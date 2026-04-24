@@ -1,0 +1,21 @@
+{
+  "name": "feature",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/game/feature/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:feature", "scope:game"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{projectRoot}/test-output/jest/coverage"],
+      "options": {
+        "jestConfig": "libs/game/feature/jest.config.cts",
+        "tsConfig": "libs/game/feature/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
