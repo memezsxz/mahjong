@@ -1,14 +1,13 @@
-import {DragonSuit, NumberSuit, TileInstance, TileType} from "@hbg/shared-models";
+import {DragonSuit, HandModel, NumberSuit, TileInstance, TileType} from "@hbg/shared-models";
 import {HONOR_TILE_BASE_VALUE} from "./game.config.js";
+import {calculateHandTotal} from "./hand-evaluator.utils.js";
 
-function buildDeck(): TileInstance[] {
+export function buildDeck(): TileInstance[] {
     const cards: TileInstance[] = [...buildNumberTiles(), ...buildHonorTiles(TileType.Dragon, HONOR_TILE_BASE_VALUE), ...buildHonorTiles(TileType.Wind, HONOR_TILE_BASE_VALUE)];
     // TODO: make 5 changeable from config
 
     return cards;
 }
-
-export default buildDeck
 
 function buildNumberTiles(): TileInstance[] {
     const sizeArray = Array.from({length: 9}, (_, i) => i + 1);
@@ -62,12 +61,14 @@ function shuffleDeck(deck: TileInstance[]): TileInstance[] {
 }
 
 
-export function drawHand(handSize: number, deck: TileInstance[]): { hand: TileInstance[], drawPile: TileInstance[] } {
+export function drawHand(handSize: number, deck: TileInstance[]): { hand: HandModel, drawPile: TileInstance[] } {
     const newDeck = shuffleDeck(deck)
     const hand = newDeck.slice(0, handSize);
 
     const drawPile = newDeck.slice(handSize)
-    return {hand, drawPile};
+    const handModel: HandModel = {tiles: hand, total: calculateHandTotal(hand)}
+
+    return {hand: handModel, drawPile};
 }
 
 export function reshuffleDeck(discardPile: TileInstance[]) {
