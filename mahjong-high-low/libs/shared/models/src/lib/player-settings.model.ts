@@ -1,5 +1,7 @@
+
+export type HandSizeOptions = 3 | 4 | 5;
 export interface PlayerSettingsModel {
-    handSize: 3 | 4 | 5; // default 3
+    handSize: HandSizeOptions; // default 3
     soundEnabled: boolean;
     musicEnabled: boolean;
     showTileValues: boolean;

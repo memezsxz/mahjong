@@ -1,6 +1,6 @@
 import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
 import {Bet, GamePhase, GameStateModel} from "@hbg/shared-models";
-import {computed} from "@angular/core";
+import {computed, inject} from "@angular/core";
 import {
     buildDeck,
     calculateScore,
@@ -12,6 +12,7 @@ import {
     reshuffleDeck,
     scaleHandValues
 } from "@hbg/shared-util-game";
+import {SettingsService} from "../settings.service";
 
 export const GameStore = signalStore(
     {providedIn: 'root'},
@@ -23,7 +24,7 @@ export const GameStore = signalStore(
         winStreak: 0,
         currentScore: 0,
         reshuffleCount: 0,
-        handSize: DEFAULT_HAND_SIZE, // TODO: update to user value from settings
+        handSize: DEFAULT_HAND_SIZE,
         gamePhase: GamePhase.Idle,
         isPaused: false,
         gameOverReason: null,
@@ -37,8 +38,10 @@ export const GameStore = signalStore(
         totalTileCount: computed(() => state.drawPile().length + state.discard().length)
     })),
 
-    withMethods((store) => ({
-        startGame() {
+    withMethods((store) => {
+        const playerSettings = inject(SettingsService);
+        return {
+            startGame() {
             let newDeck = buildDeck()
             const {hand: firstHand, drawPile: firstRemainingDeck} = drawHand(store.handSize(), newDeck)
             newDeck = firstRemainingDeck
@@ -56,6 +59,7 @@ export const GameStore = signalStore(
                 isPaused: false,
                 lastResult: null,
                 gameOverReason: null,
+                handSize: playerSettings.settings().handSize,
             });
         },
         togglePause() {
@@ -117,12 +121,13 @@ export const GameStore = signalStore(
                 winStreak: 0,
                 currentScore: 0,
                 reshuffleCount: 0,
-                handSize: DEFAULT_HAND_SIZE, // TODO: update to user value from settings
+                handSize: playerSettings.settings().handSize,
                 gamePhase: GamePhase.Idle,
                 isPaused: false,
                 lastResult: null,
                 gameOverReason: null,
             })
         }
-    }))
+        }
+    })
 )

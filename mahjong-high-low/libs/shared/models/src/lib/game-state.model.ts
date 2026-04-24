@@ -1,5 +1,6 @@
 import {TileInstance} from "./tile.model.js";
 import {HandModel} from "./hand.model.js";
+import {HandSizeOptions} from "./player-settings.model.js";
 
 export enum GamePhase {
     Idle = "idle",
@@ -23,5 +24,5 @@ export interface GameStateModel {
     isPaused: boolean;
     lastResult: HandResult;
     gameOverReason: GameOverReason
-    handSize: number // TODO: handle since added later
+    handSize: HandSizeOptions
 }
