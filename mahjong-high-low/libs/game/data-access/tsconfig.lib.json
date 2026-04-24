@@ -17,7 +17,11 @@
     "src/test-setup.ts"
   ],
   "references": [
-    { "path": "../../shared/models" },
-    { "path": "../../shared/util-game" }
+    {
+      "path": "../../shared/util-game/tsconfig.lib.json"
+    },
+    {
+      "path": "../../shared/models/tsconfig.lib.json"
+    }
   ]
 }
