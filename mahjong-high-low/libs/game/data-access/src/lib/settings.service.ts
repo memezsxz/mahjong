@@ -7,7 +7,7 @@ export class SettingsService {
     private readonly STORAGE_KEY = 'player-settings';
 
     private _settings = signal<PlayerSettingsModel>({
-        handSize: DEFAULT_HAND_SIZE, musicEnabled: true, soundEnabled: true, playerName: '', showTileValues: true
+        handSize: DEFAULT_HAND_SIZE, musicEnabled: true, soundEnabled: true, playerName: '', showTileValues: true, hasSeenTutorial: false
     });
 
     readonly settings = this._settings.asReadonly();
@@ -22,7 +22,7 @@ export class SettingsService {
     }
 
     isFirstTime(): boolean {
-        return localStorage.getItem(this.STORAGE_KEY) === null;
+        return !this._settings().hasSeenTutorial;
     }
 
     private load() {
@@ -31,5 +31,4 @@ export class SettingsService {
             this._settings.set(JSON.parse(stored))
         }
     }
-
 }

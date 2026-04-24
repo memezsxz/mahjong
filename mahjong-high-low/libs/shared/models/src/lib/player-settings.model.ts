@@ -6,4 +6,5 @@ export interface PlayerSettingsModel {
     musicEnabled: boolean;
     showTileValues: boolean;
     playerName: string | null;
+    hasSeenTutorial: boolean;
 }
