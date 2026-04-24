@@ -7,14 +7,17 @@ export enum GamePhase {
     GameOver = "gameOver",
 }
 
+export type HandResult = 'win' | 'lose' | null;
+
 export interface GameStateModel {
     drawPile: TileInstance[];
     discard: TileInstance[];
     currentHand: HandModel | null;
     previousHand: HandModel | null;
+    winStreak: number;
     currentScore: number;
     reshuffleCount: number;
     gamePhase: GamePhase;
     isPaused: boolean;
-    lastResult: 'win' | 'lose' | null
+    lastResult: HandResult
 }

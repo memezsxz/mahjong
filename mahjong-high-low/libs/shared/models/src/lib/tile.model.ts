@@ -1,5 +1,10 @@
+export enum TileType {
+    Number = 'number',
+    Wind = 'wind',
+    Dragon = 'dragon',
+}
 export enum NumberSuit {
-    Characters = 'characters',
+    Pinyin = 'pinyin',
     Dots = 'dots',
     Bamboo = 'bamboo'
 }
@@ -18,21 +23,21 @@ export enum WindSuit {
 }
 
 interface NumberTile {
-    type: 'number';
+    type: TileType.Number;
     suit: NumberSuit;
 }
 
 interface WindTile {
-    type: 'wind';
+    type: TileType.Wind;
     suit: WindSuit;
 }
 
 interface DragonTile {
-    type: 'dragon';
+    type: TileType.Dragon;
     suit: DragonSuit;
 }
 
-type TileInfo = NumberTile | WindTile | DragonTile;
+export type TileInfo = NumberTile | WindTile | DragonTile;
 
 export type TileDefinition = TileInfo & {
     faceValue: number;
