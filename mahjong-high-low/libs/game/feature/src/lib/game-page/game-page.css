@@ -25,6 +25,13 @@
   letter-spacing: 0.08em !important;
 }
 
+::ng-deep .gp-next-btn.p-button {
+  border-radius: 0 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+}
+
 ::ng-deep .gp-pause-btn.p-button {
   border-radius: 0 !important;
   background: var(--c-indigo) !important;

@@ -4,6 +4,7 @@
     icon="pi pi-arrow-up"
     styleClass="bc-btn bc-btn--higher"
     size="large"
+    [disabled]="disabled()"
     (onClick)="betPlaced.emit('higher')"
   />
 
@@ -20,6 +21,7 @@
     iconPos="right"
     styleClass="bc-btn bc-btn--lower"
     size="large"
+    [disabled]="disabled()"
     (onClick)="betPlaced.emit('lower')"
   />
 </div>

@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import {
@@ -9,20 +10,14 @@ import {
   HandHistory,
   PauseMenu,
   SettingsPanel,
-  HandHistoryItem,
 } from '@hbg/game-ui';
-import {
-  TileType,
-  NumberSuit,
-  DragonSuit,
-  WindSuit,
-  HandModel,
-  PlayerSettingsModel,
-} from '@hbg/shared-models';
+import { Bet, GameOverReason, GamePhase, PlayerSettingsModel } from '@hbg/shared-models';
+import { GameStore, LeaderboardService, SettingsService } from '@hbg/game-data-access';
 
 @Component({
   selector: 'lib-game-page',
   imports: [
+    DecimalPipe,
     Hand,
     BetControls,
     ScoreDisplay,
@@ -35,69 +30,78 @@ import {
   templateUrl: './game-page.html',
   styleUrl: './game-page.css',
 })
-export class GamePage {
-  constructor(private router: Router) {}
+export class GamePage implements OnInit {
+  private readonly router             = inject(Router);
+  readonly store                      = inject(GameStore);
+  readonly settingsService            = inject(SettingsService);
+  private readonly leaderboardService = inject(LeaderboardService);
 
-  // ── Overlay state ─────────────────────────────────────────────────────
-  pauseOpen     = signal(false);
-  settingsOpen  = signal(false);
+  // ── Expose enum to template ───────────────────────────────────────────
+  readonly GamePhase = GamePhase;
+
+  // ── UI-only overlay state ─────────────────────────────────────────────
+  settingsOpen   = signal(false);
   exitDialogOpen = signal(false);
+  scoreSaved     = signal(false);
 
-  // ── Dummy hands ───────────────────────────────────────────────────────
-  visibleHand: HandModel = {
-    tiles: [
-      { type: TileType.Number, suit: NumberSuit.Bamboo, faceValue: 3, id: 'bamboo-3-0', currentValue: 3 },
-      { type: TileType.Number, suit: NumberSuit.Dots,   faceValue: 5, id: 'dots-5-0',   currentValue: 5 },
-      { type: TileType.Wind,   suit: WindSuit.South,    faceValue: 0, id: 'wind-s-0',   currentValue: 5 },
-    ],
-    total: 13,
-  };
+  // ── Derived deck counts ───────────────────────────────────────────────
+  drawCount    = computed(() => this.store.drawPile().length);
+  discardCount = computed(() => this.store.discard().length);
 
-  hiddenHand: HandModel = {
-    tiles: [
-      { type: TileType.Dragon, suit: DragonSuit.Red,    faceValue: 0, id: 'dragon-r-0', currentValue: 7 },
-      { type: TileType.Number, suit: NumberSuit.Pinyin, faceValue: 6, id: 'pinyin-6-0', currentValue: 6 },
-      { type: TileType.Number, suit: NumberSuit.Bamboo, faceValue: 2, id: 'bamboo-2-0', currentValue: 2 },
-    ],
-    total: 15,
-  };
+  // ── Game over reason → human-readable copy ────────────────────────────
+  gameOverMessage = computed(() => {
+    const messages: Record<NonNullable<GameOverReason>, string> = {
+      'tile-min':  'A tile hit zero — the hand collapsed.',
+      'tile-max':  'A tile maxed out — the hand is too powerful.',
+      'reshuffle': 'The deck ran out of reshuffles.',
+    };
+    const reason = this.store.gameOverReason();
+    return reason ? messages[reason] : '';
+  });
 
-  // ── Dummy stats ───────────────────────────────────────────────────────
-  score          = 1250;
-  winStreak      = 3;
-  drawCount      = 48;
-  discardCount   = 22;
-  reshuffleCount = 1;
+  // ── Last 5 rounds for the sidebar history ────────────────────────────
+  handHistory = computed(() => [...this.store.handHistory()].reverse());
 
-  handHistory: HandHistoryItem[] = [
-    { round: 1, bet: 'higher', result: 'win',  scoreChange:  26 },
-    { round: 2, bet: 'lower',  result: 'win',  scoreChange:  18 },
-    { round: 3, bet: 'higher', result: 'lose', scoreChange: -11 },
-    { round: 4, bet: 'higher', result: 'win',  scoreChange:  14 },
-    { round: 5, bet: 'lower',  result: 'win',  scoreChange:  32 },
-  ];
+  constructor() {
+    effect(() => {
+      if (this.store.gamePhase() === GamePhase.GameOver && !this.scoreSaved()) {
+        this.scoreSaved.set(true);
+        this.leaderboardService.saveScore({
+          playerName: this.settingsService.settings().playerName ?? 'Anonymous',
+          totalScore: this.store.currentScore(),
+          date:       Date.now(),
+        }).subscribe();
+      }
+    });
+  }
 
-  settings: PlayerSettingsModel = {
-    handSize: 3,
-    soundEnabled: true,
-    musicEnabled: false,
-    showTileValues: true,
-    playerName: null,
-    hasSeenTutorial: false,
-  };
+  ngOnInit() {
+    this.store.startGame();
+  }
 
-  // ── Handlers ─────────────────────────────────────────────────────────
+  // ── Handlers ──────────────────────────────────────────────────────────
   onBetPlaced(bet: 'higher' | 'lower') {
-    console.log('Bet placed:', bet);
+    if (this.store.gamePhase() !== GamePhase.Betting) return;
+    this.store.placeBet(bet === 'higher' ? Bet.High : Bet.Low);
+  }
+
+  onNextHand() {
+    this.store.nextHand();
   }
 
   onSettingsChanged(partial: Partial<PlayerSettingsModel>) {
-    this.settings = { ...this.settings, ...partial };
+    this.settingsService.update(partial);
+  }
+
+  onPlayAgain() {
+    this.scoreSaved.set(false);
+    this.store.startGame();
   }
 
   onExitGame() {
+    this.scoreSaved.set(false);
+    this.store.exitGame();
     this.exitDialogOpen.set(false);
-    this.pauseOpen.set(false);
     this.router.navigate(['/']);
   }
 }

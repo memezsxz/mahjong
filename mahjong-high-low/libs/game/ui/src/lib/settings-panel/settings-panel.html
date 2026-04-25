@@ -29,11 +29,14 @@
       <div class="flex gap-1">
         @for (n of handSizeOptions; track n) {
           <button
-            class="w-9 h-9 border font-mono text-sm font-bold cursor-pointer transition-all duration-100"
-            [class]="settings().handSize === n
-              ? 'bg-c-indigo border-c-indigo text-white'
-              : 'bg-transparent border-c-indigo/10 text-c-muted hover:border-c-indigo hover:text-c-indigo'"
-            (click)="settingsChanged.emit({ handSize: n })"
+            class="w-9 h-9 border font-mono text-sm font-bold transition-all duration-100"
+            [class]="inGame()
+              ? 'cursor-not-allowed opacity-40 bg-transparent border-c-indigo/10 text-c-muted'
+              : settings().handSize === n
+                ? 'cursor-pointer bg-c-indigo border-c-indigo text-white'
+                : 'cursor-pointer bg-transparent border-c-indigo/10 text-c-muted hover:border-c-indigo hover:text-c-indigo'"
+            [disabled]="inGame()"
+            (click)="!inGame() && settingsChanged.emit({ handSize: n })"
           >{{ n }}</button>
         }
       </div>

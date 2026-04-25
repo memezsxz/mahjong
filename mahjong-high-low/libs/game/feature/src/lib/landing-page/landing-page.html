@@ -60,26 +60,26 @@
 
       <span class="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-muted">TOP SCORES</span>
 
-      @if (topScores.length === 0) {
+      @if (leaderboardService.topScores().length === 0) {
         <div class="flex flex-col gap-1 py-8">
           <span class="font-mono text-xs text-c-muted leading-relaxed">No scores yet.</span>
           <span class="font-mono text-xs text-c-muted leading-relaxed">Be the first to play.</span>
         </div>
       } @else {
         <div class="flex flex-col gap-px bg-c-indigo/10">
-          @for (entry of topScores; track entry.rank) {
+          @for (entry of leaderboardService.topScores(); track entry.date; let i = $index) {
             <div class="grid items-center gap-3 px-4 py-3.5 bg-c-surface"
                  style="grid-template-columns: 2rem 1fr auto auto">
               <span
                 class="font-mono text-xs font-bold px-1.5 py-0.5 text-center"
-                [class]="entry.rank === 1 ? 'bg-[#c9a227] text-black'
-                        : entry.rank === 2 ? 'bg-[#9da3a8] text-black'
-                        : entry.rank === 3 ? 'bg-[#8b5e3c] text-white'
+                [class]="i === 0 ? 'bg-[#c9a227] text-black'
+                        : i === 1 ? 'bg-[#9da3a8] text-black'
+                        : i === 2 ? 'bg-[#8b5e3c] text-white'
                         : 'bg-transparent text-c-muted border border-c-indigo/10'"
-              >{{ entry.rank }}</span>
-              <span class="text-sm font-medium text-c-text">{{ entry.player }}</span>
-              <span class="font-mono text-sm font-bold text-c-indigo">{{ entry.score | number }}</span>
-              <span class="font-mono text-[0.58rem] text-c-muted">{{ entry.date }}</span>
+              >{{ i + 1 }}</span>
+              <span class="text-sm font-medium text-c-text">{{ entry.playerName }}</span>
+              <span class="font-mono text-sm font-bold text-c-indigo">{{ entry.totalScore | number }}</span>
+              <span class="font-mono text-[0.58rem] text-c-muted">{{ entry.date | date:'mediumDate' }}</span>
             </div>
           }
         </div>
@@ -90,7 +90,7 @@
 
   @if (settingsOpen()) {
     <lib-settings-panel
-      [settings]="settings"
+      [settings]="settingsService.settings()"
       (settingsChanged)="onSettingsChanged($event)"
       (closed)="settingsOpen.set(false)"
     />

@@ -1,45 +1,29 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { DecimalPipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { SettingsPanel } from '@hbg/game-ui';
 import { PlayerSettingsModel } from '@hbg/shared-models';
-
-interface LeaderboardEntry {
-  rank: number;
-  player: string;
-  score: number;
-  date: string;
-}
+import { LeaderboardService, SettingsService } from '@hbg/game-data-access';
 
 @Component({
   selector: 'lib-landing-page',
-  imports: [ButtonModule, DecimalPipe, SettingsPanel],
+  imports: [ButtonModule, DatePipe, DecimalPipe, SettingsPanel],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.css',
 })
 export class LandingPage {
-  constructor(private router: Router) {}
+  private readonly router      = inject(Router);
+  readonly settingsService     = inject(SettingsService);
+  readonly leaderboardService  = inject(LeaderboardService);
 
   settingsOpen = signal(false);
-
-  settings: PlayerSettingsModel = {
-    handSize: 3,
-    soundEnabled: true,
-    musicEnabled: false,
-    showTileValues: true,
-    playerName: null,
-    hasSeenTutorial: false,
-  };
-
-  // Will be replaced by LeaderboardService.topScores()
-  topScores: LeaderboardEntry[] = [];
 
   startGame() {
     this.router.navigate(['/game']);
   }
 
   onSettingsChanged(partial: Partial<PlayerSettingsModel>) {
-    this.settings = { ...this.settings, ...partial };
+    this.settingsService.update(partial);
   }
 }

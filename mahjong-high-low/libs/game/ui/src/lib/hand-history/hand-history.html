@@ -1,15 +1,15 @@
 <div class="flex flex-col gap-2">
-  <span class="block font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted text-center">HISTORY</span>
+  <span class="sticky top-0 block font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted text-center bg-c-bg pb-1 z-10">HISTORY</span>
 
   @if (history().length === 0) {
     <span class="font-mono text-[0.6rem] text-c-muted tracking-[0.06em]">No hands played yet</span>
   } @else {
     <div class="flex flex-col">
       @for (row of history(); track row.round) {
-        <div class="flex items-center gap-1.5 py-1.5 border-b border-c-indigo/10 last:border-b-0">
+        <div class="hh-row flex items-center gap-1.5 py-1.5 border-b border-c-indigo/10 last:border-b-0">
           <span class="font-mono text-[0.58rem] text-c-muted w-5 shrink-0">R{{ row.round }}</span>
           <p-tag
-            [value]="row.result.toUpperCase()"
+            [value]="(row.result ?? 'pending').toUpperCase()"
             [severity]="row.result === 'win' ? 'success' : 'danger'"
             styleClass="hh-tag"
           />

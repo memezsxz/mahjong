@@ -4,6 +4,7 @@ import {
   NumberSuit,
   TileInstance,
   TileType,
+  WindSuit,
 } from '@hbg/shared-models';
 import { HONOR_TILE_BASE_VALUE } from './game.config.js';
 import { calculateHandTotal } from './hand-evaluator.utils.js';
@@ -46,14 +47,14 @@ function buildHonorTiles(
 ): TileInstance[] {
   const copyArray = Array.from({ length: 4 }, (_, i) => i + 1);
 
-  const suit = tileType == TileType.Dragon ? DragonSuit : TileType.Wind;
+  const suit = tileType == TileType.Dragon ? DragonSuit : WindSuit;
 
   const items: TileInstance[] = Object.values(suit).flatMap((suit) =>
     copyArray.flatMap(
       (copy) =>
         ({
-          id: `number-${suit}-${copy}`,
-          type: tileType == TileType.Dragon ? DragonSuit : TileType.Wind,
+          id: `${tileType}-${suit}-${copy}`,
+          type: tileType,
           suit: suit,
           faceValue: defaultValue,
           currentValue: defaultValue,

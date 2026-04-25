@@ -1,131 +1,192 @@
 <div class="flex h-full overflow-hidden bg-c-bg text-c-text font-display">
 
-  <!-- ── Main ────────────────────────────────────────────────────────────── -->
-  <main class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-8 lg:px-12 relative">
+  @if (store.visibleHand() && store.hiddenHand()) {
 
-    <!-- Topbar -->
-    <div class="shrink-0 flex items-center py-4 border-b border-c-indigo/10">
-      <button
-        class="bg-transparent border-0 p-0 cursor-pointer font-mono text-[0.78rem] font-bold tracking-[0.1em] text-c-indigo transition-opacity duration-150 hover:opacity-60"
-        (click)="exitDialogOpen.set(true)"
-      >
-        Mahjong High · Low
-      </button>
-    </div>
+    <!-- ── Main ──────────────────────────────────────────────────────────── -->
+    <main class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-8 lg:px-12 relative">
 
-    <!-- Center: hidden hand -->
-    <div class="gp-center flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8">
-      <lib-hand
-        [hand]="hiddenHand"
-        [showTileValue]="false"
-        [showHandTiles]="false"
-        [showFullHandValue]="false"
-      />
-    </div>
-
-    <!-- Bet strip -->
-    <div class="shrink-0 flex justify-center py-5 border-t border-c-indigo/10 border-b">
-      <lib-bet-controls
-        [handTotal]="visibleHand.total"
-        [showTotal]="false"
-        (betPlaced)="onBetPlaced($event)"
-      />
-    </div>
-
-    <!-- Bottom: total + visible hand -->
-    <div class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7">
-      <span class="font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo">
-        {{ visibleHand.total }}
-      </span>
-      <lib-hand
-        [hand]="visibleHand"
-        [showTileValue]="true"
-        [showHandTiles]="true"
-        [showFullHandValue]="false"
-      />
-    </div>
-
-    <!-- Exit confirmation dialog -->
-    @if (exitDialogOpen()) {
-      <div
-        class="absolute inset-0 bg-c-bg/85 backdrop-blur-sm flex items-center justify-center z-30"
-        (click)="exitDialogOpen.set(false)"
-      >
-        <div
-          class="bg-c-surface border border-c-indigo/10 p-8 w-80 flex flex-col gap-4"
-          (click)="$event.stopPropagation()"
+      <!-- Topbar -->
+      <div class="shrink-0 flex items-center py-4 border-b border-c-indigo/10">
+        <button
+          class="bg-transparent border-0 p-0 cursor-pointer font-mono text-[0.78rem] font-bold tracking-[0.1em] text-c-indigo transition-opacity duration-150 hover:opacity-60"
+          (click)="exitDialogOpen.set(true)"
         >
-          <span class="font-mono text-[0.82rem] font-bold tracking-[0.15em] uppercase text-c-indigo">
-            Leave game?
-          </span>
-          <p class="text-sm text-c-muted leading-[1.5] m-0">
-            Your current progress will be lost and your score won't be saved.
-          </p>
-          <div class="flex gap-2 justify-end mt-2">
-            <p-button
-              label="Keep playing"
-              styleClass="gp-dialog-btn"
-              severity="secondary"
-              (onClick)="exitDialogOpen.set(false)"
-            />
-            <p-button
-              label="Exit"
-              styleClass="gp-dialog-btn"
-              severity="danger"
-              (onClick)="onExitGame()"
-            />
+          Mahjong High · Low
+        </button>
+      </div>
+
+      <!-- Center: hidden hand -->
+      <div class="gp-center flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8">
+        <lib-hand
+          [hand]="store.hiddenHand()!"
+          [showTileValue]="false"
+          [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
+          [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
+        />
+      </div>
+
+      <!-- Bet strip -->
+      <div class="shrink-0 flex items-center justify-center gap-6 py-5 border-t border-c-indigo/10 border-b">
+        @if (store.gamePhase() === GamePhase.Revealing) {
+
+          <p-button
+            label="Next Hand"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            styleClass="gp-next-btn"
+            size="large"
+            (onClick)="onNextHand()"
+          />
+
+        } @else {
+          <lib-bet-controls
+            [handTotal]="store.visibleHand()!.total"
+            [showTotal]="false"
+            [disabled]="store.gamePhase() !== GamePhase.Betting"
+            (betPlaced)="onBetPlaced($event)"
+          />
+        }
+      </div>
+
+      <!-- Bottom: total + visible hand -->
+      <div class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7">
+        <span class="font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo">
+          {{ store.visibleHand()!.total }}
+        </span>
+        <lib-hand
+          [hand]="store.visibleHand()!"
+          [showTileValue]="settingsService.settings().showTileValues"
+          [showHandTiles]="true"
+          [showFullHandValue]="false"
+        />
+      </div>
+
+      <!-- Exit confirmation dialog -->
+      @if (exitDialogOpen()) {
+        <div
+          class="absolute inset-0 bg-c-bg/85 backdrop-blur-sm flex items-center justify-center z-30"
+          (click)="exitDialogOpen.set(false)"
+        >
+          <div
+            class="bg-c-surface border border-c-indigo/10 p-8 w-80 flex flex-col gap-4"
+            (click)="$event.stopPropagation()"
+          >
+            <span class="font-mono text-[0.82rem] font-bold tracking-[0.15em] uppercase text-c-indigo">
+              Leave game?
+            </span>
+            <p class="text-sm text-c-muted leading-[1.5] m-0">
+              Your current progress will be lost and your score won't be saved.
+            </p>
+            <div class="flex gap-2 justify-end mt-2">
+              <p-button
+                label="Keep playing"
+                styleClass="gp-dialog-btn"
+                severity="secondary"
+                (onClick)="exitDialogOpen.set(false)"
+              />
+              <p-button
+                label="Exit"
+                styleClass="gp-dialog-btn"
+                severity="danger"
+                (onClick)="onExitGame()"
+              />
+            </div>
           </div>
         </div>
+      }
+
+      <!-- Pause overlay -->
+      @if (store.isPaused()) {
+        <lib-pause-menu
+          (resumed)="store.togglePause()"
+          (settingsOpened)="settingsOpen.set(true)"
+          (exited)="exitDialogOpen.set(true); store.togglePause()"
+        />
+      }
+
+      <!-- Settings drawer -->
+      @if (settingsOpen()) {
+        <lib-settings-panel
+          [settings]="settingsService.settings()"
+          [inGame]="store.gamePhase() !== GamePhase.Idle"
+          (settingsChanged)="onSettingsChanged($event)"
+          (closed)="settingsOpen.set(false)"
+        />
+      }
+
+      <!-- Game Over overlay -->
+      @if (store.gamePhase() === GamePhase.GameOver) {
+        <div class="absolute inset-0 bg-c-bg/92 backdrop-blur-sm flex items-center justify-center z-40">
+          <div class="bg-c-surface border border-c-indigo/10 p-10 w-88 flex flex-col gap-6">
+
+            <div class="flex flex-col gap-2">
+              <span class="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-pink">Game Over</span>
+              <p class="text-sm text-c-muted leading-relaxed m-0">{{ gameOverMessage() }}</p>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">Final Score</span>
+              <span class="font-mono text-5xl font-bold leading-none text-c-indigo">
+                {{ store.currentScore() | number }}
+              </span>
+            </div>
+
+            <div class="flex flex-col gap-2 pt-2">
+              <p-button
+                label="Play Again"
+                icon="pi pi-refresh"
+                styleClass="gp-dialog-btn w-full"
+                (onClick)="onPlayAgain()"
+              />
+              <p-button
+                label="Exit to Menu"
+                icon="pi pi-sign-out"
+                styleClass="gp-dialog-btn w-full"
+                severity="secondary"
+                (onClick)="onExitGame()"
+              />
+            </div>
+
+          </div>
+        </div>
+      }
+
+    </main>
+
+    <!-- ── Sidebar ────────────────────────────────────────────────────────── -->
+    <aside class="w-52 lg:w-56 shrink-0 overflow-hidden flex flex-col border-l border-c-indigo/10">
+
+      <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
+        <lib-score-display [score]="store.currentScore()" [winStreak]="store.winStreak()" />
       </div>
-    }
 
-    <!-- Pause overlay -->
-    @if (pauseOpen()) {
-      <lib-pause-menu
-        (resumed)="pauseOpen.set(false)"
-        (settingsOpened)="settingsOpen.set(true)"
-        (exited)="exitDialogOpen.set(true); pauseOpen.set(false)"
-      />
-    }
+      <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
+        <lib-deck-counter
+          [drawCount]="drawCount()"
+          [discardCount]="discardCount()"
+          [reshuffleCount]="store.reshuffleCount()"
+        />
+      </div>
 
-    <!-- Settings drawer -->
-    @if (settingsOpen()) {
-      <lib-settings-panel
-        [settings]="settings"
-        (settingsChanged)="onSettingsChanged($event)"
-        (closed)="settingsOpen.set(false)"
-      />
-    }
+      <div class="flex-1 min-h-0 overflow-hidden px-5 py-4">
+        <lib-hand-history [history]="handHistory()" />
+      </div>
 
-  </main>
+      <div class="shrink-0 flex justify-center px-5 py-4 border-t border-c-indigo/10">
+        <p-button
+          [icon]="store.isPaused() ? 'pi pi-play' : 'pi pi-pause'"
+          styleClass="gp-pause-btn"
+          (onClick)="store.togglePause()"
+        />
+      </div>
 
-  <!-- ── Sidebar ──────────────────────────────────────────────────────────── -->
-  <aside class="w-52 lg:w-56 shrink-0 overflow-hidden flex flex-col border-l border-c-indigo/10">
+    </aside>
 
-    <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
-      <lib-score-display [score]="score" [winStreak]="winStreak" />
+  } @else {
+    <!-- Loading state while store initialises -->
+    <div class="flex-1 flex items-center justify-center">
+      <span class="font-mono text-[0.62rem] tracking-[0.18em] uppercase text-c-muted">Loading…</span>
     </div>
-
-    <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
-      <lib-deck-counter
-        [drawCount]="drawCount"
-        [discardCount]="discardCount"
-        [reshuffleCount]="reshuffleCount"
-      />
-    </div>
-
-    <div class="flex-1 min-h-0 overflow-hidden px-5 py-4">
-      <lib-hand-history [history]="handHistory" />
-    </div>
-
-    <div class="shrink-0 flex justify-center px-5 py-4 border-t border-c-indigo/10">
-      <p-button
-        icon="pi pi-pause"
-        styleClass="gp-pause-btn"
-        (onClick)="pauseOpen.set(true)"
-      />
-    </div>
-
-  </aside>
+  }
 
 </div>

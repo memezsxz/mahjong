@@ -10,5 +10,6 @@ import { ButtonModule } from 'primeng/button';
 export class BetControls {
   handTotal = input.required<number>();
   showTotal = input<boolean>(true);
+  disabled  = input<boolean>(false);
   betPlaced = output<'higher' | 'lower'>();
 }

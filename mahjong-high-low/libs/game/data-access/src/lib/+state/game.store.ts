@@ -1,5 +1,5 @@
 import {patchState, signalStore, withComputed, withMethods, withState} from '@ngrx/signals';
-import {Bet, GamePhase, GameStateModel} from "@hbg/shared-models";
+import {Bet, GamePhase, GameStateModel, HandHistoryItem} from "@hbg/shared-models";
 import {computed, inject} from "@angular/core";
 import {
     buildDeck,
@@ -28,7 +28,9 @@ export const GameStore = signalStore(
         gamePhase: GamePhase.Idle,
         isPaused: false,
         gameOverReason: null,
-        lastResult: null
+        lastResult: null,
+        lastScoreChange: null,
+        handHistory: [],
     }),
 
     withComputed((state) => ({
@@ -58,8 +60,10 @@ export const GameStore = signalStore(
                 reshuffleCount: 0,
                 isPaused: false,
                 lastResult: null,
+                lastScoreChange: null,
                 gameOverReason: null,
                 handSize: playerSettings.settings().handSize,
+                handHistory: [],
             });
         },
         togglePause() {
@@ -75,15 +79,24 @@ export const GameStore = signalStore(
             } = calculateScore(store.hiddenHand()!, store.currentScore(), store.winStreak(), result)
             const newHiddenHand = scaleHandValues(store.hiddenHand()!, result)
             const isGameOver = checkGameOverHand(newHiddenHand.tiles)
+            const scoreChange = calculatedScore - store.currentScore()
 
+            const historyEntry: HandHistoryItem = {
+                round:       store.handHistory().length + 1,
+                bet:         playerBet,
+                result,
+                scoreChange,
+            }
 
             patchState(store, {
                 hiddenHand: newHiddenHand,
                 winStreak: newWinStreak,
                 currentScore: calculatedScore,
+                lastScoreChange: scoreChange,
                 gamePhase: isGameOver ? GamePhase.GameOver : GamePhase.Revealing,
                 gameOverReason: isGameOver,
-                lastResult: result
+                lastResult: result,
+                handHistory: [...store.handHistory(), historyEntry],
             })
         },
         nextHand() {
@@ -110,6 +123,8 @@ export const GameStore = signalStore(
                 reshuffleCount: reshuffleCount,
                 gamePhase: isGameOver ? GamePhase.GameOver : GamePhase.Betting,
                 gameOverReason: isGameOver,
+                lastResult: null,
+                lastScoreChange: null,
             })
         },
         exitGame() {
@@ -125,7 +140,9 @@ export const GameStore = signalStore(
                 gamePhase: GamePhase.Idle,
                 isPaused: false,
                 lastResult: null,
+                lastScoreChange: null,
                 gameOverReason: null,
+                handHistory: [],
             })
         }
         }

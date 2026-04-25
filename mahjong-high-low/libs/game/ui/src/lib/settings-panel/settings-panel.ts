@@ -10,6 +10,7 @@ import { PlayerSettingsModel } from '@hbg/shared-models';
 })
 export class SettingsPanel {
   settings = input.required<PlayerSettingsModel>();
+  inGame   = input<boolean>(false);
   settingsChanged = output<Partial<PlayerSettingsModel>>();
   closed = output<void>();
 
