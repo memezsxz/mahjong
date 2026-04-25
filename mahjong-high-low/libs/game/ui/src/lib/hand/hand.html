@@ -1,6 +1,10 @@
-@for (t of hand().tiles; track t.id) {
+<div class="flex gap-2">
+  @for (t of hand().tiles; track t.id) {
     <lib-tile [tile]="t" [showValue]="showTileValue()" [faceDown]="!showHandTiles()"></lib-tile>
-}
+  }
+</div>
 @if (showFullHandValue()) {
-    <span>{{hand().total}}</span>
+  <span class="font-mono text-[0.62rem] font-bold tracking-[0.15em] text-c-indigo uppercase">
+    Total · {{ hand().total }}
+  </span>
 }

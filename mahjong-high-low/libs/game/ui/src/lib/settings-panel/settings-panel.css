@@ -1,0 +1,8 @@
+:host {
+  display: contents;
+}
+
+/* Focus ring on the name input — Tailwind's focus: variant doesn't pierce encapsulation */
+.sp-input:focus {
+  border-color: var(--c-indigo);
+}

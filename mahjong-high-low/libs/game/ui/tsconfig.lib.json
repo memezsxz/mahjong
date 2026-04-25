@@ -15,8 +15,5 @@
     "jest.config.cts",
     "src/test-setup.ts"
   ],
-  "references": [
-    { "path": "../../shared/models/tsconfig.lib.json" },
-    { "path": "../../shared/util-game/tsconfig.lib.json" }
-  ]
+  "references": []
 }

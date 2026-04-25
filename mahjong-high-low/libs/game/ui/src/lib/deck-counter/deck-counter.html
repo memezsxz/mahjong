@@ -1,0 +1,27 @@
+<div class="flex flex-col items-center gap-2">
+  <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">DECK</span>
+
+  <div class="flex gap-4 items-end">
+    <div class="flex flex-col gap-0.5">
+      <span class="font-mono text-2xl font-bold leading-none text-c-indigo">{{ drawCount() }}</span>
+      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">draw</span>
+    </div>
+
+    <div class="flex flex-col gap-0.5">
+      <span class="font-mono text-2xl font-bold leading-none text-c-muted">{{ discardCount() }}</span>
+      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">discard</span>
+    </div>
+
+    <div class="flex flex-col gap-0.5">
+      <div class="flex gap-1 items-center h-8">
+        @for (used of pips(); track $index) {
+          <span
+            class="w-1.5 h-1.5 rounded-full"
+            [class]="used ? 'bg-c-pink' : 'border border-c-indigo/10 bg-transparent'"
+          ></span>
+        }
+      </div>
+      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">shuffle</span>
+    </div>
+  </div>
+</div>

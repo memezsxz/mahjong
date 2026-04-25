@@ -1,0 +1,314 @@
+/* ── Root ────────────────────────────────────────────────────────────────── */
+
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+.game-root {
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-display);
+}
+
+/* ── Main ────────────────────────────────────────────────────────────────── */
+
+.game-main {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0 2.5rem;
+}
+
+/* ── Top Bar ─────────────────────────────────────────────────────────────── */
+
+.game-topbar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.game-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--c-indigo);
+}
+
+/* ── Center Zone ─────────────────────────────────────────────────────────── */
+
+.game-center {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  /* push group slightly above vertical center */
+  padding-bottom: 6rem;
+}
+
+.zone-label {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+/* ── Bet Controls ────────────────────────────────────────────────────────── */
+
+.bet-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+::ng-deep .btn-higher.p-button {
+  background: var(--c-green) !important;
+  border-color: var(--c-green) !important;
+  color: #fff !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.12em !important;
+  border-radius: 0 !important;
+  min-width: 140px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+::ng-deep .btn-higher.p-button:hover {
+  background: #2f6b29 !important;
+  border-color: #2f6b29 !important;
+}
+
+::ng-deep .btn-lower.p-button {
+  background: var(--c-pink) !important;
+  border-color: var(--c-pink) !important;
+  color: #fff !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.12em !important;
+  border-radius: 0 !important;
+  min-width: 140px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+::ng-deep .btn-lower.p-button:hover {
+  background: #cc3c74 !important;
+  border-color: #cc3c74 !important;
+}
+
+.bet-hint {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--c-muted);
+  letter-spacing: 0.06em;
+}
+
+/* Tile size overrides — hidden hand */
+
+::ng-deep .game-center lib-tile {
+  --tile-w: 54px;
+  --tile-h: 76px;
+}
+
+/* ── Bottom Zone ─────────────────────────────────────────────────────────── */
+
+.game-bottom {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1.25rem 0 1.75rem;
+  border-top: 1px solid var(--c-border);
+}
+
+/* Tile size overrides — visible hand (slightly larger) */
+
+::ng-deep .game-bottom lib-tile {
+  --tile-w: 64px;
+  --tile-h: 90px;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+
+.game-sidebar {
+  width: 232px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--c-border);
+}
+
+.sb-section {
+  flex-shrink: 0;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.sb-section--grow {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-bottom: none;
+}
+
+.sb-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  margin-bottom: 0.55rem;
+}
+
+/* Score + Streak */
+
+.sb-score-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.sb-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sb-big {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--c-indigo);
+}
+
+.sb-big--pink  { color: var(--c-pink); }
+.sb-big--green { color: var(--c-green); }
+
+.sb-sub {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--c-muted);
+  letter-spacing: 0.06em;
+}
+
+/* Deck */
+
+.sb-deck-row {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-end;
+}
+
+.sb-deck-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sb-deck-count {
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--c-indigo);
+}
+
+.sb-deck-count--muted { color: var(--c-muted); }
+
+.sb-deck-sub {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.sb-pips {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  height: 1.35rem; /* match sb-deck-count line-height */
+}
+
+.pip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid var(--c-border);
+}
+
+.pip--used {
+  background: var(--c-pink);
+  border-color: var(--c-pink);
+}
+
+/* History */
+
+.sb-history {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.history-row:last-child {
+  border-bottom: none;
+}
+
+.history-round {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--c-muted);
+  width: 20px;
+  flex-shrink: 0;
+}
+
+.history-bet {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--c-muted);
+  letter-spacing: 0.04em;
+  flex: 1;
+}
+
+.history-delta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+::ng-deep .history-tag.p-tag {
+  font-size: 0.5rem !important;
+  padding: 0.1rem 0.35rem !important;
+  letter-spacing: 0.08em !important;
+}

@@ -1,1 +1,112 @@
-<p>playground works!</p>
+<div class="game-root">
+
+  <!-- ── Main ─────────────────────────────────────────────────────────────── -->
+  <main class="game-main">
+
+    <!-- Top bar -->
+    <div class="game-topbar">
+      <div class="topbar-left">
+        <span class="game-title">Mahjong High · Low</span>
+        <p-tag value="BETTING" severity="info" />
+      </div>
+      <p-button icon="pi pi-pause" [rounded]="true" [text]="true" severity="secondary" />
+    </div>
+
+    <!-- Center: hidden hand + bet controls -->
+    <div class="game-center">
+      <span class="zone-label">Hidden Hand</span>
+
+      <lib-hand
+        [hand]="hiddenHand"
+        [showTileValue]="false"
+        [showHandTiles]="false"
+        [showFullHandValue]="false"
+      />
+
+      <div class="bet-controls">
+        <p-button label="HIGHER" icon="pi pi-arrow-up" styleClass="btn-higher" size="large" />
+        <p-button label="LOWER" icon="pi pi-arrow-down" iconPos="right" styleClass="btn-lower" size="large" />
+      </div>
+
+      <span class="bet-hint">Will it be higher or lower than your hand?</span>
+    </div>
+
+    <!-- Bottom: visible hand -->
+    <div class="game-bottom">
+      <span class="zone-label">Your Hand</span>
+      <lib-hand
+        [hand]="visibleHand"
+        [showTileValue]="true"
+        [showHandTiles]="true"
+        [showFullHandValue]="true"
+      />
+    </div>
+
+  </main>
+
+  <!-- ── Sidebar ────────────────────────────────────────────────────────────── -->
+  <aside class="game-sidebar">
+
+    <!-- Score + Streak -->
+    <div class="sb-section">
+      <div class="sb-score-row">
+        <div class="sb-stat">
+          <span class="sb-label">SCORE</span>
+          <span class="sb-big">1,250</span>
+        </div>
+        <div class="sb-stat">
+          <span class="sb-label">STREAK</span>
+          <span class="sb-big sb-big--pink">×3</span>
+        </div>
+      </div>
+      <span class="sb-sub">next multiplier ×3</span>
+    </div>
+
+    <!-- Deck -->
+    <div class="sb-section">
+      <span class="sb-label">DECK</span>
+      <div class="sb-deck-row">
+        <div class="sb-deck-item">
+          <span class="sb-deck-count">48</span>
+          <span class="sb-deck-sub">draw</span>
+        </div>
+        <div class="sb-deck-item">
+          <span class="sb-deck-count sb-deck-count--muted">22</span>
+          <span class="sb-deck-sub">discard</span>
+        </div>
+        <div class="sb-deck-item">
+          <div class="sb-pips">
+            <span class="pip pip--used"></span>
+            <span class="pip"></span>
+            <span class="pip"></span>
+          </div>
+          <span class="sb-deck-sub">shuffle</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="sb-section sb-section--grow">
+      <span class="sb-label">HISTORY</span>
+      <div class="sb-history">
+        @for (row of handHistory; track row.round) {
+          <div class="history-row">
+            <span class="history-round">R{{ row.round }}</span>
+            <p-tag
+              [value]="row.result"
+              [severity]="row.result === 'WIN' ? 'success' : 'danger'"
+              styleClass="history-tag"
+            />
+            <span class="history-bet">{{ row.bet }}</span>
+            <span
+              class="history-delta"
+              [style.color]="row.scoreChange > 0 ? 'var(--c-green)' : 'var(--c-pink)'"
+            >{{ row.scoreChange > 0 ? '+' : '' }}{{ row.scoreChange }}</span>
+          </div>
+        }
+      </div>
+    </div>
+
+  </aside>
+
+</div>

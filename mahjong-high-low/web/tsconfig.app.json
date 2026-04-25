@@ -15,7 +15,13 @@
   ],
   "references": [
     {
-      "path": "../libs/game/data-access/tsconfig.lib.json"
+      "path": "../libs/game/ui"
+    },
+    {
+      "path": "../libs/shared/models"
+    },
+    {
+      "path": "../libs/game/data-access"
     }
   ]
 }

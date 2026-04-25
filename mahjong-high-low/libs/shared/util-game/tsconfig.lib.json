@@ -10,11 +10,7 @@
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
-  "references": [
-    {
-      "path": "../models/tsconfig.lib.json"
-    }
-  ],
+  "references": [],
   "exclude": [
     "jest.config.ts",
     "jest.config.cts",

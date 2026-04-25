@@ -18,9 +18,14 @@
           {
             "glob": "**/*",
             "input": "web/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "web/src/assets",
+            "output": "assets"
           }
         ],
-        "styles": ["web/src/styles.scss"]
+        "styles": ["node_modules/primeicons/primeicons.css", "web/src/styles.scss"]
       },
       "configurations": {
         "production": {

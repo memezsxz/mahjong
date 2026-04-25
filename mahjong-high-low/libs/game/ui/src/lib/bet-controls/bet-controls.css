@@ -1,0 +1,34 @@
+:host {
+  display: block;
+}
+
+::ng-deep .bc-btn.p-button {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 0.12em !important;
+  border-radius: 0 !important;
+  min-width: 8.5rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+::ng-deep .bc-btn--higher.p-button {
+  background: var(--c-green) !important;
+  border-color: var(--c-green) !important;
+  color: #fff !important;
+}
+
+::ng-deep .bc-btn--higher.p-button:hover {
+  background: var(--c-green-dark, #2f6b29) !important;
+  border-color: var(--c-green-dark, #2f6b29) !important;
+}
+
+::ng-deep .bc-btn--lower.p-button {
+  background: var(--c-pink) !important;
+  border-color: var(--c-pink) !important;
+  color: #fff !important;
+}
+
+::ng-deep .bc-btn--lower.p-button:hover {
+  background: var(--c-pink-dark, #cc3c74) !important;
+  border-color: var(--c-pink-dark, #cc3c74) !important;
+}

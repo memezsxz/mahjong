@@ -1,0 +1,14 @@
+import { Component, input, output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+
+@Component({
+  selector: 'lib-bet-controls',
+  imports: [ButtonModule],
+  templateUrl: './bet-controls.html',
+  styleUrl: './bet-controls.css',
+})
+export class BetControls {
+  handTotal = input.required<number>();
+  showTotal = input<boolean>(true);
+  betPlaced = output<'higher' | 'lower'>();
+}

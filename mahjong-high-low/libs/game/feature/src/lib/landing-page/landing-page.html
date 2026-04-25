@@ -1,0 +1,99 @@
+<div class="relative flex flex-col h-full overflow-hidden bg-c-bg text-c-text font-display">
+
+  <div class="flex flex-1 min-h-0 overflow-hidden flex-col lg:flex-row">
+
+    <!-- Left: branding + actions + rules -->
+    <div class="flex-1 min-w-0 flex flex-col justify-center gap-8 lg:gap-10 px-8 md:px-14 lg:px-20 py-10 border-b lg:border-b-0 lg:border-r border-c-indigo/10">
+
+      <div class="flex flex-col gap-3">
+        <span class="font-mono text-[0.62rem] tracking-[0.18em] uppercase text-c-muted">
+          Penny Software · Assessment
+        </span>
+        <h1 class="text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] text-c-indigo m-0">
+          Mahjong<br />High · Low
+        </h1>
+        <p class="text-sm text-c-muted leading-relaxed max-w-sm m-0">
+          Bet whether the hidden hand is higher or lower than yours.
+          Dynamic tile values, win streaks, and a live leaderboard.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <p-button
+          label="Start Game"
+          icon="pi pi-play"
+          styleClass="lp-start-btn"
+          size="large"
+          (onClick)="startGame()"
+        />
+        <p-button
+          icon="pi pi-cog"
+          [outlined]="true"
+          styleClass="lp-settings-btn"
+          size="large"
+          (onClick)="settingsOpen.set(true)"
+        />
+      </div>
+
+      <div class="flex flex-col gap-3 max-w-md">
+        <div class="flex items-start gap-4">
+          <span class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px">01</span>
+          <span class="text-sm text-c-text leading-[1.5]">You're dealt a visible hand. Bet Higher or Lower.</span>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px">02</span>
+          <span class="text-sm text-c-text leading-[1.5]">Win streaks multiply your score — up to ×3.</span>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px">03</span>
+          <span class="text-sm text-c-text leading-[1.5]">Honor tile values shift with each win or loss.</span>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px">04</span>
+          <span class="text-sm text-c-text leading-[1.5]">Game ends when a tile hits 0 or 10, or after 3 reshuffles.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: leaderboard -->
+    <div class="w-full lg:w-72 xl:w-80 shrink-0 flex flex-col px-8 py-10 lg:py-16 gap-5 overflow-hidden">
+
+      <span class="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-muted">TOP SCORES</span>
+
+      @if (topScores.length === 0) {
+        <div class="flex flex-col gap-1 py-8">
+          <span class="font-mono text-xs text-c-muted leading-relaxed">No scores yet.</span>
+          <span class="font-mono text-xs text-c-muted leading-relaxed">Be the first to play.</span>
+        </div>
+      } @else {
+        <div class="flex flex-col gap-px bg-c-indigo/10">
+          @for (entry of topScores; track entry.rank) {
+            <div class="grid items-center gap-3 px-4 py-3.5 bg-c-surface"
+                 style="grid-template-columns: 2rem 1fr auto auto">
+              <span
+                class="font-mono text-xs font-bold px-1.5 py-0.5 text-center"
+                [class]="entry.rank === 1 ? 'bg-[#c9a227] text-black'
+                        : entry.rank === 2 ? 'bg-[#9da3a8] text-black'
+                        : entry.rank === 3 ? 'bg-[#8b5e3c] text-white'
+                        : 'bg-transparent text-c-muted border border-c-indigo/10'"
+              >{{ entry.rank }}</span>
+              <span class="text-sm font-medium text-c-text">{{ entry.player }}</span>
+              <span class="font-mono text-sm font-bold text-c-indigo">{{ entry.score | number }}</span>
+              <span class="font-mono text-[0.58rem] text-c-muted">{{ entry.date }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+  </div>
+
+  @if (settingsOpen()) {
+    <lib-settings-panel
+      [settings]="settings"
+      (settingsChanged)="onSettingsChanged($event)"
+      (closed)="settingsOpen.set(false)"
+    />
+  }
+
+</div>

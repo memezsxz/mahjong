@@ -1,0 +1,131 @@
+<div class="flex h-full overflow-hidden bg-c-bg text-c-text font-display">
+
+  <!-- ── Main ────────────────────────────────────────────────────────────── -->
+  <main class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-8 lg:px-12 relative">
+
+    <!-- Topbar -->
+    <div class="shrink-0 flex items-center py-4 border-b border-c-indigo/10">
+      <button
+        class="bg-transparent border-0 p-0 cursor-pointer font-mono text-[0.78rem] font-bold tracking-[0.1em] text-c-indigo transition-opacity duration-150 hover:opacity-60"
+        (click)="exitDialogOpen.set(true)"
+      >
+        Mahjong High · Low
+      </button>
+    </div>
+
+    <!-- Center: hidden hand -->
+    <div class="gp-center flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8">
+      <lib-hand
+        [hand]="hiddenHand"
+        [showTileValue]="false"
+        [showHandTiles]="false"
+        [showFullHandValue]="false"
+      />
+    </div>
+
+    <!-- Bet strip -->
+    <div class="shrink-0 flex justify-center py-5 border-t border-c-indigo/10 border-b">
+      <lib-bet-controls
+        [handTotal]="visibleHand.total"
+        [showTotal]="false"
+        (betPlaced)="onBetPlaced($event)"
+      />
+    </div>
+
+    <!-- Bottom: total + visible hand -->
+    <div class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7">
+      <span class="font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo">
+        {{ visibleHand.total }}
+      </span>
+      <lib-hand
+        [hand]="visibleHand"
+        [showTileValue]="true"
+        [showHandTiles]="true"
+        [showFullHandValue]="false"
+      />
+    </div>
+
+    <!-- Exit confirmation dialog -->
+    @if (exitDialogOpen()) {
+      <div
+        class="absolute inset-0 bg-c-bg/85 backdrop-blur-sm flex items-center justify-center z-30"
+        (click)="exitDialogOpen.set(false)"
+      >
+        <div
+          class="bg-c-surface border border-c-indigo/10 p-8 w-80 flex flex-col gap-4"
+          (click)="$event.stopPropagation()"
+        >
+          <span class="font-mono text-[0.82rem] font-bold tracking-[0.15em] uppercase text-c-indigo">
+            Leave game?
+          </span>
+          <p class="text-sm text-c-muted leading-[1.5] m-0">
+            Your current progress will be lost and your score won't be saved.
+          </p>
+          <div class="flex gap-2 justify-end mt-2">
+            <p-button
+              label="Keep playing"
+              styleClass="gp-dialog-btn"
+              severity="secondary"
+              (onClick)="exitDialogOpen.set(false)"
+            />
+            <p-button
+              label="Exit"
+              styleClass="gp-dialog-btn"
+              severity="danger"
+              (onClick)="onExitGame()"
+            />
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Pause overlay -->
+    @if (pauseOpen()) {
+      <lib-pause-menu
+        (resumed)="pauseOpen.set(false)"
+        (settingsOpened)="settingsOpen.set(true)"
+        (exited)="exitDialogOpen.set(true); pauseOpen.set(false)"
+      />
+    }
+
+    <!-- Settings drawer -->
+    @if (settingsOpen()) {
+      <lib-settings-panel
+        [settings]="settings"
+        (settingsChanged)="onSettingsChanged($event)"
+        (closed)="settingsOpen.set(false)"
+      />
+    }
+
+  </main>
+
+  <!-- ── Sidebar ──────────────────────────────────────────────────────────── -->
+  <aside class="w-52 lg:w-56 shrink-0 overflow-hidden flex flex-col border-l border-c-indigo/10">
+
+    <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
+      <lib-score-display [score]="score" [winStreak]="winStreak" />
+    </div>
+
+    <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
+      <lib-deck-counter
+        [drawCount]="drawCount"
+        [discardCount]="discardCount"
+        [reshuffleCount]="reshuffleCount"
+      />
+    </div>
+
+    <div class="flex-1 min-h-0 overflow-hidden px-5 py-4">
+      <lib-hand-history [history]="handHistory" />
+    </div>
+
+    <div class="shrink-0 flex justify-center px-5 py-4 border-t border-c-indigo/10">
+      <p-button
+        icon="pi pi-pause"
+        styleClass="gp-pause-btn"
+        (onClick)="pauseOpen.set(true)"
+      />
+    </div>
+
+  </aside>
+
+</div>

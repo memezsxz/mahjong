@@ -1,0 +1,25 @@
+<div class="flex items-center gap-5">
+  <p-button
+    label="HIGHER"
+    icon="pi pi-arrow-up"
+    styleClass="bc-btn bc-btn--higher"
+    size="large"
+    (onClick)="betPlaced.emit('higher')"
+  />
+
+  @if (showTotal()) {
+    <div class="flex flex-col items-center gap-0.5 min-w-16">
+      <span class="font-mono text-[2.5rem] font-bold leading-none text-c-indigo">{{ handTotal() }}</span>
+      <span class="font-mono text-[0.52rem] tracking-[0.15em] uppercase text-c-muted">your total</span>
+    </div>
+  }
+
+  <p-button
+    label="LOWER"
+    icon="pi pi-arrow-down"
+    iconPos="right"
+    styleClass="bc-btn bc-btn--lower"
+    size="large"
+    (onClick)="betPlaced.emit('lower')"
+  />
+</div>
