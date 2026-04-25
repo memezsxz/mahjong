@@ -1,6 +1,6 @@
 <div class="flex gap-2">
-  @for (t of hand().tiles; track t.id) {
-    <lib-tile [tile]="t" [showValue]="showTileValue()" [faceDown]="!showHandTiles()"></lib-tile>
+  @for (t of hand().tiles; track t.id; let i = $index) {
+    <lib-tile [tile]="t" [showValue]="showTileValue()" [faceDown]="!showHandTiles()" [tileIndex]="i"></lib-tile>
   }
 </div>
 @if (showFullHandValue()) {

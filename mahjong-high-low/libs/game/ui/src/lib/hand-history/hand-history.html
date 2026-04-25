@@ -11,7 +11,7 @@
           <p-tag
             [value]="(row.result ?? 'pending').toUpperCase()"
             [severity]="row.result === 'win' ? 'success' : 'danger'"
-            styleClass="hh-tag"
+            class="hh-tag"
           />
           <span class="font-mono text-[0.5rem] text-c-muted tracking-[0.06em] flex-1">{{ row.bet.toUpperCase() }}</span>
           <span

@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -13,6 +13,7 @@ import {
 } from '@hbg/game-ui';
 import { Bet, GameOverReason, GamePhase, PlayerSettingsModel } from '@hbg/shared-models';
 import { GameStore, LeaderboardService, SettingsService } from '@hbg/game-data-access';
+import { getBetControlsDelay, getHiddenHandBaseDelay, getSingleHandDealDuration } from './game-page.animations';
 
 @Component({
   selector: 'lib-game-page',
@@ -28,9 +29,9 @@ import { GameStore, LeaderboardService, SettingsService } from '@hbg/game-data-a
     ButtonModule,
   ],
   templateUrl: './game-page.html',
-  styleUrl: './game-page.css',
+  styleUrls: ['./game-page.layout.css', './game-page.deal.css'],
 })
-export class GamePage implements OnInit {
+export class GamePage implements OnInit, OnDestroy {
   private readonly router             = inject(Router);
   readonly store                      = inject(GameStore);
   readonly settingsService            = inject(SettingsService);
@@ -43,6 +44,16 @@ export class GamePage implements OnInit {
   settingsOpen   = signal(false);
   exitDialogOpen = signal(false);
   scoreSaved     = signal(false);
+  dealCount      = signal(0);
+  betControlsReady = signal(false);
+  private betControlsTimer: ReturnType<typeof setTimeout> | null = null;
+
+  // ── Deal animation timing ─────────────────────────────────────────────
+  readonly singleHandDealDuration = computed(() => {
+    return getSingleHandDealDuration(this.settingsService.settings().handSize);
+  });
+  readonly hiddenHandBaseDelay = computed(() => getHiddenHandBaseDelay(this.settingsService.settings().handSize));
+  readonly betControlsDelay = computed(() => getBetControlsDelay(this.settingsService.settings().handSize));
 
   // ── Derived deck counts ───────────────────────────────────────────────
   drawCount    = computed(() => this.store.drawPile().length);
@@ -73,10 +84,33 @@ export class GamePage implements OnInit {
         }).subscribe();
       }
     });
+
+    effect(() => {
+      const phase = this.store.gamePhase();
+      const visibleHand = this.store.visibleHand();
+      const hiddenHand = this.store.hiddenHand();
+      this.dealCount();
+
+      if (phase !== GamePhase.Betting || !visibleHand || !hiddenHand) {
+        this.clearBetControlsTimer();
+        this.betControlsReady.set(false);
+        return;
+      }
+
+      this.clearBetControlsTimer();
+      this.betControlsReady.set(false);
+      this.betControlsTimer = setTimeout(() => {
+        this.betControlsReady.set(true);
+      }, this.betControlsDelay());
+    });
   }
 
   ngOnInit() {
     this.store.startGame();
+  }
+
+  ngOnDestroy() {
+    this.clearBetControlsTimer();
   }
 
   // ── Handlers ──────────────────────────────────────────────────────────
@@ -87,6 +121,7 @@ export class GamePage implements OnInit {
 
   onNextHand() {
     this.store.nextHand();
+    this.dealCount.update(n => n + 1);
   }
 
   onSettingsChanged(partial: Partial<PlayerSettingsModel>) {
@@ -96,6 +131,7 @@ export class GamePage implements OnInit {
   onPlayAgain() {
     this.scoreSaved.set(false);
     this.store.startGame();
+    this.dealCount.update(n => n + 1);
   }
 
   onExitGame() {
@@ -103,5 +139,12 @@ export class GamePage implements OnInit {
     this.store.exitGame();
     this.exitDialogOpen.set(false);
     this.router.navigate(['/']);
+  }
+
+  private clearBetControlsTimer(): void {
+    if (this.betControlsTimer !== null) {
+      clearTimeout(this.betControlsTimer);
+      this.betControlsTimer = null;
+    }
   }
 }

@@ -15,10 +15,7 @@
   ],
   "references": [
     {
-      "path": "../libs/game/ui"
-    },
-    {
-      "path": "../libs/shared/models"
+      "path": "../libs/game/feature"
     },
     {
       "path": "../libs/game/data-access"

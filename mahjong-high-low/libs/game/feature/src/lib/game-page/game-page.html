@@ -15,13 +15,17 @@
         </button>
       </div>
 
-      <!-- Center: hidden hand -->
-      <div class="gp-center flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8">
+      <!-- Center: hidden hand (deals second) -->
+      <div
+        class="gp-center flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8"
+        [style.--hand-base-delay.ms]="hiddenHandBaseDelay()"
+      >
         <lib-hand
           [hand]="store.hiddenHand()!"
           [showTileValue]="false"
           [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
           [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
+          [dealTrigger]="dealCount()"
         />
       </div>
 
@@ -39,16 +43,18 @@
           />
 
         } @else {
-          <lib-bet-controls
-            [handTotal]="store.visibleHand()!.total"
-            [showTotal]="false"
-            [disabled]="store.gamePhase() !== GamePhase.Betting"
-            (betPlaced)="onBetPlaced($event)"
-          />
+          @if (betControlsReady()) {
+            <lib-bet-controls
+              [handTotal]="store.visibleHand()!.total"
+              [showTotal]="false"
+              [disabled]="store.gamePhase() !== GamePhase.Betting"
+              (betPlaced)="onBetPlaced($event)"
+            />
+          }
         }
       </div>
 
-      <!-- Bottom: total + visible hand -->
+      <!-- Bottom: visible hand (deals first) -->
       <div class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7">
         <span class="font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo">
           {{ store.visibleHand()!.total }}
@@ -58,6 +64,7 @@
           [showTileValue]="settingsService.settings().showTileValues"
           [showHandTiles]="true"
           [showFullHandValue]="false"
+          [dealTrigger]="dealCount()"
         />
       </div>
 

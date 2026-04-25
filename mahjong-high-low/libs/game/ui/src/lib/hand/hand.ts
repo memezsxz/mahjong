@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { afterNextRender, Component, effect, input, viewChildren } from '@angular/core';
 import { HandModel } from '@hbg/shared-models';
 import { Tile } from '../tile/tile';
 
@@ -9,9 +9,25 @@ import { Tile } from '../tile/tile';
   styleUrl: './hand.css',
 })
 export class Hand {
-  hand = input.required<HandModel>();
-  showTileValue = input.required<boolean>();
-  showHandTiles = input.required<boolean>();
+  hand              = input.required<HandModel>();
+  showTileValue     = input.required<boolean>();
+  showHandTiles     = input.required<boolean>();
   showFullHandValue = input<boolean>(true);
+  dealTrigger       = input<number>(0);
 
+  private tileComponents = viewChildren(Tile);
+
+  constructor() {
+    afterNextRender(() => this.deal());
+
+    effect(() => {
+      const trigger = this.dealTrigger();
+      if (trigger < 1) return;
+      requestAnimationFrame(() => requestAnimationFrame(() => this.deal()));
+    });
+  }
+
+  private deal(): void {
+    this.tileComponents().forEach(t => t.restartDealAnimation());
+  }
 }
