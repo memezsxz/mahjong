@@ -1,0 +1,131 @@
+.gp-round-transition-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 12;
+}
+
+::ng-deep .gp-round-transition-layer lib-tile {
+  --tile-w: 86px;
+  --tile-h: 120px;
+}
+
+::ng-deep .gp-outgoing-visible-hand lib-tile {
+  --tile-w: 86px;
+  --tile-h: 120px;
+}
+
+::ng-deep .gp-round-transition-layer lib-tile img,
+::ng-deep .gp-outgoing-visible-hand lib-tile img {
+  width: 86px !important;
+  height: 120px !important;
+  min-width: 86px;
+  min-height: 120px;
+  max-width: 86px;
+  max-height: 120px;
+}
+
+.gp-promoted-hand,
+.gp-incoming-hidden-hand {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+.gp-promoted-hand {
+  transition: transform 430ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gp-promoted-hand-active {
+  transform: translate(
+    calc(-50% + var(--gp-promote-dx, 0px)),
+    calc(-50% + var(--gp-promote-dy, 0px))
+  );
+}
+
+.gp-incoming-hidden-hand {
+  transform: translate(-50%, calc(-50% - 60vh));
+  transition: transform 430ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.gp-incoming-hidden-hand-active {
+  transform: translate(-50%, -50%);
+}
+
+.gp-outgoing-visible-hand {
+  will-change: transform;
+  transform-origin: center top;
+}
+
+.gp-outgoing-visible-hand-active {
+  animation: gp-outgoing-visible-hand 260ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.gp-visible-total-slot {
+  position: relative;
+  min-height: 2.25rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.gp-visible-total {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  will-change: transform, opacity;
+}
+
+.gp-visible-total-placeholder {
+  visibility: hidden;
+}
+
+.gp-visible-total-incoming {
+  opacity: 0;
+}
+
+.gp-visible-total-out {
+  animation: gp-visible-total-out 260ms ease forwards;
+}
+
+.gp-visible-total-in {
+  animation: gp-visible-total-in 220ms ease forwards;
+}
+
+@keyframes gp-visible-total-out {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes gp-visible-total-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes gp-outgoing-visible-hand {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(45vh);
+  }
+}

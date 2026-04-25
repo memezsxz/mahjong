@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+.gp-bet-strip {
+  min-height: 4.75rem;
+}
+
+.gp-bet-strip-placeholder {
+  width: 15.5rem;
+  height: 2.5rem;
+  visibility: hidden;
+}
+
+/* ── PrimeNG button overrides ─────────────────────────────────────────── */
+
+::ng-deep .gp-dialog-btn.p-button {
+  border-radius: 0 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+::ng-deep .gp-next-btn.p-button {
+  border-radius: 0 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+::ng-deep .gp-pause-btn.p-button {
+  border-radius: 0 !important;
+  background: var(--c-indigo) !important;
+  border-color: var(--c-indigo) !important;
+  color: #fff !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+
+::ng-deep .gp-pause-btn.p-button:hover {
+  background: var(--c-indigo-dark, #1e206a) !important;
+  border-color: var(--c-indigo-dark, #1e206a) !important;
+}

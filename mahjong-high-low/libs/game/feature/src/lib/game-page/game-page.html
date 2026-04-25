@@ -3,7 +3,7 @@
   @if (store.visibleHand() && store.hiddenHand()) {
 
     <!-- ── Main ──────────────────────────────────────────────────────────── -->
-    <main class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-8 lg:px-12 relative">
+    <main #mainStage class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-8 lg:px-12 relative">
 
       <!-- Topbar -->
       <div class="shrink-0 flex items-center py-4 border-b border-c-indigo/10">
@@ -17,20 +17,24 @@
 
       <!-- Center: hidden hand (deals second) -->
       <div
+        #centerStage
         class="gp-center flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8"
         [style.--hand-base-delay.ms]="hiddenHandBaseDelay()"
       >
-        <lib-hand
-          [hand]="store.hiddenHand()!"
-          [showTileValue]="false"
-          [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
-          [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
-          [dealTrigger]="dealCount()"
-        />
+        @if (!roundTransitionActive()) {
+          <lib-hand
+            [hand]="store.hiddenHand()!"
+            [showTileValue]="false"
+            [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
+            [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
+            [dealTrigger]="dealCount()"
+            [animateDeal]="steadyHandsShouldDeal()"
+          />
+        }
       </div>
 
       <!-- Bet strip -->
-      <div class="shrink-0 flex items-center justify-center gap-6 py-5 border-t border-c-indigo/10 border-b">
+      <div class="gp-bet-strip shrink-0 flex items-center justify-center gap-6 py-5 border-t border-c-indigo/10 border-b">
         @if (store.gamePhase() === GamePhase.Revealing) {
 
           <p-button
@@ -45,28 +49,114 @@
         } @else {
           @if (betControlsReady()) {
             <lib-bet-controls
-              [handTotal]="store.visibleHand()!.total"
+              [handTotal]="transitionIncomingVisibleTotal() ?? store.visibleHand()!.total"
               [showTotal]="false"
               [disabled]="store.gamePhase() !== GamePhase.Betting"
               (betPlaced)="onBetPlaced($event)"
             />
+          } @else {
+            <div class="gp-bet-strip-placeholder" aria-hidden="true"></div>
           }
         }
       </div>
 
       <!-- Bottom: visible hand (deals first) -->
-      <div class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7">
-        <span class="font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo">
-          {{ store.visibleHand()!.total }}
-        </span>
-        <lib-hand
-          [hand]="store.visibleHand()!"
-          [showTileValue]="settingsService.settings().showTileValues"
-          [showHandTiles]="true"
-          [showFullHandValue]="false"
-          [dealTrigger]="dealCount()"
-        />
+      <div #bottomStage class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7 relative">
+        <div class="gp-visible-total-slot">
+          @if (!roundTransitionActive()) {
+            <span class="font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo">
+              {{ store.visibleHand()!.total }}
+            </span>
+          } @else {
+            <span class="gp-visible-total-placeholder font-mono text-2xl lg:text-3xl font-bold leading-none">
+              88
+            </span>
+
+            @if (transitionOutgoingVisibleTotal() !== null) {
+              <span
+                class="gp-visible-total font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo"
+                [class.gp-visible-total-out]="visibleHandExitActive()"
+              >
+                {{ transitionOutgoingVisibleTotal() }}
+              </span>
+            }
+
+            @if (transitionIncomingVisibleTotal() !== null) {
+              <span
+                class="gp-visible-total gp-visible-total-incoming font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo"
+                [class.gp-visible-total-in]="incomingVisibleTotalActive()"
+              >
+                {{ transitionIncomingVisibleTotal() }}
+              </span>
+            }
+          }
+        </div>
+
+        <div #bottomHandSlot class="gp-bottom-hand-slot">
+          @if (!roundTransitionActive()) {
+            <lib-hand
+              [hand]="store.visibleHand()!"
+              [showTileValue]="settingsService.settings().showTileValues"
+              [showHandTiles]="true"
+              [showFullHandValue]="false"
+              [dealTrigger]="dealCount()"
+              [animateDeal]="steadyHandsShouldDeal()"
+            />
+          } @else {
+            @if (transitionOutgoingVisibleHand()) {
+              <div class="gp-outgoing-visible-hand" [class.gp-outgoing-visible-hand-active]="visibleHandExitActive()">
+                <lib-hand
+                  [hand]="transitionOutgoingVisibleHand()!"
+                  [showTileValue]="settingsService.settings().showTileValues"
+                  [showHandTiles]="true"
+                  [showFullHandValue]="false"
+                  [animateDeal]="false"
+                />
+              </div>
+            }
+          }
+        </div>
       </div>
+
+      @if (roundTransitionActive()) {
+        <div class="gp-round-transition-layer">
+          @if (transitionPromotedVisibleHand()) {
+            <div
+              class="gp-promoted-hand"
+              [class.gp-promoted-hand-active]="promotedHandMoveActive()"
+              [style.left.px]="transitionPromotedStartX()"
+              [style.top.px]="transitionPromotedStartY()"
+              [style.--gp-promote-dx.px]="transitionPromotedDeltaX()"
+              [style.--gp-promote-dy.px]="transitionPromotedDeltaY()"
+            >
+              <lib-hand
+                [hand]="transitionPromotedVisibleHand()!"
+                [showTileValue]="settingsService.settings().showTileValues"
+                [showHandTiles]="true"
+                [showFullHandValue]="false"
+                [animateDeal]="false"
+              />
+            </div>
+          }
+
+          @if (transitionIncomingHiddenHand()) {
+            <div
+              class="gp-incoming-hidden-hand"
+              [class.gp-incoming-hidden-hand-active]="incomingHiddenEnterActive()"
+              [style.left.px]="transitionPromotedStartX()"
+              [style.top.px]="transitionPromotedStartY()"
+            >
+              <lib-hand
+                [hand]="transitionIncomingHiddenHand()!"
+                [showTileValue]="false"
+                [showHandTiles]="false"
+                [showFullHandValue]="false"
+                [animateDeal]="false"
+              />
+            </div>
+          }
+        </div>
+      }
 
       <!-- Exit confirmation dialog -->
       @if (exitDialogOpen()) {

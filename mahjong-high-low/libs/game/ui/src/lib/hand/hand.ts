@@ -14,13 +14,18 @@ export class Hand {
   showHandTiles     = input.required<boolean>();
   showFullHandValue = input<boolean>(true);
   dealTrigger       = input<number>(0);
+  animateDeal       = input<boolean>(true);
 
   private tileComponents = viewChildren(Tile);
 
   constructor() {
-    afterNextRender(() => this.deal());
+    afterNextRender(() => {
+      if (!this.animateDeal()) return;
+      this.deal();
+    });
 
     effect(() => {
+      if (!this.animateDeal()) return;
       const trigger = this.dealTrigger();
       if (trigger < 1) return;
       requestAnimationFrame(() => requestAnimationFrame(() => this.deal()));

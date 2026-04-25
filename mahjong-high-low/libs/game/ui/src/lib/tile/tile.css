@@ -55,7 +55,7 @@ img {
   object-fit: contain;
   display: block;
   /* fallback background when image is missing */
-  background: #f0f0f8;
+  background: var(--c-bg);
 }
 
 span {

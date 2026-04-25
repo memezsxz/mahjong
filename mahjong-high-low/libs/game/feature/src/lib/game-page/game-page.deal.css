@@ -1,0 +1,13 @@
+/* ── Tile size overrides (CSS custom props — Tailwind can't do this) ── */
+
+::ng-deep .gp-center lib-tile {
+  --tile-w: 86px;
+  --tile-h: 120px;
+  --tile-phase1-end: -38vh;  /* passes through center area then slides to hidden hand row */
+}
+
+::ng-deep .gp-bottom lib-tile {
+  --tile-w: 86px;
+  --tile-h: 120px;
+  --tile-phase1-end: -5vh;   /* visible hand: arrives quickly, short settle at bottom */
+}
