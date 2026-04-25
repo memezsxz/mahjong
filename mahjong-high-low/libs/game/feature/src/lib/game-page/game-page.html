@@ -24,27 +24,43 @@
         @if (!roundTransitionActive()) {
           <lib-hand
             [hand]="store.hiddenHand()!"
-            [showTileValue]="false"
+            [showTileValue]="store.gamePhase() === GamePhase.Revealing"
             [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
             [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
+            [reserveTotalSlot]="true"
+            [tileValueOverrides]="store.gamePhase() === GamePhase.Revealing ? revealTileValueOverrides() : null"
+            [handTotalOverride]="store.gamePhase() === GamePhase.Revealing ? revealHiddenTotalOverride() : null"
             [dealTrigger]="dealCount()"
             [animateDeal]="steadyHandsShouldDeal()"
           />
+
+          @if (revealResultBannerText()) {
+            <div
+              class="gp-win-reveal-banner"
+              [class.gp-win-reveal-banner--lose]="revealResultBannerText() === 'LOSE'"
+              [class.gp-win-reveal-banner-pulse]="revealResultBannerText() === 'WIN' && revealValueAnimationActive()"
+            >
+              {{ revealResultBannerText() }}
+            </div>
+          }
         }
       </div>
 
       <!-- Bet strip -->
       <div class="gp-bet-strip shrink-0 flex items-center justify-center gap-6 py-5 border-t border-c-indigo/10 border-b">
         @if (store.gamePhase() === GamePhase.Revealing) {
-
-          <p-button
-            label="Next Hand"
-            icon="pi pi-arrow-right"
-            iconPos="right"
-            styleClass="gp-next-btn"
-            size="large"
-            (onClick)="onNextHand()"
-          />
+          @if (!revealSequenceLocked()) {
+            <p-button
+              label="Next Hand"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              styleClass="gp-next-btn"
+              size="large"
+              (onClick)="onNextHand()"
+            />
+          } @else {
+            <div class="gp-bet-strip-placeholder" aria-hidden="true"></div>
+          }
 
         } @else {
           @if (betControlsReady()) {

@@ -11,6 +11,9 @@ export const NEXT_ROUND_INCOMING_HIDDEN_MS = 430;
 export const NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS = NEXT_ROUND_PROMOTE_DELAY_MS + NEXT_ROUND_PROMOTE_MS;
 export const NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS = 520;
 export const NEXT_ROUND_TRANSITION_TOTAL_MS = NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS + NEXT_ROUND_INCOMING_HIDDEN_MS + 50;
+export const WIN_BANNER_SHOW_MS = 1150;
+export const WIN_VALUE_STEP_MS = 1000;
+export const WIN_POST_VALUE_SETTLE_MS = 260;
 
 export function getSingleHandDealDuration(handSize: HandSizeOptions): number {
   return (handSize - 1) * TILE_DEAL_STAGGER_MS + TILE_DEAL_DURATION_MS;
@@ -25,5 +28,5 @@ export function getBetControlsDelay(handSize: HandSizeOptions): number {
 }
 
 export function getNextRoundBetControlsDelay(): number {
-  return NEXT_ROUND_TRANSITION_TOTAL_MS - 150;
+  return NEXT_ROUND_TRANSITION_TOTAL_MS - 400;
 }

@@ -1,10 +1,36 @@
 <div class="flex gap-2">
   @for (t of hand().tiles; track t.id; let i = $index) {
-    <lib-tile [tile]="t" [showValue]="showTileValue()" [faceDown]="!showHandTiles()" [tileIndex]="i"></lib-tile>
+    <lib-tile
+      [tile]="t"
+      [showValue]="showTileValue()"
+      [displayValue]="tileValueOverrides()?.[t.id] ?? null"
+      [faceDown]="!showHandTiles()"
+      [tileIndex]="i"
+    ></lib-tile>
   }
 </div>
-@if (showFullHandValue()) {
-  <span class="font-mono text-[0.62rem] font-bold tracking-[0.15em] text-c-indigo uppercase">
-    Total · {{ hand().total }}
+@if (showFullHandValue() || reserveTotalSlot()) {
+  <span
+    class="hand-total-display font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo"
+    [class.hand-total-display--hidden]="!showFullHandValue()"
+  >
+    @if (showFullHandValue()) {
+      @if (totalRolling() && previousTotalValue() !== null) {
+        <span
+          class="hand-total-roll"
+          [class.hand-total-old]="totalRollDirection() === 'down'"
+          [class.hand-total-old-up]="totalRollDirection() === 'up'"
+        >{{ previousTotalValue() }}</span>
+        <span
+          class="hand-total-roll"
+          [class.hand-total-new]="totalRollDirection() === 'down'"
+          [class.hand-total-new-up]="totalRollDirection() === 'up'"
+        >{{ currentTotalValue() }}</span>
+      } @else {
+        <span>{{ currentTotalValue() ?? (handTotalOverride() ?? hand().total) }}</span>
+      }
+    } @else {
+      <span>88</span>
+    }
   </span>
 }

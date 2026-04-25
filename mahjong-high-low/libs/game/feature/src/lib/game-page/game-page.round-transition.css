@@ -129,3 +129,48 @@
     transform: translateY(45vh);
   }
 }
+
+.gp-win-reveal-banner {
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  transform: translateX(-50%);
+  z-index: 6;
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--c-pink);
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  line-height: 1;
+  pointer-events: none;
+  animation: gp-result-scale 420ms ease-in-out infinite alternate;
+}
+
+.gp-win-reveal-banner--lose {
+  color: #ef4444;
+}
+
+.gp-win-reveal-banner-pulse {
+  animation: gp-win-reveal-banner-pulse 220ms ease-in-out infinite alternate;
+}
+
+@keyframes gp-win-reveal-banner-pulse {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(-3px);
+  }
+}
+
+@keyframes gp-result-scale {
+  0% {
+    transform: translateX(-50%) scale(0.92);
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1.08);
+  }
+}

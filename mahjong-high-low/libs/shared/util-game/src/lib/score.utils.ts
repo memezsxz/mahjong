@@ -15,7 +15,7 @@ export function calculateScore(hand: HandModel, totalScore: number, winStreak: n
         calculatedScore += (hand.total * newWinStreak)
     } else {
         newWinStreak = 0
-        calculatedScore -= Math.max(0, calculatedScore - hand.total)
+        calculatedScore = Math.max(0, calculatedScore - hand.total)
     }
 
     return {newWinStreak, calculatedScore}

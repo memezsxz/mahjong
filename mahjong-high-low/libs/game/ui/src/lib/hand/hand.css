@@ -4,3 +4,79 @@
   align-items: center;
   gap: 8px;
 }
+
+.hand-total-display {
+  position: relative;
+  min-height: 1.2em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 2ch;
+}
+
+.hand-total-display--hidden {
+  visibility: hidden;
+}
+
+.hand-total-roll {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hand-total-old {
+  animation: hand-total-old-down 700ms ease forwards;
+}
+
+.hand-total-new {
+  animation: hand-total-new-down 700ms ease forwards;
+}
+
+.hand-total-old-up {
+  animation: hand-total-old-up 700ms ease forwards;
+}
+
+.hand-total-new-up {
+  animation: hand-total-new-up 700ms ease forwards;
+}
+
+@keyframes hand-total-old-down {
+  0% {
+    transform: translate(-50%, 0);
+  }
+
+  100% {
+    transform: translate(-50%, 125%);
+  }
+}
+
+@keyframes hand-total-new-down {
+  0% {
+    transform: translate(-50%, -125%);
+  }
+
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes hand-total-old-up {
+  0% {
+    transform: translate(-50%, 0);
+  }
+
+  100% {
+    transform: translate(-50%, -125%);
+  }
+}
+
+@keyframes hand-total-new-up {
+  0% {
+    transform: translate(-50%, 125%);
+  }
+
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
