@@ -100,3 +100,15 @@ init:
 
 	# PostCSS (needed for Tailwind v4)
 	npm install -D @tailwindcss/postcss postcss
+
+	# Config read to read from .env
+	npm install @nestjs/config
+
+run_db_container:
+	docker run -d \
+      --name mongodb \
+      -p 27017:27017 \
+      -e MONGO_INITDB_ROOT_USERNAME=admin \
+      -e MONGO_INITDB_ROOT_PASSWORD=password \
+      mongo:latest
+
