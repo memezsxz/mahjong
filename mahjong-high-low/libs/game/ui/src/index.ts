@@ -1,1 +1,3 @@
-export * from './lib/ui/ui';
+export * from './lib/tile/tile';
+
+export * from './lib/hand/hand';

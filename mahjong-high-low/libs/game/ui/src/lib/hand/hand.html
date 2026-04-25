@@ -1,0 +1,6 @@
+@for (t of hand().tiles; track t.id) {
+    <lib-tile [tile]="t" [showValue]="showTileValue()" [faceDown]="!showHandTiles()"></lib-tile>
+}
+@if (showFullHandValue()) {
+    <span>{{hand().total}}</span>
+}

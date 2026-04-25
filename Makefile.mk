@@ -33,7 +33,7 @@ init:
 	npx nx g @nx/js:lib models \
 	  --directory=libs/shared/models \
 	  --importPath=@hbg/shared-models \
-	  --bundler=none \
+	  --bundler=esbuild \
 	  --linter=eslint \
 	  --unitTestRunner=jest \
 	  --tags=type:util,scope:shared
@@ -42,7 +42,7 @@ init:
 	npx nx g @nx/js:lib util-game \
 	  --directory=libs/shared/util-game \
 	  --importPath=@hbg/shared-util-game \
-	  --bundler=none \
+	  --bundler=esbuild \
 	  --linter=eslint \
 	  --unitTestRunner=jest \
 	  --tags=type:util,scope:shared
@@ -112,3 +112,9 @@ run_db_container:
       -e MONGO_INITDB_ROOT_PASSWORD=password \
       mongo:latest
 
+
+create_component:
+	cd mahjong-high-low && npx nx g @nx/angular:component libs/game/ui/src/lib/hand/hand --standalone --export
+
+create_page:
+	cd mahjong-high-low && npx nx g @nx/angular:component web/src/app/playground/playground --standalone --export
