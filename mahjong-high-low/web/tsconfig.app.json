@@ -16,9 +16,6 @@
   "references": [
     {
       "path": "../libs/game/feature"
-    },
-    {
-      "path": "../libs/game/data-access"
     }
   ]
 }

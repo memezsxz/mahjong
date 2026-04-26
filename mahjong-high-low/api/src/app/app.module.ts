@@ -1,8 +1,7 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { LeaderboardModule } from '@hbg/api-leaderboard';
 
 @Module({
   imports: [
@@ -14,8 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       }),
       inject: [ConfigService],
     }),
+    LeaderboardModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
