@@ -8,6 +8,6 @@ export function checkGameOverHand(handTiles: TileInstance[]): 'tile-min' | 'tile
 }
 
 export function checkGameOverShuffle(reshuffleCount: number): 'reshuffle' | null {
-    if (reshuffleCount >= MAX_RESHUFFLES) return 'reshuffle';
+    if (reshuffleCount > MAX_RESHUFFLES) return 'reshuffle';
     return null
 }

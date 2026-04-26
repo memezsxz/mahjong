@@ -1,4 +1,4 @@
-import { afterNextRender, Component, effect, input, OnDestroy, signal, viewChildren } from '@angular/core';
+import { afterNextRender, Component, computed, effect, input, OnDestroy, signal, viewChildren } from '@angular/core';
 import { HandModel } from '@hbg/shared-models';
 import { Tile } from '../tile/tile';
 
@@ -16,10 +16,15 @@ export class Hand implements OnDestroy {
   reserveTotalSlot  = input<boolean>(false);
   tileValueOverrides = input<Record<string, number> | null>(null);
   handTotalOverride  = input<number | null>(null);
+  playTileValueChangeSound = input<boolean>(false);
+  faceUpTileIds = input<string[] | null>(null);
+  valueVisibleTileIds = input<string[] | null>(null);
   dealTrigger       = input<number>(0);
   animateDeal       = input<boolean>(true);
 
   private tileComponents = viewChildren(Tile);
+  faceUpTileIdSet = computed(() => new Set(this.faceUpTileIds() ?? []));
+  valueVisibleTileIdSet = computed(() => new Set(this.valueVisibleTileIds() ?? []));
   totalRolling = signal(false);
   totalRollDirection = signal<'up' | 'down'>('down');
   previousTotalValue = signal<number | null>(null);

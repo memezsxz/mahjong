@@ -2,9 +2,10 @@
   @for (t of hand().tiles; track t.id; let i = $index) {
     <lib-tile
       [tile]="t"
-      [showValue]="showTileValue()"
+      [showValue]="showTileValue() && (valueVisibleTileIds() === null || valueVisibleTileIdSet().has(t.id))"
       [displayValue]="tileValueOverrides()?.[t.id] ?? null"
-      [faceDown]="!showHandTiles()"
+      [playValueChangeSound]="playTileValueChangeSound()"
+      [faceDown]="!showHandTiles() || (faceUpTileIds() !== null && !faceUpTileIdSet().has(t.id))"
       [tileIndex]="i"
     ></lib-tile>
   }
@@ -15,6 +16,9 @@
     [class.hand-total-display--hidden]="!showFullHandValue()"
   >
     @if (showFullHandValue()) {
+      <span class="hand-total-base" [class.hand-total-base--hidden]="totalRolling() && previousTotalValue() !== null">
+        {{ currentTotalValue() ?? (handTotalOverride() ?? hand().total) }}
+      </span>
       @if (totalRolling() && previousTotalValue() !== null) {
         <span
           class="hand-total-roll"
@@ -26,8 +30,6 @@
           [class.hand-total-new]="totalRollDirection() === 'down'"
           [class.hand-total-new-up]="totalRollDirection() === 'up'"
         >{{ currentTotalValue() }}</span>
-      } @else {
-        <span>{{ currentTotalValue() ?? (handTotalOverride() ?? hand().total) }}</span>
       }
     } @else {
       <span>88</span>

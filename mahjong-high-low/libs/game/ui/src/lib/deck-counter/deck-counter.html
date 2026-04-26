@@ -1,23 +1,58 @@
 <div class="flex flex-col items-center gap-2">
   <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">DECK</span>
 
-  <div class="flex gap-4 items-end">
-    <div class="flex flex-col gap-0.5">
-      <span class="font-mono text-2xl font-bold leading-none text-c-indigo">{{ drawCount() }}</span>
+  <div class="dc-grid">
+    <div class="dc-col">
+      <span class="dc-value font-mono text-2xl font-bold leading-none text-c-indigo">
+        @if (drawRolling() && previousDrawValue() !== null) {
+          <span
+            class="dc-roll"
+            [class.dc-old]="drawRollDirection() === 'down'"
+            [class.dc-old-up]="drawRollDirection() === 'up'"
+          >{{ previousDrawValue() }}</span>
+          <span
+            class="dc-roll"
+            [class.dc-new]="drawRollDirection() === 'down'"
+            [class.dc-new-up]="drawRollDirection() === 'up'"
+          >{{ currentDrawValue() }}</span>
+        } @else {
+          <span>{{ currentDrawValue() ?? (displayDrawCount() ?? drawCount()) }}</span>
+        }
+      </span>
       <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">draw</span>
     </div>
 
-    <div class="flex flex-col gap-0.5">
-      <span class="font-mono text-2xl font-bold leading-none text-c-muted">{{ discardCount() }}</span>
+    <div class="dc-col">
+      <span class="dc-value font-mono text-2xl font-bold leading-none text-c-muted">
+        @if (discardRolling() && previousDiscardValue() !== null) {
+          <span
+            class="dc-roll"
+            [class.dc-old]="discardRollDirection() === 'down'"
+            [class.dc-old-up]="discardRollDirection() === 'up'"
+          >{{ previousDiscardValue() }}</span>
+          <span
+            class="dc-roll"
+            [class.dc-new]="discardRollDirection() === 'down'"
+            [class.dc-new-up]="discardRollDirection() === 'up'"
+          >{{ currentDiscardValue() }}</span>
+        } @else {
+          <span>{{ currentDiscardValue() ?? (displayDiscardCount() ?? discardCount()) }}</span>
+        }
+      </span>
       <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">discard</span>
     </div>
 
-    <div class="flex flex-col gap-0.5">
-      <div class="flex gap-1 items-center h-8">
-        @for (used of pips(); track $index) {
+    <div class="dc-col">
+      <div class="dc-pips">
+        @for (pip of pips(); track $index) {
           <span
-            class="w-1.5 h-1.5 rounded-full"
-            [class]="used ? 'bg-c-pink' : 'border border-c-indigo/10 bg-transparent'"
+            class="dc-pip"
+            [style.left.%]="pip.left"
+            [style.top.%]="pip.top"
+            [class.bg-c-pink]="pip.used"
+            [class.border]="!pip.used"
+            [class.border-c-indigo/10]="!pip.used"
+            [class.bg-transparent]="!pip.used"
           ></span>
         }
       </div>

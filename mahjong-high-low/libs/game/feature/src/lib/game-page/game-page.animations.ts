@@ -14,6 +14,13 @@ export const NEXT_ROUND_TRANSITION_TOTAL_MS = NEXT_ROUND_INCOMING_HIDDEN_DELAY_M
 export const WIN_BANNER_SHOW_MS = 1150;
 export const WIN_VALUE_STEP_MS = 1000;
 export const WIN_POST_VALUE_SETTLE_MS = 260;
+export const HIDDEN_REVEAL_TILE_STEP_MS = 420;
+export const HIDDEN_REVEAL_VALUE_DELAY_MS = 230;
+export const HIDDEN_REVEAL_SETTLE_MS = 260;
+export const HIDDEN_REVEAL_TOTAL_STEP_MS = 220;
+export const HIDDEN_REVEAL_POST_TILE_MS = 180;
+export const SCORE_GAIN_FLY_MS = 650;
+export const SCORE_GAIN_SETTLE_MS = 260;
 
 export function getSingleHandDealDuration(handSize: HandSizeOptions): number {
   return (handSize - 1) * TILE_DEAL_STAGGER_MS + TILE_DEAL_DURATION_MS;

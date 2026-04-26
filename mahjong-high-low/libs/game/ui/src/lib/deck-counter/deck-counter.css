@@ -1,3 +1,89 @@
 :host {
   display: block;
 }
+
+.dc-grid {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+.dc-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.18rem;
+  width: 3.6rem;
+  flex: 0 0 3.6rem;
+}
+
+.dc-value {
+  position: relative;
+  min-height: 1.2em;
+  width: 3ch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+}
+
+.dc-pips {
+  position: relative;
+  width: 1.9rem;
+  height: 1.62rem;
+  margin-top: 0.06rem;
+}
+
+.dc-pip {
+  position: absolute;
+  width: 0.28rem;
+  height: 0.28rem;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+}
+
+.dc-roll {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dc-old {
+  animation: dc-old-down 420ms ease forwards;
+}
+
+.dc-new {
+  animation: dc-new-down 420ms ease forwards;
+}
+
+.dc-old-up {
+  animation: dc-old-up 420ms ease forwards;
+}
+
+.dc-new-up {
+  animation: dc-new-up 420ms ease forwards;
+}
+
+@keyframes dc-old-down {
+  0% { transform: translate(-50%, 0); }
+  100% { transform: translate(-50%, 125%); }
+}
+
+@keyframes dc-new-down {
+  0% { transform: translate(-50%, -125%); }
+  100% { transform: translate(-50%, 0); }
+}
+
+@keyframes dc-old-up {
+  0% { transform: translate(-50%, 0); }
+  100% { transform: translate(-50%, -125%); }
+}
+
+@keyframes dc-new-up {
+  0% { transform: translate(-50%, 125%); }
+  100% { transform: translate(-50%, 0); }
+}

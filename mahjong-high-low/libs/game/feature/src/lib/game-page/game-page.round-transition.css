@@ -174,3 +174,150 @@
     transform: translateX(-50%) scale(1.08);
   }
 }
+
+.gp-reshuffle-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  pointer-events: none;
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+
+.gp-reshuffle-overlay-exit {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.gp-reshuffle-title {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(2rem, 6vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--c-pink);
+  line-height: 1;
+}
+
+.gp-reshuffle-subtitle {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+}
+
+.gp-reshuffle-swirl {
+  position: relative;
+  width: 6.5rem;
+  height: 2.8rem;
+  pointer-events: none;
+  transition: opacity 280ms ease, transform 280ms ease;
+}
+
+.gp-reshuffle-swirl-exit {
+  opacity: 0;
+  transform: scale(0.2);
+}
+
+.gp-reshuffle-tile {
+  position: absolute;
+  width: 18px;
+  height: 26px;
+  object-fit: contain;
+  border-radius: 3px;
+  box-shadow: 0 4px 10px rgba(38, 40, 123, 0.16);
+}
+
+.gp-reshuffle-tile-a {
+  left: 50%;
+  top: 50%;
+  animation: gp-reshuffle-triangle-a 1800ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
+.gp-reshuffle-tile-b {
+  left: 50%;
+  top: 50%;
+  animation: gp-reshuffle-triangle-b 1800ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
+.gp-reshuffle-tile-c {
+  left: 50%;
+  top: 50%;
+  animation: gp-reshuffle-triangle-c 1800ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
+@keyframes gp-reshuffle-triangle-a {
+  0%, 10% { transform: translate(-26px, 8px) rotate(-15deg); z-index: 3; }
+  16%, 26% { transform: translate(0, -16px) rotate(2deg); z-index: 4; }
+  32%, 42% { transform: translate(26px, 8px) rotate(15deg); z-index: 2; }
+  48%, 58% { transform: translate(0, -16px) rotate(-6deg); z-index: 4; }
+  64%, 74% { transform: translate(-26px, 8px) rotate(-12deg); z-index: 3; }
+  80%, 90% { transform: translate(26px, 8px) rotate(12deg); z-index: 2; }
+  100% { transform: translate(-26px, 8px) rotate(-15deg); z-index: 3; }
+}
+
+@keyframes gp-reshuffle-triangle-b {
+  0%, 10% { transform: translate(0, -16px) rotate(3deg); z-index: 2; }
+  16%, 26% { transform: translate(26px, 8px) rotate(15deg); z-index: 4; }
+  32%, 42% { transform: translate(-26px, 8px) rotate(-15deg); z-index: 3; }
+  48%, 58% { transform: translate(26px, 8px) rotate(10deg); z-index: 4; }
+  64%, 74% { transform: translate(0, -16px) rotate(0deg); z-index: 2; }
+  80%, 90% { transform: translate(-26px, 8px) rotate(-10deg); z-index: 3; }
+  100% { transform: translate(0, -16px) rotate(3deg); z-index: 2; }
+}
+
+@keyframes gp-reshuffle-triangle-c {
+  0%, 10% { transform: translate(26px, 8px) rotate(15deg); z-index: 1; }
+  16%, 26% { transform: translate(-26px, 8px) rotate(-15deg); z-index: 4; }
+  32%, 42% { transform: translate(0, -16px) rotate(3deg); z-index: 3; }
+  48%, 58% { transform: translate(-26px, 8px) rotate(-10deg); z-index: 4; }
+  64%, 74% { transform: translate(26px, 8px) rotate(10deg); z-index: 1; }
+  80%, 90% { transform: translate(0, -16px) rotate(0deg); z-index: 3; }
+  100% { transform: translate(26px, 8px) rotate(15deg); z-index: 1; }
+}
+
+.gp-score-gain {
+  position: absolute;
+  z-index: 25;
+  pointer-events: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--c-pink);
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.gp-score-gain-active {
+  animation: gp-score-gain-fly 650ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.gp-score-gain--lose {
+  color: #ef4444;
+}
+
+@keyframes gp-score-gain-fly {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  72% {
+    opacity: 1;
+    transform: translate(
+      calc(-50% + var(--gp-score-gain-dx, 0px)),
+      calc(-50% + var(--gp-score-gain-dy, 0px))
+    ) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--gp-score-gain-dx, 0px)),
+      calc(-50% + var(--gp-score-gain-dy, 0px))
+    ) scale(0.45);
+  }
+}

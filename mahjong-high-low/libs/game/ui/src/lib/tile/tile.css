@@ -25,6 +25,7 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  perspective: 700px;
 }
 
 :host.dealing {
@@ -50,6 +51,27 @@ img {
   display: block;
   /* fallback background when image is missing */
   background: var(--c-bg);
+  transform-origin: center;
+  backface-visibility: hidden;
+}
+
+:host.tile-flipping img {
+  animation: tile-reveal-flip 520ms ease-in-out both;
+}
+
+@keyframes tile-reveal-flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  49% {
+    transform: rotateY(90deg);
+  }
+  51% {
+    transform: rotateY(90deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
 }
 
 .tile-value-chip {

@@ -86,6 +86,14 @@ export const GameStore = signalStore(
                 bet:         playerBet,
                 result,
                 scoreChange,
+                visibleHand: {
+                    total: store.visibleHand()!.total,
+                    tiles: store.visibleHand()!.tiles.map((tile) => ({ ...tile })),
+                },
+                hiddenHand: {
+                    total: newHiddenHand.total,
+                    tiles: newHiddenHand.tiles.map((tile) => ({ ...tile })),
+                },
             }
 
             patchState(store, {
@@ -103,9 +111,23 @@ export const GameStore = signalStore(
             let deck = store.drawPile()
             let discard = [...store.discard(), ...store.hiddenHand()!.tiles]
             let reshuffleCount = store.reshuffleCount()
+            const currentHiddenHand = store.hiddenHand()
 
             if (store.drawPile().length < store.handSize()) {
-                deck = reshuffleDeck(store.discard())
+                const reshuffleGameOver = checkGameOverShuffle(reshuffleCount + 1)
+                if (reshuffleGameOver) {
+                    patchState(store, {
+                        visibleHand: currentHiddenHand,
+                        discard: discard,
+                        gamePhase: GamePhase.GameOver,
+                        gameOverReason: reshuffleGameOver,
+                        lastResult: null,
+                        lastScoreChange: null,
+                    })
+                    return
+                }
+
+                deck = reshuffleDeck(deck, discard)
                 discard = []
                 reshuffleCount += 1
             }
@@ -113,8 +135,6 @@ export const GameStore = signalStore(
             const isGameOver = checkGameOverShuffle(reshuffleCount)
 
             const {hand, drawPile} = drawHand(store.handSize(), deck)
-
-            const currentHiddenHand = store.hiddenHand()
             patchState(store, {
                 drawPile: drawPile,
                 discard: discard,

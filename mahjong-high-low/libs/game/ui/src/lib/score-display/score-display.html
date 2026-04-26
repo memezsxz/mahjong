@@ -1,7 +1,14 @@
 <div class="flex flex-col items-center gap-1">
   <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">SCORE</span>
   <div class="flex items-baseline gap-1.5">
-    <span class="font-mono text-3xl font-bold leading-none text-c-indigo">{{ score() | number }}</span>
+    <span
+      class="score-display-value font-mono text-3xl font-bold leading-none"
+      [class.score-display-value--up]="scoreStepping() && scoreStepDirection() === 'up'"
+      [class.score-display-value--down]="scoreStepping() && scoreStepDirection() === 'down'"
+      [class.score-display-value--idle]="!scoreStepping()"
+    >
+      {{ (currentScore() ?? score()) | number }}
+    </span>
     @if (winStreak() > 1) {
       <span class="font-mono text-sm font-bold leading-none text-c-pink">×{{ winStreak() }}</span>
     }

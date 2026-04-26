@@ -6,18 +6,39 @@
   } @else {
     <div class="flex flex-col">
       @for (row of history(); track row.round) {
-        <div class="hh-row flex items-center gap-1.5 py-1.5 border-b border-c-indigo/10 last:border-b-0">
-          <span class="font-mono text-[0.58rem] text-c-muted w-5 shrink-0">R{{ row.round }}</span>
-          <p-tag
-            [value]="(row.result ?? 'pending').toUpperCase()"
-            [severity]="row.result === 'win' ? 'success' : 'danger'"
-            class="hh-tag"
-          />
-          <span class="font-mono text-[0.5rem] text-c-muted tracking-[0.06em] flex-1">{{ row.bet.toUpperCase() }}</span>
-          <span
-            class="font-mono text-[0.68rem] font-bold"
-            [style.color]="row.scoreChange > 0 ? 'var(--c-green)' : 'var(--c-pink)'"
-          >{{ row.scoreChange > 0 ? '+' : '' }}{{ row.scoreChange }}</span>
+        <div class="hh-row flex flex-col gap-1.5 py-1.5 border-b border-c-indigo/10 last:border-b-0">
+          <div class="flex items-center gap-1.5">
+            <span class="font-mono text-[0.58rem] text-c-muted w-5 shrink-0">R{{ row.round }}</span>
+            <p-tag
+              [value]="(row.result ?? 'pending').toUpperCase()"
+              [severity]="row.result === 'win' ? 'success' : 'danger'"
+              class="hh-tag"
+            />
+            <span class="font-mono text-[0.5rem] text-c-muted tracking-[0.06em] flex-1">{{ row.bet.toUpperCase() }}</span>
+            <span
+              class="font-mono text-[0.68rem] font-bold"
+              [style.color]="row.scoreChange > 0 ? 'var(--c-green)' : 'var(--c-pink)'"
+            >{{ row.scoreChange > 0 ? '+' : '' }}{{ row.scoreChange }}</span>
+          </div>
+
+          @if (row.visibleHand || row.hiddenHand) {
+            <div class="hh-hands">
+              @if (row.visibleHand) {
+                <div class="hh-mini-hand">
+                  @for (tile of row.visibleHand.tiles; track tile.id) {
+                    <img class="hh-mini-tile" [src]="tileAssetPath(tile)" alt="" />
+                  }
+                </div>
+              }
+              @if (row.hiddenHand) {
+                <div class="hh-mini-hand">
+                  @for (tile of row.hiddenHand.tiles; track tile.id) {
+                    <img class="hh-mini-tile" [src]="tileAssetPath(tile)" alt="" />
+                  }
+                </div>
+              }
+            </div>
+          }
         </div>
       }
     </div>

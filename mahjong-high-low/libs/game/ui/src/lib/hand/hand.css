@@ -15,14 +15,28 @@
   min-width: 2ch;
 }
 
+.hand-total-base {
+  visibility: visible;
+  white-space: nowrap;
+}
+
+.hand-total-base--hidden {
+  visibility: hidden;
+}
+
 .hand-total-display--hidden {
   visibility: hidden;
 }
 
 .hand-total-roll {
   position: absolute;
+  top: 0;
   left: 50%;
+  width: 100%;
+  text-align: center;
+  display: block;
   transform: translateX(-50%);
+  backface-visibility: hidden;
 }
 
 .hand-total-old {

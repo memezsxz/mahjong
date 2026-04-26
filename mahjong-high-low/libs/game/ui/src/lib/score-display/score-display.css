@@ -1,3 +1,24 @@
 :host {
   display: block;
 }
+
+.score-display-value {
+  display: inline-flex;
+  justify-content: center;
+  min-width: 4ch;
+  min-height: 1em;
+  line-height: 1;
+  color: var(--c-indigo);
+}
+
+.score-display-value--idle {
+  color: var(--c-indigo);
+}
+
+.score-display-value--up {
+  color: var(--c-pink);
+}
+
+.score-display-value--down {
+  color: #ef4444;
+}

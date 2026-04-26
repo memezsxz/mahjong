@@ -9,6 +9,8 @@ import {
 import { HONOR_TILE_BASE_VALUE } from './game.config.js';
 import { calculateHandTotal } from './hand-evaluator.utils.js';
 
+let reshuffleDeckSequence = 0;
+
 export function buildDeck(): TileInstance[] {
   const cards: TileInstance[] = [
     ...buildNumberTiles(),
@@ -20,8 +22,8 @@ export function buildDeck(): TileInstance[] {
 }
 
 function buildNumberTiles(): TileInstance[] {
-  const sizeArray = Array.from({ length: 9 }, (_, i) => i + 1);
-  const copyArray = Array.from({ length: 4 }, (_, i) => i + 1);
+  const sizeArray = Array.from({ length: 1 }, (_, i) => i + 1);
+  const copyArray = Array.from({ length: 1 }, (_, i) => i + 1);
 
   const items: TileInstance[] = Object.values(NumberSuit).flatMap((suit) =>
     sizeArray.flatMap((value) =>
@@ -89,8 +91,13 @@ export function drawHand(
   return { hand: handModel, drawPile };
 }
 
-export function reshuffleDeck(discardPile: TileInstance[]) {
-  const newDeck = [...buildDeck(), ...discardPile];
+export function reshuffleDeck(oldDeck: TileInstance[] , discardPile: TileInstance[]) {
+  reshuffleDeckSequence += 1;
+  const freshDeck = buildDeck().map((tile) => ({
+    ...tile,
+    id: `${tile.id}-r${reshuffleDeckSequence}`,
+  }));
+  const newDeck = [...freshDeck, ...oldDeck, ...discardPile];
 
   return shuffleDeck(newDeck);
 }

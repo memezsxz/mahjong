@@ -1,0 +1,299 @@
+import { Injectable, effect, inject } from '@angular/core';
+import { SettingsService } from './settings.service';
+
+type MusicMode = 'none' | 'gameplay' | 'pause';
+type MusicTrack = 'gameplay' | 'pause';
+type ResultSound = 'win' | 'lose';
+
+@Injectable({ providedIn: 'root' })
+export class GameAudioManager {
+  private readonly gameplayMusicVolume = 0.24;
+  private readonly pauseMusicVolume = 0.34;
+  private readonly buttonVolume = 0.035;
+  private readonly tileSlideVolume = 0.32;
+  private readonly settingsService = inject(SettingsService);
+  private readonly musicSources: Record<MusicTrack, string> = {
+    gameplay: 'assets/sounds/game_loop_music.mp3',
+    pause: 'assets/sounds/pause_music.mp3',
+  };
+  private readonly resultSources: Record<ResultSound, string> = {
+    win: 'assets/sounds/win.mp3',
+    lose: 'assets/sounds/lose.mp3',
+  };
+  private readonly cardValueChangeSource = 'assets/sounds/card_value_change.mp3';
+  private readonly tileSlideSource = 'assets/sounds/piece_slide.mp3';
+  private readonly tileFlipSources = [
+    'assets/sounds/peice_flip_1.mp3',
+    'assets/sounds/peice_flip_2.mp3',
+    'assets/sounds/peice_flip_3.mp3',
+    'assets/sounds/peice_flip_4.mp3',
+    'assets/sounds/peice_flip_5.mp3',
+  ];
+
+  private activeMusicMode: MusicMode = 'none';
+  private desiredMusicMode: MusicMode = 'none';
+  private activeMusic: HTMLAudioElement | null = null;
+  private unlocked = false;
+  private mediaUnlocked = false;
+  private audioContext: AudioContext | null = null;
+  private musicCache = new Map<string, HTMLAudioElement>();
+  private lastTileFlipIndex = -1;
+
+  constructor() {
+    effect(() => {
+      if (!this.settingsService.settings().musicEnabled) {
+        this.stopMusic();
+        return;
+      }
+
+      this.applyMusicState();
+    });
+  }
+
+  registerInteraction(): void {
+    this.unlocked = true;
+    this.resumeAudioContext();
+    this.unlockMediaPlayback();
+    this.applyMusicState();
+  }
+
+  syncMusic(mode: MusicMode): void {
+    this.desiredMusicMode = mode;
+    this.applyMusicState();
+  }
+
+  stopMusic(): void {
+    if (this.activeMusic) {
+      this.activeMusic.pause();
+      this.activeMusic.currentTime = 0;
+      this.activeMusic = null;
+    }
+    this.activeMusicMode = 'none';
+  }
+
+  playButtonClick(): void {
+    this.playTone(700, 0.035, 'square', this.buttonVolume);
+  }
+
+  playTileIn(count: number = 1): void {
+    void count;
+    this.playAsset(this.tileSlideSource, this.tileSlideVolume);
+  }
+
+  playTileOut(): void {
+    this.playAsset(this.tileSlideSource, this.tileSlideVolume);
+  }
+
+  playTileFlip(): void {
+    this.playAsset(this.getNextTileFlipSource(), 0.34);
+  }
+
+  playCardValueChange(): void {
+    this.playAsset(this.cardValueChangeSource, 0.24);
+  }
+
+  playScoreIncrease(): void {
+    this.playTone(760, 0.12, 'sine', 0.055, 980);
+  }
+
+  playScoreDecrease(): void {
+    this.playTone(520, 0.12, 'sine', 0.055, 320);
+  }
+
+  playWin(): void {
+    this.playAsset(this.resultSources.win, 0.8);
+  }
+
+  playLose(): void {
+    this.playAsset(this.resultSources.lose, 0.82);
+  }
+
+  private applyMusicState(): void {
+    if (!this.unlocked || !this.settingsService.settings().musicEnabled) {
+      this.stopMusic();
+      return;
+    }
+
+    if (this.desiredMusicMode === 'none') {
+      this.stopMusic();
+      return;
+    }
+
+    if (this.activeMusicMode === this.desiredMusicMode && this.activeMusic) {
+      return;
+    }
+
+    const nextTrack = this.getMusicTrack(this.desiredMusicMode);
+    if (!nextTrack) {
+      this.stopMusic();
+      return;
+    }
+
+    this.stopMusic();
+    const audio = this.getCachedMusic(nextTrack);
+    audio.currentTime = 0;
+    audio.loop = true;
+    audio.volume = nextTrack === 'pause' ? this.pauseMusicVolume : this.gameplayMusicVolume;
+    audio.play().catch(() => undefined);
+    this.activeMusic = audio;
+    this.activeMusicMode = this.desiredMusicMode;
+  }
+
+  private getMusicTrack(mode: MusicMode): MusicTrack | null {
+    // if (mode === 'gameplay') return 'gameplay';
+    if (mode === 'pause') return 'pause';
+    return null;
+  }
+
+  private getCachedMusic(track: MusicTrack): HTMLAudioElement {
+    const src = this.musicSources[track];
+    const cached = this.musicCache.get(src);
+    if (cached) {
+      return cached;
+    }
+
+    const audio = new Audio(src);
+    audio.preload = 'auto';
+    this.musicCache.set(src, audio);
+    return audio;
+  }
+
+  private getNextTileFlipSource(): string {
+    if (this.tileFlipSources.length === 1) {
+      return this.tileFlipSources[0];
+    }
+
+    let nextIndex = Math.floor(Math.random() * this.tileFlipSources.length);
+    if (nextIndex === this.lastTileFlipIndex) {
+      nextIndex = (nextIndex + 1) % this.tileFlipSources.length;
+    }
+
+    this.lastTileFlipIndex = nextIndex;
+    return this.tileFlipSources[nextIndex];
+  }
+
+  private playAsset(src: string, volume: number): void {
+    this.playAssetAtOffset(src, volume, 0);
+  }
+
+  private playAssetAtOffset(
+    src: string,
+    volume: number,
+    offsetSeconds: number,
+  ): void {
+    if (!this.settingsService.settings().soundEnabled || !this.unlocked) {
+      return;
+    }
+
+    window.setTimeout(() => {
+      const audio = new Audio(src);
+      audio.preload = 'auto';
+      audio.volume = volume;
+      audio.play().catch(() => undefined);
+    }, offsetSeconds * 1000);
+  }
+
+  private playTone(
+    frequency: number,
+    durationSeconds: number,
+    type: OscillatorType,
+    volume: number,
+    frequencyEnd?: number,
+  ): void {
+    this.playToneAtOffset(
+      frequency,
+      durationSeconds,
+      type,
+      volume,
+      0,
+      frequencyEnd,
+    );
+  }
+
+  private playToneAtOffset(
+    frequency: number,
+    durationSeconds: number,
+    type: OscillatorType,
+    volume: number,
+    offsetSeconds: number,
+    frequencyEnd?: number,
+  ): void {
+    if (!this.settingsService.settings().soundEnabled || !this.unlocked) {
+      return;
+    }
+
+    const context = this.getAudioContext();
+    if (!context) return;
+
+    const now = context.currentTime + offsetSeconds;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, now);
+    if (frequencyEnd !== undefined) {
+      oscillator.frequency.linearRampToValueAtTime(
+        frequencyEnd,
+        now + durationSeconds,
+      );
+    }
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(volume, now + 0.01);
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      now + durationSeconds,
+    );
+
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start(now);
+    oscillator.stop(now + durationSeconds);
+  }
+
+  private getAudioContext(): AudioContext | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    if (this.audioContext) {
+      return this.audioContext;
+    }
+
+    const AudioContextCtor =
+      window.AudioContext ||
+      (window as Window & { webkitAudioContext?: typeof AudioContext })
+        .webkitAudioContext;
+    if (!AudioContextCtor) {
+      return null;
+    }
+
+    this.audioContext = new AudioContextCtor();
+    return this.audioContext;
+  }
+
+  private resumeAudioContext(): void {
+    const context = this.getAudioContext();
+    if (!context || context.state !== 'suspended') return;
+    context.resume().catch(() => undefined);
+  }
+
+  private unlockMediaPlayback(): void {
+    if (this.mediaUnlocked || typeof Audio === 'undefined') {
+      return;
+    }
+
+    this.mediaUnlocked = true;
+    const audio = new Audio(this.tileSlideSource);
+    audio.preload = 'auto';
+    audio.muted = true;
+    audio.volume = 0;
+    audio.play()
+      .then(() => {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.muted = false;
+      })
+      .catch(() => undefined);
+  }
+}

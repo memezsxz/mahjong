@@ -1,4 +1,4 @@
-<div class="flex h-full overflow-hidden bg-c-bg text-c-text font-display">
+<div #pageFrame class="relative flex h-full overflow-hidden bg-c-bg text-c-text font-display">
 
   @if (store.visibleHand() && store.hiddenHand()) {
 
@@ -9,16 +9,26 @@
       <div class="shrink-0 flex items-center py-4 border-b border-c-indigo/10">
         <button
           class="bg-transparent border-0 p-0 cursor-pointer font-mono text-[0.78rem] font-bold tracking-[0.1em] text-c-indigo transition-opacity duration-150 hover:opacity-60"
-          (click)="exitDialogOpen.set(true)"
+          (click)="openExitDialog()"
         >
           Mahjong High · Low
         </button>
+
+        @if (debugMode()) {
+          <button
+            class="ml-auto h-8 px-3 border border-c-pink/50 bg-c-bg font-mono text-[0.62rem] font-bold tracking-[0.1em] text-c-pink cursor-pointer"
+            [disabled]="roundTransitionActive() || revealSequenceLocked() || reshuffleSequenceActive()"
+            (click)="onDebugForceReshuffle()"
+          >
+            DEBUG RESHUFFLE
+          </button>
+        }
       </div>
 
       <!-- Center: hidden hand (deals second) -->
       <div
         #centerStage
-        class="gp-center flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8"
+        class="gp-center relative flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8"
         [style.--hand-base-delay.ms]="hiddenHandBaseDelay()"
       >
         @if (!roundTransitionActive()) {
@@ -28,7 +38,10 @@
             [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
             [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
             [reserveTotalSlot]="true"
+            [faceUpTileIds]="store.gamePhase() === GamePhase.Revealing ? revealTileFaceUpIds() : null"
+            [valueVisibleTileIds]="store.gamePhase() === GamePhase.Revealing ? revealTileValueVisibleIds() : null"
             [tileValueOverrides]="store.gamePhase() === GamePhase.Revealing ? revealTileValueOverrides() : null"
+            [playTileValueChangeSound]="store.gamePhase() === GamePhase.Revealing && revealValueAnimationActive()"
             [handTotalOverride]="store.gamePhase() === GamePhase.Revealing ? revealHiddenTotalOverride() : null"
             [dealTrigger]="dealCount()"
             [animateDeal]="steadyHandsShouldDeal()"
@@ -44,12 +57,27 @@
             </div>
           }
         }
+
+        @if (reshuffleSequenceActive()) {
+          <div class="gp-reshuffle-overlay" [class.gp-reshuffle-overlay-exit]="reshuffleSequenceExitActive()">
+            <span class="gp-reshuffle-title">RESHUFFLE</span>
+            <span class="gp-reshuffle-subtitle">adding a new deck to keep this fun game going</span>
+            <div
+              class="gp-reshuffle-swirl"
+              [class.gp-reshuffle-swirl-exit]="reshuffleSequenceExitActive()"
+            >
+              <img class="gp-reshuffle-tile gp-reshuffle-tile-a" src="assets/tiles/tile.png" alt="" />
+              <img class="gp-reshuffle-tile gp-reshuffle-tile-b" src="assets/tiles/tile.png" alt="" />
+              <img class="gp-reshuffle-tile gp-reshuffle-tile-c" src="assets/tiles/tile.png" alt="" />
+            </div>
+          </div>
+        }
       </div>
 
       <!-- Bet strip -->
       <div class="gp-bet-strip shrink-0 flex items-center justify-center gap-6 py-5 border-t border-c-indigo/10 border-b">
         @if (store.gamePhase() === GamePhase.Revealing) {
-          @if (!revealSequenceLocked()) {
+          @if (!revealSequenceLocked() && !reshuffleSequenceActive() && !roundTransitionActive()) {
             <p-button
               label="Next Hand"
               icon="pi pi-arrow-right"
@@ -192,11 +220,11 @@
             </p>
             <div class="flex gap-2 justify-end mt-2">
               <p-button
-                label="Keep playing"
-                styleClass="gp-dialog-btn"
-                severity="secondary"
-                (onClick)="exitDialogOpen.set(false)"
-              />
+              label="Keep playing"
+              styleClass="gp-dialog-btn"
+              severity="secondary"
+              (onClick)="closeExitDialog()"
+            />
               <p-button
                 label="Exit"
                 styleClass="gp-dialog-btn"
@@ -211,9 +239,9 @@
       <!-- Pause overlay -->
       @if (store.isPaused()) {
         <lib-pause-menu
-          (resumed)="store.togglePause()"
-          (settingsOpened)="settingsOpen.set(true)"
-          (exited)="exitDialogOpen.set(true); store.togglePause()"
+          (resumed)="onPauseResumed()"
+          (settingsOpened)="onPauseSettingsOpened()"
+          (exited)="onPauseExited()"
         />
       }
 
@@ -223,7 +251,7 @@
           [settings]="settingsService.settings()"
           [inGame]="store.gamePhase() !== GamePhase.Idle"
           (settingsChanged)="onSettingsChanged($event)"
-          (closed)="settingsOpen.set(false)"
+          (closed)="onSettingsPanelClosed()"
         />
       }
 
@@ -243,6 +271,29 @@
                 {{ store.currentScore() | number }}
               </span>
             </div>
+
+            @if (!scoreSaved() && needsGameOverName()) {
+              <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-0.5">
+                  <span class="text-sm font-semibold text-c-text">Save Score As</span>
+                  <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Enter a player name to save this run</span>
+                </div>
+                <input
+                  class="w-full h-9 px-3 border border-c-indigo/10 bg-c-bg font-display text-sm text-c-text outline-none transition-colors duration-100 placeholder:text-c-muted"
+                  type="text"
+                  [value]="gameOverNameDraft()"
+                  placeholder="Enter your name..."
+                  (input)="onGameOverNameInput($any($event.target).value)"
+                />
+                <p-button
+                  label="Save Score"
+                  icon="pi pi-save"
+                  styleClass="gp-dialog-btn w-full"
+                  [disabled]="!gameOverNameDraft().trim()"
+                  (onClick)="onSaveScoreWithName()"
+                />
+              </div>
+            }
 
             <div class="flex flex-col gap-2 pt-2">
               <p-button
@@ -269,14 +320,20 @@
     <!-- ── Sidebar ────────────────────────────────────────────────────────── -->
     <aside class="w-52 lg:w-56 shrink-0 overflow-hidden flex flex-col border-l border-c-indigo/10">
 
-      <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
-        <lib-score-display [score]="store.currentScore()" [winStreak]="store.winStreak()" />
+      <div #scoreDisplaySlot class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
+        <lib-score-display
+          [score]="scoreDisplayOverride() ?? store.currentScore()"
+          [winStreak]="visibleWinStreak()"
+          [soundEnabled]="settingsService.settings().soundEnabled"
+        />
       </div>
 
       <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
         <lib-deck-counter
           [drawCount]="drawCount()"
           [discardCount]="discardCount()"
+          [displayDrawCount]="reshuffleDisplayDrawCount()"
+          [displayDiscardCount]="reshuffleDisplayDiscardCount()"
           [reshuffleCount]="store.reshuffleCount()"
         />
       </div>
@@ -289,11 +346,25 @@
         <p-button
           [icon]="store.isPaused() ? 'pi pi-play' : 'pi pi-pause'"
           styleClass="gp-pause-btn"
-          (onClick)="store.togglePause()"
+          (onClick)="onPauseToggle()"
         />
       </div>
 
     </aside>
+
+    @if (scoreGainAnimationActive()) {
+      <div
+        class="gp-score-gain"
+        [class.gp-score-gain-active]="scoreGainTravelActive()"
+        [class.gp-score-gain--lose]="scoreGainDirection() === 'up'"
+        [style.left.px]="scoreGainStartX()"
+        [style.top.px]="scoreGainStartY()"
+        [style.--gp-score-gain-dx.px]="scoreGainDeltaX()"
+        [style.--gp-score-gain-dy.px]="scoreGainDeltaY()"
+      >
+        {{ scoreGainDirection() === 'down' ? '+' : '-' }}{{ scoreGainAmount() }}
+      </div>
+    }
 
   } @else {
     <!-- Loading state while store initialises -->

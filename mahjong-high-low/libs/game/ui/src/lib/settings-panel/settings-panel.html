@@ -107,6 +107,7 @@
         type="text"
         [value]="settings().playerName ?? ''"
         placeholder="Enter your name..."
+        (input)="settingsChanged.emit({ playerName: $any($event.target).value })"
         (blur)="settingsChanged.emit({ playerName: $any($event.target).value.trim() || null })"
       />
     </div>
