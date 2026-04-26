@@ -1,31 +1,42 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
-  "extends": "./tsconfig.base.json",
   "compileOnSave": false,
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    "lib": ["es2022", "dom"],
+    "paths": {
+      "@hbg/shared-models": ["libs/models/index.ts"],
+      "@hbg/shared-util-game": ["libs/util-game/index.ts"],
+      "@hbg/game-data-access": ["libs/data-access/index.ts"],
+      "@hbg/game-feature": ["libs/game/feature/src/index.ts"],
+      "@hbg/game-ui": ["libs/game/ui/src/index.ts"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "typeCheckHostBindings": true,
+    "strictTemplates": true
+  },
   "files": [],
   "references": [
     {
-      "path": "./api"
+      "path": "./tsconfig.app.json"
     },
     {
-      "path": "./libs/shared/models"
-    },
-    {
-      "path": "./libs/shared/util-game"
-    },
-    {
-      "path": "./libs/api/leaderboard"
-    },
-    {
-      "path": "./libs/game/data-access"
-    },
-    {
-      "path": "./libs/game/feature"
-    },
-    {
-      "path": "./libs/game/ui"
-    },
-    {
-      "path": "./web"
+      "path": "./tsconfig.spec.json"
     }
   ]
 }

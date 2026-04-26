@@ -1,31 +1,59 @@
-# Mahjong High Low Workspace
+# TempAngular
 
-This workspace is split by responsibility, not by screen or by technical convenience.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.6.
 
-## Project map
+## Development server
 
-- `web`: the Angular application shell. It should bootstrap the app, own app-level routing, register global providers, and host static assets.
-- `api`: the Nest application shell. It should bootstrap the backend, wire infrastructure, and compose feature modules.
-- `libs/game/feature`: game flows and page-level orchestration. It should compose UI pieces, coordinate state, and own route-facing containers.
-- `libs/game/ui`: reusable presentational components for the game. It should render inputs and emit outputs, with as little business logic as possible.
-- `libs/game/data-access`: client-side state and persistence adapters. It should own stores, browser storage, API clients, and service facades used by features.
-- `libs/api/leaderboard`: backend leaderboard feature. It should own leaderboard routes, service logic, and persistence details.
-- `libs/shared/models`: shared contracts and domain shapes. It should only define types, enums, and plain data models shared across app and API.
-- `libs/shared/util-game`: shared pure game rules and calculations. It should contain deterministic logic that can run in any environment.
+To start a local development server, run:
 
-## Dependency direction
+```bash
+ng serve
+```
 
-- `web` -> `game/feature`
-- `game/feature` -> `game/ui`, `game/data-access`, `shared/models`, `shared/util-game`
-- `game/ui` -> `shared/models`, `shared/util-game`
-- `game/data-access` -> `shared/models`, `shared/util-game`
-- `api` -> `api/leaderboard`, `shared/models`
-- `api/leaderboard` -> `shared/models`
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Boundary rules
+## Code scaffolding
 
-- Shared libraries must not depend on Angular app shells, Nest app shells, DOM globals, or browser storage.
-- `game/ui` should not own app state, routing, local storage, or backend decisions.
-- `game/feature` should not become a dumping ground for reusable primitives; if something is reusable, move it down to `ui`, `data-access`, or `shared`.
-- `data-access` should not hold page layout code or animation orchestration.
-- `api` should stay thin; backend feature code belongs in feature libraries, not in the app shell.
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+
+```bash
+ng generate component component-name
+```
+
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+
+```bash
+ng generate --help
+```
+
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
