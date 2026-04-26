@@ -30,7 +30,8 @@ export class SettingsService {
         const stored = localStorage.getItem(this.STORAGE_KEY);
         if (stored) {
             const parsed = JSON.parse(stored) as Partial<PlayerSettingsModel> & { playerName?: string | null };
-            const { playerName: _playerName, ...rest } = parsed;
+            const { playerName, ...rest } = parsed;
+            void playerName;
             this._settings.set(this.normalizeSettings({
                 ...this._settings(),
                 ...rest,

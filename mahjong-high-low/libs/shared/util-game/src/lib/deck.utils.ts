@@ -11,6 +11,7 @@ import { calculateHandTotal } from './hand-evaluator.utils.js';
 
 let reshuffleDeckSequence = 0;
 
+// The runtime deck contains one copy of each number tile and four copies of each honor tile.
 export function buildDeck(): TileInstance[] {
   const cards: TileInstance[] = [
     ...buildNumberTiles(),
@@ -93,6 +94,7 @@ export function drawHand(
 
 export function reshuffleDeck(oldDeck: TileInstance[] , discardPile: TileInstance[]) {
   reshuffleDeckSequence += 1;
+  // Rebuilt tiles get a reshuffle suffix so runtime IDs stay unique across the session.
   const freshDeck = buildDeck().map((tile) => ({
     ...tile,
     id: `${tile.id}-r${reshuffleDeckSequence}`,

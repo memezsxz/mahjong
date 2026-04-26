@@ -1,11 +1,10 @@
-import { Component, computed, effect, ElementRef, inject, input, OnDestroy, signal } from '@angular/core';
-import { GameAudioManager } from '@hbg/game-data-access';
+import { Component, computed, effect, ElementRef, inject, input, OnDestroy, output, signal } from '@angular/core';
 import { TileInstance } from '@hbg/shared-models';
-import { getTileAssetPath } from '@hbg/shared-util-game';
 import {
   UI_TILE_REVEAL_FLIP_DURATION_MS,
   UI_TILE_VALUE_ROLL_DURATION_MS,
 } from '../game-ui.animations';
+import { getTileAssetPath } from '../tile-asset-path';
 
 @Component({
   selector: 'lib-tile',
@@ -19,7 +18,6 @@ import {
 })
 export class Tile implements OnDestroy {
   private el = inject(ElementRef<HTMLElement>);
-  private audioManager = inject(GameAudioManager);
   private valueRollTimer: ReturnType<typeof setTimeout> | null = null;
   private flipMidTimer: ReturnType<typeof setTimeout> | null = null;
   private flipEndTimer: ReturnType<typeof setTimeout> | null = null;
@@ -30,6 +28,7 @@ export class Tile implements OnDestroy {
   showValue = input<boolean>(true);
   displayValue = input<number | null>(null);
   playValueChangeSound = input<boolean>(false);
+  valueChangeSoundRequested = output<void>();
   faceDown  = input<boolean>(false);
   tileIndex = input<number>(0);
   flipActive = signal(false);
@@ -87,7 +86,7 @@ export class Tile implements OnDestroy {
       this.currentDisplayValue.set(value);
       this.valueRollDirection.set(value > current ? 'down' : 'up');
       if (this.playValueChangeSound()) {
-        this.audioManager.playCardValueChange();
+        this.valueChangeSoundRequested.emit();
       }
       this.valueRolling.set(false);
       if (this.valueRollTimer !== null) {

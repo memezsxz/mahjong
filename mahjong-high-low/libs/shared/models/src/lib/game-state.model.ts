@@ -10,6 +10,7 @@ export enum GamePhase {
   GameOver = 'gameOver',
 }
 
+// `HandResult` is the per-round reveal outcome, while `GameOverReason` is the terminal condition for the whole run.
 export type HandResult = 'win' | 'lose' | null;
 export type GameOverReason = 'tile-min' | 'tile-max' | 'reshuffle' | null;
 

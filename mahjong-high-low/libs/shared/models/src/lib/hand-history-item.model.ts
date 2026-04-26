@@ -7,6 +7,7 @@ export interface HandHistoryItem {
   bet:         Bet;
   result:      HandResult;
   scoreChange: number;
+  // These are recorded snapshots for the sidebar/history view, not live hand references.
   visibleHand?: HandModel;
   hiddenHand?: HandModel;
 }

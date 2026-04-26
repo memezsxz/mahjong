@@ -47,5 +47,7 @@
       }
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "@hbg/shared-models": "0.0.1"
+  }
 }

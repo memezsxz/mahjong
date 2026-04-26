@@ -37,12 +37,15 @@ interface DragonTile {
     suit: DragonSuit;
 }
 
+// `TileInfo` is the stable category/suit identity shared by every tile shape.
 export type TileInfo = NumberTile | WindTile | DragonTile;
 
+// `TileDefinition` is the static rules-layer definition before a runtime instance gets an ID.
 export type TileDefinition = TileInfo & {
     faceValue: number;
 };
 
+// `TileInstance` is the runtime tile shape used in decks, hands, and persisted history snapshots.
 export type TileInstance = TileDefinition & {
     id: string;
     currentValue: number;

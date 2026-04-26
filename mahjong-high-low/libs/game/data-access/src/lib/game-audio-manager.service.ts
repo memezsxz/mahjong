@@ -27,6 +27,9 @@ export class GameAudioManager {
     lose: 'assets/sounds/lose.mp3',
   };
   private readonly cardValueChangeSource = 'assets/sounds/card_value_change.mp3';
+  private readonly scoreStepSource = 'assets/sounds/number_change.mp3';
+  private readonly scoreStepVolume = 0.12;
+  private readonly scoreStepTailPaddingMs = 40;
   private readonly tileSlideSource = 'assets/sounds/piece_slide.mp3';
   private readonly tileFlipSources = [
     'assets/sounds/peice_flip_1.mp3',
@@ -83,7 +86,7 @@ export class GameAudioManager {
     this.playTone(700, 0.035, 'square', this.buttonVolume);
   }
 
-  playTileIn(count: number = 1): void {
+  playTileIn(count = 1): void {
     void count;
     this.playAsset(this.tileSlideSource, this.tileSlideVolume);
   }
@@ -98,6 +101,10 @@ export class GameAudioManager {
 
   playCardValueChange(): void {
     this.playAsset(this.cardValueChangeSource, 0.24);
+  }
+
+  playScoreStep(): void {
+    this.playAssetTail(this.scoreStepSource, this.scoreStepVolume, this.scoreStepTailPaddingMs);
   }
 
   playScoreIncrease(): void {
@@ -210,6 +217,47 @@ export class GameAudioManager {
       audio.volume = volume;
       audio.play().catch(() => undefined);
     }, offsetSeconds * 1000);
+  }
+
+  private playAssetTail(src: string, volume: number, clipDurationMs: number): void {
+    if (!this.settingsService.settings().soundEnabled || !this.unlocked) {
+      return;
+    }
+
+    if (!this.mediaPlaybackReady) {
+      this.pendingAssetPlaybacks.push({
+        src,
+        volume,
+        requestedAtMs: this.nowMs(),
+        offsetMs: 0,
+      });
+      this.unlockMediaPlayback();
+      return;
+    }
+
+    const audio = new Audio(src);
+    audio.preload = 'metadata';
+    audio.volume = volume;
+
+    const playTail = () => {
+      const durationMs = Number.isFinite(audio.duration)
+        ? audio.duration * 1000
+        : clipDurationMs;
+      const startAtSeconds = Math.max(0, (durationMs - clipDurationMs) / 1000);
+      audio.currentTime = startAtSeconds;
+      audio.play().catch(() => undefined);
+      window.setTimeout(() => {
+        audio.pause();
+      }, clipDurationMs + 20);
+    };
+
+    if (audio.readyState >= 1) {
+      playTail();
+      return;
+    }
+
+    audio.addEventListener('loadedmetadata', playTail, { once: true });
+    audio.load();
   }
 
   private playTone(

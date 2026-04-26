@@ -54,6 +54,23 @@ export class GamePageUiShellService {
     });
   }
 
+  openExitFlow(
+    hasActiveProgress: boolean,
+    allowScoreSaveOnExit: boolean,
+  ): 'exit-now' | 'dialog-opened' | 'save-panel-opened' {
+    if (!hasActiveProgress) {
+      return 'exit-now';
+    }
+
+    if (allowScoreSaveOnExit && this.scoreQualifiesForLeaderboard()) {
+      this.openExitSavePanel();
+      return 'save-panel-opened';
+    }
+
+    this.exitDialogOpen.set(true);
+    return 'dialog-opened';
+  }
+
   resolvePendingLeave(allowed: boolean): boolean {
     this.exitDialogOpen.set(false);
     this.exitSavePanelOpen.set(false);
@@ -100,22 +117,39 @@ export class GamePageUiShellService {
     this.saveScore(playerName);
   }
 
+  dismissExitDialog(): void {
+    this.resolvePendingLeave(false);
+  }
+
+  dismissExitSavePanel(): void {
+    this.cancelExitSavePanel();
+    this.resolvePendingLeave(false);
+  }
+
+  saveScoreWithNameAndCheckExit(): boolean {
+    this.saveScoreWithName();
+    return this.exitSavePanelOpen() && this.scoreSaved();
+  }
+
   private saveScore(playerName: string | null): void {
     if (!playerName || this.scoreSaved() || !this.scoreQualifiesForLeaderboard()) {
       return;
     }
 
-    if (this.exitSavePanelOpen()) {
-      this.exitScoreSaved.set(true);
-    } else {
-      this.gameOverScoreSaved.set(true);
+    const scoreSaved = this.scoresService.submitScore(
+      playerName,
+      this.store.currentScore(),
+    );
+    if (!scoreSaved) {
+      return;
     }
 
-    this.scoresService.saveScore({
-      playerName,
-      totalScore: this.store.currentScore(),
-      date: Date.now(),
-    });
+    if (this.exitSavePanelOpen()) {
+      this.exitScoreSaved.set(true);
+      return;
+    }
+
+    this.gameOverScoreSaved.set(true);
   }
 
   private getTrimmedGameOverName(): string | null {

@@ -47,6 +47,7 @@
               [dealTrigger]="dealCount()"
               [animateDeal]="steadyHandsShouldDeal()"
               (dealStarted)="onHiddenHandDealStarted()"
+              (tileValueChangeSoundRequested)="audioManager.playCardValueChange()"
             />
           </div>
 
@@ -214,11 +215,14 @@
       @if (exitDialogOpen()) {
         <div
           class="absolute inset-0 bg-c-bg/85 backdrop-blur-sm flex items-center justify-center z-30"
-          (click)="exitDialogOpen.set(false)"
+          tabindex="0"
+          (click)="$event.target === $event.currentTarget && closeExitDialog()"
+          (keydown.enter)="closeExitDialog()"
+          (keydown.space)="closeExitDialog()"
+          (keydown.escape)="closeExitDialog()"
         >
           <div
             class="bg-c-surface border border-c-indigo/10 p-8 w-80 flex flex-col gap-4"
-            (click)="$event.stopPropagation()"
           >
             <span class="font-mono text-[0.82rem] font-bold tracking-[0.15em] uppercase text-c-indigo">
               Leave game?
@@ -356,7 +360,7 @@
         <lib-score-display
           [score]="scoreDisplayOverride() ?? store.currentScore()"
           [winStreak]="visibleWinStreak()"
-          [soundEnabled]="settingsService.settings().soundEnabled"
+          (scoreStepSoundRequested)="audioManager.playScoreStep()"
         />
       </div>
 

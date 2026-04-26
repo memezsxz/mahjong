@@ -23,6 +23,7 @@ export class Hand implements OnDestroy {
   dealTrigger       = input<number>(0);
   animateDeal       = input<boolean>(true);
   dealStarted       = output<void>();
+  tileValueChangeSoundRequested = output<void>();
 
   private tileComponents = viewChildren(Tile);
   faceUpTileIdSet = computed(() => new Set(this.faceUpTileIds() ?? []));

@@ -1,11 +1,14 @@
 
 <div
   class="fixed inset-0 bg-c-bg/60 backdrop-blur-sm flex items-stretch justify-end z-20"
-  (click)="closed.emit()"
+  tabindex="0"
+  (click)="$event.target === $event.currentTarget && closed.emit()"
+  (keydown.enter)="closed.emit()"
+  (keydown.space)="closed.emit()"
+  (keydown.escape)="closed.emit()"
 >
   <div
     class="bg-c-surface border-l border-c-indigo/10 w-80 lg:w-96 h-dvh max-h-dvh flex flex-col overflow-y-auto"
-    (click)="$event.stopPropagation()"
   >
 
     <!-- Header -->

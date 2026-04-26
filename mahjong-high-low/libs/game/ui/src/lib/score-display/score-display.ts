@@ -1,9 +1,6 @@
-import { Component, effect, input, signal } from '@angular/core';
+import { Component, effect, input, OnDestroy, output, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import {
-  UI_SCORE_STEP_MS,
-  UI_SCORE_STEP_SOUND_TAIL_PADDING_MS,
-} from '../game-ui.animations';
+import { UI_SCORE_STEP_MS } from '../game-ui.animations';
 
 @Component({
   selector: 'lib-score-display',
@@ -11,18 +8,15 @@ import {
   templateUrl: './score-display.html',
   styleUrl: './score-display.css',
 })
-export class ScoreDisplay {
+export class ScoreDisplay implements OnDestroy {
   private readonly scoreStepMs = UI_SCORE_STEP_MS;
-  private readonly scoreStepSoundVolume = 0.12;
-  private readonly scoreStepSoundTailPaddingMs = UI_SCORE_STEP_SOUND_TAIL_PADDING_MS;
   score = input.required<number>();
   winStreak = input.required<number>();
-  soundEnabled = input<boolean>(false);
+  scoreStepSoundRequested = output<void>();
   scoreStepping = signal(false);
   scoreStepDirection = signal<'up' | 'down'>('down');
   currentScore = signal<number | null>(null);
   private scoreStepTimer: ReturnType<typeof setTimeout> | null = null;
-  private readonly numberChangeSoundSrc = 'assets/sounds/number_change.mp3';
 
   constructor() {
     effect(() => {
@@ -59,7 +53,7 @@ export class ScoreDisplay {
       }
 
       const nextValue = value + direction;
-      this.playStepSound();
+      this.scoreStepSoundRequested.emit();
       this.currentScore.set(nextValue);
       this.scoreStepTimer = setTimeout(() => tick(nextValue), this.scoreStepMs);
     };
@@ -72,34 +66,5 @@ export class ScoreDisplay {
       clearTimeout(this.scoreStepTimer);
       this.scoreStepTimer = null;
     }
-  }
-
-  private playStepSound(): void {
-    if (!this.soundEnabled() || typeof Audio === 'undefined') {
-      return;
-    }
-
-    const audio = new Audio(this.numberChangeSoundSrc);
-    const clipDurationMs = this.scoreStepMs + this.scoreStepSoundTailPaddingMs;
-    audio.preload = 'metadata';
-    audio.volume = this.scoreStepSoundVolume;
-
-    const playTail = () => {
-      const durationMs = Number.isFinite(audio.duration) ? audio.duration * 1000 : clipDurationMs;
-      const startAtSeconds = Math.max(0, (durationMs - clipDurationMs) / 1000);
-      audio.currentTime = startAtSeconds;
-      audio.play().catch(() => undefined);
-      window.setTimeout(() => {
-        audio.pause();
-      }, clipDurationMs + 20);
-    };
-
-    if (audio.readyState >= 1) {
-      playTail();
-      return;
-    }
-
-    audio.addEventListener('loadedmetadata', playTail, { once: true });
-    audio.load();
   }
 }

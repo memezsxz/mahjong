@@ -18,7 +18,6 @@
     "paths": {
       "@hbg/shared-models": ["libs/shared/models/src/index.ts"],
       "@hbg/shared-util-game": ["libs/shared/util-game/src/index.ts"],
-      "@hbg/api-leaderboard": ["libs/api/leaderboard/src/index.ts"],
       "@hbg/game-data-access": ["libs/game/data-access/src/index.ts"],
       "@hbg/game-feature": ["libs/game/feature/src/index.ts"],
       "@hbg/game-ui": ["libs/game/ui/src/index.ts"]

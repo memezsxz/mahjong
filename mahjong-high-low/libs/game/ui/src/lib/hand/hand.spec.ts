@@ -11,6 +11,12 @@ describe('Hand', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(Hand);
+    fixture.componentRef.setInput('hand', {
+      total: 5,
+      tiles: [],
+    });
+    fixture.componentRef.setInput('showTileValue', true);
+    fixture.componentRef.setInput('showHandTiles', true);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

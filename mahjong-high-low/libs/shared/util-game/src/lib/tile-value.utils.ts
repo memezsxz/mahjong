@@ -1,6 +1,7 @@
 import {HandModel, HandResult, TileInstance, TileType} from "@hbg/shared-models";
 import {calculateHandTotal} from "./hand-evaluator.utils.js";
 
+// Only honor tiles scale across rounds; number tiles keep their face/current value.
 export function scaleHandValues(hand: HandModel, result: HandResult): HandModel {
     const newHand = hand.tiles.map((tile: TileInstance) => scaleTileValue(tile, result))
 

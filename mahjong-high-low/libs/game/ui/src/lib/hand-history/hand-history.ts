@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { HandHistoryItem } from '@hbg/shared-models';
-import { getTileAssetPath } from '@hbg/shared-util-game';
+import { getTileAssetPath } from '../tile-asset-path';
 
 @Component({
   selector: 'lib-hand-history',
