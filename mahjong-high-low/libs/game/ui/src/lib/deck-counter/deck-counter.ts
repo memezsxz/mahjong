@@ -26,22 +26,15 @@ export class DeckCounter implements OnDestroy {
   private discardTimer: ReturnType<typeof setTimeout> | null = null;
 
   pips = computed(() => {
-    const total = Math.min(Math.max(this.maxReshuffles(), 0), 10);
+    const total = this.maxReshuffles();
     const usedCount = Math.min(this.reshuffleCount(), total);
-    const columns = total <= 5 ? total : Math.ceil(total / 2);
-    const rows = total <= 5 ? 1 : 2;
-    const xStep = columns > 1 ? 100 / (columns - 1) : 0;
-    const yPositions = rows === 1 ? [50] : [28, 72];
+    const positions = this.getPipPositions(total);
 
-    return Array.from({ length: total }, (_, i) => {
-      const row = rows === 1 ? 0 : Math.floor(i / columns);
-      const column = rows === 1 ? i : i % columns;
-      return {
-        used: i < usedCount,
-        left: columns === 1 ? 50 : column * xStep,
-        top: yPositions[row],
-      };
-    });
+    return positions.map((position, index) => ({
+      used: index < usedCount,
+      left: position.left,
+      top: position.top,
+    }));
   });
 
   constructor() {
@@ -95,5 +88,98 @@ export class DeckCounter implements OnDestroy {
   ngOnDestroy(): void {
     if (this.drawTimer !== null) clearTimeout(this.drawTimer);
     if (this.discardTimer !== null) clearTimeout(this.discardTimer);
+  }
+
+  private getPipPositions(total: number): Array<{ left: number; top: number }> {
+    const fixedLayouts: Partial<Record<number, Array<{ left: number; top: number }>>> = {
+      0: [],
+      1: [{ left: 50, top: 50 }],
+      2: [
+        { left: 50, top: 30 },
+        { left: 50, top: 70 },
+      ],
+      3: [
+        { left: 50, top: 18 },
+        { left: 22, top: 72 },
+        { left: 78, top: 72 },
+      ],
+      4: [
+        { left: 28, top: 28 },
+        { left: 72, top: 28 },
+        { left: 28, top: 72 },
+        { left: 72, top: 72 },
+      ],
+      5: [
+        { left: 50, top: 12 },
+        { left: 18, top: 36 },
+        { left: 30, top: 78 },
+        { left: 70, top: 78 },
+        { left: 82, top: 36 },
+      ],
+      6: [
+        { left: 50, top: 10 },
+        { left: 22, top: 28 },
+        { left: 22, top: 72 },
+        { left: 50, top: 90 },
+        { left: 78, top: 72 },
+        { left: 78, top: 28 },
+      ],
+      8: [
+        { left: 22, top: 28 },
+        { left: 38, top: 28 },
+        { left: 22, top: 48 },
+        { left: 38, top: 48 },
+        { left: 62, top: 52 },
+        { left: 78, top: 52 },
+        { left: 62, top: 72 },
+        { left: 78, top: 72 },
+      ],
+      9: [
+        { left: 20, top: 24 },
+        { left: 50, top: 16 },
+        { left: 80, top: 8 },
+        { left: 20, top: 50 },
+        { left: 50, top: 42 },
+        { left: 80, top: 34 },
+        { left: 20, top: 76 },
+        { left: 50, top: 68 },
+        { left: 80, top: 60 },
+      ],
+      10: [
+        { left: 50, top: 8 },
+        { left: 20, top: 28 },
+        { left: 50, top: 28 },
+        { left: 80, top: 28 },
+        { left: 20, top: 50 },
+        { left: 50, top: 50 },
+        { left: 80, top: 50 },
+        { left: 20, top: 72 },
+        { left: 50, top: 72 },
+        { left: 80, top: 72 },
+      ],
+    };
+
+    return fixedLayouts[total] ?? this.getFallbackGrid(total);
+  }
+
+  private getFallbackGrid(total: number): Array<{ left: number; top: number }> {
+    if (total <= 0) {
+      return [];
+    }
+
+    const columns = Math.ceil(Math.sqrt(total));
+    const rows = Math.ceil(total / columns);
+    const xStep = columns > 1 ? 100 / (columns - 1) : 0;
+    const yStep = rows > 1 ? 100 / (rows - 1) : 0;
+
+    return Array.from({ length: total }, (_, index) => {
+      const row = Math.floor(index / columns);
+      const column = index % columns;
+
+      return {
+        left: columns === 1 ? 50 : column * xStep,
+        top: rows === 1 ? 50 : row * yStep,
+      };
+    });
   }
 }

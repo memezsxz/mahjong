@@ -1,10 +1,10 @@
 
 <div
-  class="absolute inset-0 bg-c-bg/60 backdrop-blur-sm flex items-stretch justify-end z-20"
+  class="fixed inset-0 bg-c-bg/60 backdrop-blur-sm flex items-stretch justify-end z-20"
   (click)="closed.emit()"
 >
   <div
-    class="bg-c-surface border-l border-c-indigo/10 w-80 lg:w-96 flex flex-col overflow-y-auto"
+    class="bg-c-surface border-l border-c-indigo/10 w-80 lg:w-96 h-dvh max-h-dvh flex flex-col overflow-y-auto"
     (click)="$event.stopPropagation()"
   >
 
@@ -109,24 +109,6 @@
           : 'bg-transparent border-c-indigo/10 text-c-muted'"
         (click)="settingsChanged.emit({ musicEnabled: !settings().musicEnabled })"
       >{{ settings().musicEnabled ? 'ON' : 'OFF' }}</button>
-    </div>
-
-    <div class="h-px bg-c-indigo/10 mx-6"></div>
-
-    <!-- Player Name -->
-    <div class="flex flex-col gap-3 px-6 py-4">
-      <div class="flex flex-col gap-0.5">
-        <span class="text-sm font-semibold text-c-text">Player Name</span>
-        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Shown on the leaderboard</span>
-      </div>
-      <input
-        class="sp-input w-full h-9 px-3 border border-c-indigo/10 bg-c-bg font-display text-sm text-c-text outline-none transition-colors duration-100 placeholder:text-c-muted"
-        type="text"
-        [value]="settings().playerName ?? ''"
-        placeholder="Enter your name..."
-        (input)="settingsChanged.emit({ playerName: $any($event.target).value })"
-        (blur)="settingsChanged.emit({ playerName: $any($event.target).value.trim() || null })"
-      />
     </div>
 
   </div>

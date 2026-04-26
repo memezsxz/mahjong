@@ -2,10 +2,10 @@ import { Component, computed, effect, ElementRef, HostListener, inject, OnDestro
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { BetControls, DeckCounter, Hand, HandHistory, PauseMenu, ScoreDisplay, SettingsPanel } from '@hbg/game-ui';
+import { BetControls, DeckCounter, Hand, HandHistory, ScoreDisplay, SettingsPanel } from '@hbg/game-ui';
 import { Bet, GameOverReason, GamePhase, HandModel, PlayerSettingsModel } from '@hbg/shared-models';
 import { GameAudioManager, GameStore, SettingsService } from '@hbg/game-data-access';
-import { buildDeck } from '@hbg/shared-util-game';
+import { ALLOW_SCORE_SAVE_ON_EXIT, buildDeck, MAX_RESHUFFLES } from '@hbg/shared-util-game';
 import {
   getBetControlsDelay,
   getHiddenHandBaseDelay,
@@ -29,7 +29,6 @@ import { GamePageUiShellService } from './game-page-ui-shell.service';
     ScoreDisplay,
     DeckCounter,
     HandHistory,
-    PauseMenu,
     SettingsPanel,
     ButtonModule,
   ],
@@ -52,7 +51,6 @@ export class GamePage implements OnInit, OnDestroy {
   private previousScoreDisplayValue: number | null = null;
   private previousReshuffleDrawValue: number | null = null;
   private previousReshuffleDiscardValue: number | null = null;
-  private lastInitialDealSoundCount = -1;
 
   private readonly router = inject(Router);
   readonly store = inject(GameStore);
@@ -74,7 +72,9 @@ export class GamePage implements OnInit, OnDestroy {
   // ── UI-only overlay state ─────────────────────────────────────────────
   settingsOpen = this.uiShell.settingsOpen;
   exitDialogOpen = this.uiShell.exitDialogOpen;
+  exitSavePanelOpen = this.uiShell.exitSavePanelOpen;
   scoreSaved = this.uiShell.scoreSaved;
+  scoreQualifiesForLeaderboard = this.uiShell.scoreQualifiesForLeaderboard;
   gameOverNameDraft = this.uiShell.gameOverNameDraft;
   dealCount = signal(0);
   betControlsReady = signal(false);
@@ -210,6 +210,7 @@ export class GamePage implements OnInit, OnDestroy {
   // ── Derived deck counts ───────────────────────────────────────────────
   drawCount = computed(() => this.store.drawPile().length);
   discardCount = computed(() => this.store.discard().length);
+  readonly maxReshuffles = MAX_RESHUFFLES;
 
   // ── Game over reason → human-readable copy ────────────────────────────
   gameOverMessage = computed(() => {
@@ -262,32 +263,6 @@ export class GamePage implements OnInit, OnDestroy {
       this.betControlsTimer = globalThis.setTimeout(() => {
         this.betControlsReady.set(true);
       }, this.betControlsDelay());
-    });
-
-    effect(() => {
-      const phase = this.store.gamePhase();
-      const visibleHand = this.store.visibleHand();
-      const hiddenHand = this.store.hiddenHand();
-      const shouldDeal = this.steadyHandsShouldDeal();
-      const dealCount = this.dealCount();
-
-      if (
-        phase !== GamePhase.Betting ||
-        !shouldDeal ||
-        !visibleHand ||
-        !hiddenHand ||
-        this.lastInitialDealSoundCount === dealCount
-      ) {
-        return;
-      }
-
-      this.lastInitialDealSoundCount = dealCount;
-      this.queueAnimationTimer(() => {
-        this.audioManager.playTileIn(this.store.handSize());
-      }, 0);
-      this.queueAnimationTimer(() => {
-        this.audioManager.playTileIn(this.store.handSize());
-      }, this.hiddenHandBaseDelay());
     });
 
     effect(() => {
@@ -344,8 +319,26 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   canLeaveGame(): boolean | Promise<boolean> {
-    return this.uiShell.requestLeave(this.hasActiveProgress(), () => {
-      this.store.exitGame();
+    const hasActiveProgress = this.hasActiveProgress();
+    const leaveRequest = this.uiShell.requestLeave(
+      hasActiveProgress,
+      ALLOW_SCORE_SAVE_ON_EXIT,
+    );
+
+    if (typeof leaveRequest === 'boolean') {
+      if (leaveRequest && this.store.gamePhase() !== GamePhase.Idle) {
+        this.store.exitGame();
+      }
+
+      return leaveRequest;
+    }
+
+    return leaveRequest.then((allowed) => {
+      if (allowed) {
+        this.store.exitGame();
+      }
+
+      return allowed;
     });
   }
 
@@ -458,9 +451,7 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   onSettingsChanged(partial: Partial<PlayerSettingsModel>) {
-    if (!('playerName' in partial)) {
-      this.handleButtonInteraction();
-    }
+    this.handleButtonInteraction();
     this.settingsService.update(partial);
   }
 
@@ -523,6 +514,7 @@ export class GamePage implements OnInit, OnDestroy {
       onFinish: () => {
         this.finishRoundTransition();
         this.revealedHandPromoted.set(true);
+        this.store.checkForPendingReshuffleGameOver();
       },
     });
   }
@@ -539,10 +531,6 @@ export class GamePage implements OnInit, OnDestroy {
       this.hiddenHandSlotRef()?.nativeElement,
       this.bottomHandSlotRef()?.nativeElement,
     );
-  }
-
-  private queueAnimationTimer(fn: () => void, delay: number): void {
-    this.roundTransition.queueTimer(fn, delay);
   }
 
   private clearAnimationTimers(): void {
@@ -680,6 +668,22 @@ export class GamePage implements OnInit, OnDestroy {
 
   openExitDialog(): void {
     this.handleButtonInteraction();
+
+    if (!this.hasActiveProgress()) {
+      this.onExitGame();
+      return;
+    }
+
+    if (ALLOW_SCORE_SAVE_ON_EXIT) {
+      if (this.scoreQualifiesForLeaderboard()) {
+        this.uiShell.openExitSavePanel();
+        return;
+      }
+
+      this.exitDialogOpen.set(true);
+      return;
+    }
+
     this.exitDialogOpen.set(true);
   }
 
@@ -688,30 +692,28 @@ export class GamePage implements OnInit, OnDestroy {
     this.uiShell.resolvePendingLeave(false);
   }
 
-  onPauseToggle(): void {
+  onExitSavePanelClosed(): void {
     this.handleButtonInteraction();
-    this.store.togglePause();
+    this.uiShell.cancelExitSavePanel();
+    this.uiShell.resolvePendingLeave(false);
   }
 
-  onPauseResumed(): void {
-    this.handleButtonInteraction();
-    this.store.togglePause();
+  onVisibleHandDealStarted(): void {
+    this.audioManager.playTileIn(this.store.handSize());
   }
 
-  onPauseSettingsOpened(): void {
-    this.handleButtonInteraction();
-    this.settingsOpen.set(true);
-  }
-
-  onPauseExited(): void {
-    this.handleButtonInteraction();
-    this.exitDialogOpen.set(true);
-    this.store.togglePause();
+  onHiddenHandDealStarted(): void {
+    this.audioManager.playTileIn(this.store.handSize());
   }
 
   onSettingsPanelClosed(): void {
     this.handleButtonInteraction();
     this.settingsOpen.set(false);
+  }
+
+  onSettingsOpened(): void {
+    this.handleButtonInteraction();
+    this.settingsOpen.set(true);
   }
 
   onGameOverNameInput(value: string): void {
@@ -721,6 +723,10 @@ export class GamePage implements OnInit, OnDestroy {
   onSaveScoreWithName(): void {
     this.handleButtonInteraction();
     this.uiShell.saveScoreWithName();
+
+    if (this.exitSavePanelOpen() && this.scoreSaved()) {
+      this.onExitGame();
+    }
   }
 
   private handleButtonInteraction(): void {

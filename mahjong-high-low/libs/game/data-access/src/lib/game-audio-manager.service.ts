@@ -4,6 +4,12 @@ import { SettingsService } from './settings.service';
 type MusicMode = 'none' | 'gameplay' | 'pause';
 type MusicTrack = 'gameplay' | 'pause';
 type ResultSound = 'win' | 'lose';
+type PendingAssetPlayback = {
+  src: string;
+  volume: number;
+  requestedAtMs: number;
+  offsetMs: number;
+};
 
 @Injectable({ providedIn: 'root' })
 export class GameAudioManager {
@@ -34,10 +40,12 @@ export class GameAudioManager {
   private desiredMusicMode: MusicMode = 'none';
   private activeMusic: HTMLAudioElement | null = null;
   private unlocked = false;
-  private mediaUnlocked = false;
+  private mediaUnlockRequested = false;
+  private mediaPlaybackReady = false;
   private audioContext: AudioContext | null = null;
   private musicCache = new Map<string, HTMLAudioElement>();
   private lastTileFlipIndex = -1;
+  private pendingAssetPlaybacks: PendingAssetPlayback[] = [];
 
   constructor() {
     effect(() => {
@@ -185,6 +193,17 @@ export class GameAudioManager {
       return;
     }
 
+    if (!this.mediaPlaybackReady) {
+      this.pendingAssetPlaybacks.push({
+        src,
+        volume,
+        requestedAtMs: this.nowMs(),
+        offsetMs: offsetSeconds * 1000,
+      });
+      this.unlockMediaPlayback();
+      return;
+    }
+
     window.setTimeout(() => {
       const audio = new Audio(src);
       audio.preload = 'auto';
@@ -279,11 +298,11 @@ export class GameAudioManager {
   }
 
   private unlockMediaPlayback(): void {
-    if (this.mediaUnlocked || typeof Audio === 'undefined') {
+    if (this.mediaPlaybackReady || this.mediaUnlockRequested || typeof Audio === 'undefined') {
       return;
     }
 
-    this.mediaUnlocked = true;
+    this.mediaUnlockRequested = true;
     const audio = new Audio(this.tileSlideSource);
     audio.preload = 'auto';
     audio.muted = true;
@@ -293,7 +312,41 @@ export class GameAudioManager {
         audio.pause();
         audio.currentTime = 0;
         audio.muted = false;
+        this.mediaPlaybackReady = true;
+        this.flushPendingAssetPlaybacks();
       })
-      .catch(() => undefined);
+      .catch(() => {
+        this.mediaUnlockRequested = false;
+      });
+  }
+
+  private flushPendingAssetPlaybacks(): void {
+    if (this.pendingAssetPlaybacks.length === 0) {
+      return;
+    }
+
+    const queuedPlaybacks = [...this.pendingAssetPlaybacks];
+    this.pendingAssetPlaybacks = [];
+    const nowMs = this.nowMs();
+
+    for (const playback of queuedPlaybacks) {
+      const elapsedMs = nowMs - playback.requestedAtMs;
+      const remainingMs = Math.max(0, playback.offsetMs - elapsedMs);
+
+      window.setTimeout(() => {
+        const audio = new Audio(playback.src);
+        audio.preload = 'auto';
+        audio.volume = playback.volume;
+        audio.play().catch(() => undefined);
+      }, remainingMs);
+    }
+  }
+
+  private nowMs(): number {
+    if (typeof performance !== 'undefined') {
+      return performance.now();
+    }
+
+    return Date.now();
   }
 }

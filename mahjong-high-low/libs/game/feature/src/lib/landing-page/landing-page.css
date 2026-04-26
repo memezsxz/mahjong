@@ -1,7 +1,23 @@
 :host {
   display: block;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.lp-score-row {
+  grid-template-columns: 2rem minmax(0, 1fr) 4.75rem 4.9rem;
+}
+
+.lp-score-value {
+  justify-self: start;
+  text-align: left;
+}
+
+.lp-score-date {
+  justify-self: start;
+  white-space: nowrap;
+  text-align: left;
 }
 
 /* ── PrimeNG button overrides ─────────────────────────────────────────── */

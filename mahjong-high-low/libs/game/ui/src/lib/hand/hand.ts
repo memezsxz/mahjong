@@ -1,4 +1,4 @@
-import { afterNextRender, Component, computed, effect, input, OnDestroy, signal, viewChildren } from '@angular/core';
+import { afterNextRender, Component, computed, effect, input, OnDestroy, output, signal, viewChildren } from '@angular/core';
 import { HandModel } from '@hbg/shared-models';
 import { Tile } from '../tile/tile';
 import { UI_HAND_TOTAL_ROLL_DURATION_MS } from '../game-ui.animations';
@@ -22,6 +22,7 @@ export class Hand implements OnDestroy {
   valueVisibleTileIds = input<string[] | null>(null);
   dealTrigger       = input<number>(0);
   animateDeal       = input<boolean>(true);
+  dealStarted       = output<void>();
 
   private tileComponents = viewChildren(Tile);
   faceUpTileIdSet = computed(() => new Set(this.faceUpTileIds() ?? []));
@@ -76,6 +77,7 @@ export class Hand implements OnDestroy {
   }
 
   private deal(): void {
+    this.dealStarted.emit();
     this.tileComponents().forEach(t => t.restartDealAnimation());
   }
 

@@ -44,10 +44,11 @@ export const GameStore = signalStore(
         const playerSettings = inject(SettingsService);
         return {
             startGame() {
+            const selectedHandSize = playerSettings.settings().handSize
             let newDeck = buildDeck()
-            const {hand: firstHand, drawPile: firstRemainingDeck} = drawHand(store.handSize(), newDeck)
+            const {hand: firstHand, drawPile: firstRemainingDeck} = drawHand(selectedHandSize, newDeck)
             newDeck = firstRemainingDeck
-            const {hand: secondHand, drawPile: secondRemainingDeck} = drawHand(store.handSize(), newDeck)
+            const {hand: secondHand, drawPile: secondRemainingDeck} = drawHand(selectedHandSize, newDeck)
             newDeck = secondRemainingDeck
             patchState(store, {
                 drawPile: newDeck,
@@ -62,7 +63,7 @@ export const GameStore = signalStore(
                 lastResult: null,
                 lastScoreChange: null,
                 gameOverReason: null,
-                handSize: playerSettings.settings().handSize,
+                handSize: selectedHandSize,
                 handHistory: [],
             });
         },
@@ -148,6 +149,32 @@ export const GameStore = signalStore(
                 lastResult: null,
                 lastScoreChange: null,
             })
+        },
+        checkForPendingReshuffleGameOver() {
+            const currentHiddenHand = store.hiddenHand()
+            if (!currentHiddenHand) {
+                return false
+            }
+
+            if (store.drawPile().length >= store.handSize()) {
+                return false
+            }
+
+            const reshuffleGameOver = checkGameOverShuffle(store.reshuffleCount() + 1)
+            if (!reshuffleGameOver) {
+                return false
+            }
+
+            patchState(store, {
+                visibleHand: currentHiddenHand,
+                discard: [...store.discard(), ...currentHiddenHand.tiles],
+                gamePhase: GamePhase.GameOver,
+                gameOverReason: reshuffleGameOver,
+                lastResult: null,
+                lastScoreChange: null,
+            })
+
+            return true
         },
         exitGame() {
             patchState(store, {

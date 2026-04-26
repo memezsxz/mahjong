@@ -1,19 +1,27 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
-import { GameStore, ScoresService, SettingsService } from '@hbg/game-data-access';
+import { GameStore, ScoresService } from '@hbg/game-data-access';
 import { GamePhase } from '@hbg/shared-models';
 
 @Injectable()
 export class GamePageUiShellService {
+  private static readonly MAX_RUN_NAME_LENGTH = 20;
   readonly settingsOpen = signal(false);
   readonly exitDialogOpen = signal(false);
-  readonly scoreSaved = signal(false);
+  readonly exitSavePanelOpen = signal(false);
   readonly gameOverNameDraft = signal('');
-  readonly needsGameOverName = computed(() => !this.getTrimmedPlayerName());
+  readonly scoreQualifiesForLeaderboard = computed(() =>
+    this.scoresService.qualifiesForLeaderboard(this.store.currentScore()),
+  );
+  readonly scoreSaved = computed(() =>
+    this.exitSavePanelOpen() ? this.exitScoreSaved() : this.gameOverScoreSaved(),
+  );
+  readonly needsGameOverName = computed(() => !this.getTrimmedGameOverName());
 
   private readonly store = inject(GameStore);
-  private readonly settingsService = inject(SettingsService);
   private readonly scoresService = inject(ScoresService);
   private pendingLeaveResolver: ((allowed: boolean) => void) | null = null;
+  private readonly gameOverScoreSaved = signal(false);
+  private readonly exitScoreSaved = signal(false);
 
   constructor() {
     effect(() => {
@@ -21,21 +29,25 @@ export class GamePageUiShellService {
         return;
       }
 
-      this.gameOverNameDraft.set(this.settingsService.settings().playerName ?? '');
-
-      if (!this.scoreSaved() && !this.needsGameOverName()) {
-        this.saveScore();
-      }
+      this.gameOverScoreSaved.set(false);
+      this.gameOverNameDraft.set('');
     });
   }
 
-  requestLeave(hasActiveProgress: boolean, onImmediateLeave: () => void): boolean | Promise<boolean> {
+  requestLeave(
+    hasActiveProgress: boolean,
+    allowScoreSaveOnExit: boolean,
+  ): boolean | Promise<boolean> {
     if (!hasActiveProgress) {
-      onImmediateLeave();
       return true;
     }
 
-    this.exitDialogOpen.set(true);
+    if (allowScoreSaveOnExit && this.scoreQualifiesForLeaderboard()) {
+      this.openExitSavePanel();
+    } else {
+      this.exitDialogOpen.set(true);
+    }
+
     return new Promise<boolean>((resolve) => {
       this.pendingLeaveResolver = resolve;
     });
@@ -43,6 +55,7 @@ export class GamePageUiShellService {
 
   resolvePendingLeave(allowed: boolean): boolean {
     this.exitDialogOpen.set(false);
+    this.exitSavePanelOpen.set(false);
     if (!this.pendingLeaveResolver) {
       return false;
     }
@@ -53,29 +66,50 @@ export class GamePageUiShellService {
   }
 
   resetScoreSaved(): void {
-    this.scoreSaved.set(false);
+    this.gameOverScoreSaved.set(false);
+    this.exitScoreSaved.set(false);
+    this.gameOverNameDraft.set('');
+    this.exitSavePanelOpen.set(false);
+    this.exitDialogOpen.set(false);
+  }
+
+  openExitSavePanel(): void {
+    this.exitDialogOpen.set(false);
+    this.exitScoreSaved.set(false);
+    this.gameOverNameDraft.set('');
+    this.exitSavePanelOpen.set(true);
+  }
+
+  cancelExitSavePanel(): void {
+    this.exitScoreSaved.set(false);
+    this.gameOverNameDraft.set('');
+    this.exitSavePanelOpen.set(false);
   }
 
   onGameOverNameInput(value: string): void {
-    this.gameOverNameDraft.set(value);
+    this.gameOverNameDraft.set(value.slice(0, GamePageUiShellService.MAX_RUN_NAME_LENGTH));
   }
 
   saveScoreWithName(): void {
-    const playerName = this.gameOverNameDraft().trim();
-    if (!playerName || this.scoreSaved()) {
+    const playerName = this.getTrimmedGameOverName();
+    if (!playerName || this.scoreSaved() || !this.scoreQualifiesForLeaderboard()) {
       return;
     }
 
-    this.settingsService.update({ playerName });
     this.saveScore(playerName);
   }
 
-  private saveScore(playerName: string | null = this.getTrimmedPlayerName()): void {
-    if (!playerName || this.scoreSaved()) {
+  private saveScore(playerName: string | null): void {
+    if (!playerName || this.scoreSaved() || !this.scoreQualifiesForLeaderboard()) {
       return;
     }
 
-    this.scoreSaved.set(true);
+    if (this.exitSavePanelOpen()) {
+      this.exitScoreSaved.set(true);
+    } else {
+      this.gameOverScoreSaved.set(true);
+    }
+
     this.scoresService.saveScore({
       playerName,
       totalScore: this.store.currentScore(),
@@ -83,8 +117,10 @@ export class GamePageUiShellService {
     });
   }
 
-  private getTrimmedPlayerName(): string | null {
-    const playerName = this.settingsService.settings().playerName?.trim();
+  private getTrimmedGameOverName(): string | null {
+    const playerName = this.gameOverNameDraft()
+      .slice(0, GamePageUiShellService.MAX_RUN_NAME_LENGTH)
+      .trim();
     return playerName ? playerName : null;
   }
 }
