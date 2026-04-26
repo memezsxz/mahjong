@@ -291,7 +291,7 @@
                 <input
                   class="w-full h-9 px-3 border border-c-indigo/10 bg-c-bg font-display text-sm text-c-text outline-none transition-colors duration-100 placeholder:text-c-muted"
                   type="text"
-                  maxlength="20"
+                  [attr.maxlength]="maxRunNameLength"
                   [value]="gameOverNameDraft()"
                   placeholder="Enter a run name..."
                   (input)="onGameOverNameInput($any($event.target).value)"

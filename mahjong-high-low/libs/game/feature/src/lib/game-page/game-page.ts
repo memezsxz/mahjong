@@ -76,6 +76,7 @@ export class GamePage implements OnInit, OnDestroy {
   scoreSaved = this.uiShell.scoreSaved;
   scoreQualifiesForLeaderboard = this.uiShell.scoreQualifiesForLeaderboard;
   gameOverNameDraft = this.uiShell.gameOverNameDraft;
+  maxRunNameLength = this.uiShell.maxRunNameLength;
   dealCount = signal(0);
   betControlsReady = signal(false);
   promotedHandMoveActive = this.roundTransition.promotedHandMoveActive;

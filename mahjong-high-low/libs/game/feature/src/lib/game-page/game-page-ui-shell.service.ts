@@ -4,7 +4,8 @@ import { GamePhase } from '@hbg/shared-models';
 
 @Injectable()
 export class GamePageUiShellService {
-  private static readonly MAX_RUN_NAME_LENGTH = 20;
+  private static readonly MAX_RUN_NAME_LENGTH = 10;
+  readonly maxRunNameLength = GamePageUiShellService.MAX_RUN_NAME_LENGTH;
   readonly settingsOpen = signal(false);
   readonly exitDialogOpen = signal(false);
   readonly exitSavePanelOpen = signal(false);
