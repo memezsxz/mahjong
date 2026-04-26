@@ -29,8 +29,8 @@
 }
 
 :host.dealing {
-  animation: tile-deal 520ms linear both;
-  animation-delay: calc(var(--hand-base-delay, 0ms) + var(--tile-index) * 65ms);
+  animation: tile-deal var(--gui-tile-deal-ms) linear both;
+  animation-delay: calc(var(--hand-base-delay, 0ms) + var(--tile-index) * var(--gui-tile-deal-stagger-ms));
 }
 
 @keyframes tile-deal {
@@ -56,7 +56,7 @@ img {
 }
 
 :host.tile-flipping img {
-  animation: tile-reveal-flip 520ms ease-in-out both;
+  animation: tile-reveal-flip var(--gui-tile-flip-ms) ease-in-out both;
 }
 
 @keyframes tile-reveal-flip {
@@ -112,19 +112,19 @@ img {
 }
 
 .tile-value-old {
-  animation: tile-value-old-down 700ms ease forwards;
+  animation: tile-value-old-down var(--gui-tile-value-roll-ms) ease forwards;
 }
 
 .tile-value-new {
-  animation: tile-value-new-down 700ms ease forwards;
+  animation: tile-value-new-down var(--gui-tile-value-roll-ms) ease forwards;
 }
 
 .tile-value-old-up {
-  animation: tile-value-old-up 700ms ease forwards;
+  animation: tile-value-old-up var(--gui-tile-value-roll-ms) ease forwards;
 }
 
 .tile-value-new-up {
-  animation: tile-value-new-up 700ms ease forwards;
+  animation: tile-value-new-up var(--gui-tile-value-roll-ms) ease forwards;
 }
 
 @keyframes tile-value-old-down {

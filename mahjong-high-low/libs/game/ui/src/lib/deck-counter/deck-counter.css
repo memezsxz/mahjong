@@ -53,19 +53,19 @@
 }
 
 .dc-old {
-  animation: dc-old-down 420ms ease forwards;
+  animation: dc-old-down var(--gui-deck-counter-roll-ms) ease forwards;
 }
 
 .dc-new {
-  animation: dc-new-down 420ms ease forwards;
+  animation: dc-new-down var(--gui-deck-counter-roll-ms) ease forwards;
 }
 
 .dc-old-up {
-  animation: dc-old-up 420ms ease forwards;
+  animation: dc-old-up var(--gui-deck-counter-roll-ms) ease forwards;
 }
 
 .dc-new-up {
-  animation: dc-new-up 420ms ease forwards;
+  animation: dc-new-up var(--gui-deck-counter-roll-ms) ease forwards;
 }
 
 @keyframes dc-old-down {

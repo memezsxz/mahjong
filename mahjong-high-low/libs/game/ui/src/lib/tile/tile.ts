@@ -2,12 +2,16 @@ import { Component, computed, effect, ElementRef, inject, input, OnDestroy, sign
 import { GameAudioManager } from '@hbg/game-data-access';
 import { TileInstance } from '@hbg/shared-models';
 import { getTileAssetPath } from '@hbg/shared-util-game';
+import {
+  UI_TILE_REVEAL_FLIP_DURATION_MS,
+  UI_TILE_VALUE_ROLL_DURATION_MS,
+} from '../game-ui.animations';
 
 @Component({
   selector: 'lib-tile',
   imports: [],
   templateUrl: './tile.html',
-  styleUrl: './tile.css',
+  styleUrls: ['../game-ui.animation-tokens.css', './tile.css'],
   host: {
     '[style.--tile-index]': 'tileIndex()',
     '[class.tile-flipping]': 'flipActive()',
@@ -20,7 +24,7 @@ export class Tile implements OnDestroy {
   private flipMidTimer: ReturnType<typeof setTimeout> | null = null;
   private flipEndTimer: ReturnType<typeof setTimeout> | null = null;
   private previousFaceDown: boolean | null = null;
-  private readonly revealFlipDurationMs = 520;
+  private readonly revealFlipDurationMs = UI_TILE_REVEAL_FLIP_DURATION_MS;
 
   tile      = input.required<TileInstance>();
   showValue = input<boolean>(true);
@@ -95,7 +99,7 @@ export class Tile implements OnDestroy {
           this.valueRolling.set(false);
           this.previousDisplayValue.set(null);
           this.valueRollTimer = null;
-        }, 700);
+        }, UI_TILE_VALUE_ROLL_DURATION_MS);
       });
     });
   }

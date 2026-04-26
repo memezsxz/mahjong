@@ -40,19 +40,19 @@
 }
 
 .hand-total-old {
-  animation: hand-total-old-down 700ms ease forwards;
+  animation: hand-total-old-down var(--gui-hand-total-roll-ms) ease forwards;
 }
 
 .hand-total-new {
-  animation: hand-total-new-down 700ms ease forwards;
+  animation: hand-total-new-down var(--gui-hand-total-roll-ms) ease forwards;
 }
 
 .hand-total-old-up {
-  animation: hand-total-old-up 700ms ease forwards;
+  animation: hand-total-old-up var(--gui-hand-total-roll-ms) ease forwards;
 }
 
 .hand-total-new-up {
-  animation: hand-total-new-up 700ms ease forwards;
+  animation: hand-total-new-up var(--gui-hand-total-roll-ms) ease forwards;
 }
 
 @keyframes hand-total-old-down {

@@ -60,14 +60,14 @@
 
       <span class="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-muted">TOP SCORES</span>
 
-      @if (leaderboardService.topScores().length === 0) {
+      @if (scoresService.topScores().length === 0) {
         <div class="flex flex-col gap-1 py-8">
           <span class="font-mono text-xs text-c-muted leading-relaxed">No scores yet.</span>
           <span class="font-mono text-xs text-c-muted leading-relaxed">Be the first to play.</span>
         </div>
       } @else {
         <div class="flex flex-col gap-px bg-c-indigo/10">
-          @for (entry of leaderboardService.topScores(); track entry.date; let i = $index) {
+          @for (entry of scoresService.topScores(); track entry.date; let i = $index) {
             <div class="grid items-center gap-3 px-4 py-3.5 bg-c-surface"
                  style="grid-template-columns: 2rem 1fr auto auto">
               <span

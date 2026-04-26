@@ -1,0 +1,13 @@
+:host {
+  /* Edit page-level visual motion timings here. */
+  --gp-promoted-hand-ms: 430ms;
+  --gp-incoming-hidden-ms: 430ms;
+  --gp-visible-hand-exit-ms: 260ms;
+  --gp-visible-total-out-ms: 260ms;
+  --gp-visible-total-in-ms: 220ms;
+  --gp-result-scale-ms: 420ms;
+  --gp-result-pulse-ms: 220ms;
+  --gp-overlay-exit-ms: 280ms;
+  --gp-reshuffle-swirl-ms: 1800ms;
+  --gp-score-gain-fly-ms: 650ms;
+}

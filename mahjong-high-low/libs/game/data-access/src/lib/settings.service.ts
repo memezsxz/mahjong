@@ -7,7 +7,7 @@ export class SettingsService {
     private readonly STORAGE_KEY = 'player-settings';
 
     private _settings = signal<PlayerSettingsModel>({
-        handSize: DEFAULT_HAND_SIZE, musicEnabled: true, soundEnabled: true, playerName: '', showTileValues: true, hasSeenTutorial: false
+        handSize: DEFAULT_HAND_SIZE, musicEnabled: true, soundEnabled: true, animationsEnabled: true, playerName: '', showTileValues: true, hasSeenTutorial: false
     });
 
     readonly settings = this._settings.asReadonly();

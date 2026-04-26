@@ -1,10 +1,11 @@
 import { Component, computed, effect, input, OnDestroy, signal } from '@angular/core';
+import { UI_DECK_COUNTER_ROLL_DURATION_MS } from '../game-ui.animations';
 
 @Component({
   selector: 'lib-deck-counter',
   imports: [],
   templateUrl: './deck-counter.html',
-  styleUrl: './deck-counter.css',
+  styleUrls: ['../game-ui.animation-tokens.css', './deck-counter.css'],
 })
 export class DeckCounter implements OnDestroy {
   drawCount = input.required<number>();
@@ -63,7 +64,7 @@ export class DeckCounter implements OnDestroy {
           this.drawRolling.set(false);
           this.previousDrawValue.set(null);
           this.drawTimer = null;
-        }, 420);
+        }, UI_DECK_COUNTER_ROLL_DURATION_MS);
       });
     });
 
@@ -86,7 +87,7 @@ export class DeckCounter implements OnDestroy {
           this.discardRolling.set(false);
           this.previousDiscardValue.set(null);
           this.discardTimer = null;
-        }, 420);
+        }, UI_DECK_COUNTER_ROLL_DURATION_MS);
       });
     });
   }

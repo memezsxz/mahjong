@@ -1,12 +1,13 @@
 import { afterNextRender, Component, computed, effect, input, OnDestroy, signal, viewChildren } from '@angular/core';
 import { HandModel } from '@hbg/shared-models';
 import { Tile } from '../tile/tile';
+import { UI_HAND_TOTAL_ROLL_DURATION_MS } from '../game-ui.animations';
 
 @Component({
   selector: 'lib-hand',
   imports: [Tile],
   templateUrl: './hand.html',
-  styleUrl: './hand.css',
+  styleUrls: ['../game-ui.animation-tokens.css', './hand.css'],
 })
 export class Hand implements OnDestroy {
   hand              = input.required<HandModel>();
@@ -69,7 +70,7 @@ export class Hand implements OnDestroy {
           this.totalRolling.set(false);
           this.previousTotalValue.set(null);
           this.totalRollTimer = null;
-        }, 700);
+        }, UI_HAND_TOTAL_ROLL_DURATION_MS);
       });
     });
   }

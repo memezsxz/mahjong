@@ -4,7 +4,7 @@ import { DatePipe, DecimalPipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { SettingsPanel } from '@hbg/game-ui';
 import { PlayerSettingsModel } from '@hbg/shared-models';
-import { GameAudioManager, LeaderboardService, SettingsService } from '@hbg/game-data-access';
+import { GameAudioManager, ScoresService, SettingsService } from '@hbg/game-data-access';
 
 @Component({
   selector: 'lib-landing-page',
@@ -15,7 +15,7 @@ import { GameAudioManager, LeaderboardService, SettingsService } from '@hbg/game
 export class LandingPage {
   private readonly router      = inject(Router);
   readonly settingsService     = inject(SettingsService);
-  readonly leaderboardService  = inject(LeaderboardService);
+  readonly scoresService       = inject(ScoresService);
   readonly audioManager        = inject(GameAudioManager);
 
   settingsOpen = signal(false);

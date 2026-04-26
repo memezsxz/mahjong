@@ -1,31 +1,24 @@
-import { Component, computed, effect, ElementRef, inject, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
+import { Component, computed, effect, ElementRef, HostListener, inject, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { BetControls, DeckCounter, Hand, HandHistory, PauseMenu, ScoreDisplay, SettingsPanel } from '@hbg/game-ui';
 import { Bet, GameOverReason, GamePhase, HandModel, PlayerSettingsModel } from '@hbg/shared-models';
-import { GameAudioManager, GameStore, LeaderboardService, SettingsService } from '@hbg/game-data-access';
+import { GameAudioManager, GameStore, SettingsService } from '@hbg/game-data-access';
 import { buildDeck } from '@hbg/shared-util-game';
 import {
   getBetControlsDelay,
   getHiddenHandBaseDelay,
   getNextRoundBetControlsDelay,
   getSingleHandDealDuration,
-  HIDDEN_REVEAL_POST_TILE_MS,
-  HIDDEN_REVEAL_SETTLE_MS,
-  HIDDEN_REVEAL_TOTAL_STEP_MS,
-  HIDDEN_REVEAL_VALUE_DELAY_MS,
-  NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS,
   NEXT_ROUND_INCOMING_HIDDEN_MS,
-  NEXT_ROUND_PROMOTE_DELAY_MS,
-  NEXT_ROUND_TRANSITION_TOTAL_MS,
-  NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS,
-  SCORE_GAIN_FLY_MS,
-  SCORE_GAIN_SETTLE_MS,
-  WIN_BANNER_SHOW_MS,
-  WIN_POST_VALUE_SETTLE_MS,
-  WIN_VALUE_STEP_MS
+  TRANSITION_FINISH_BUFFER_MS,
 } from './game-page.animations';
+import { GamePageRevealSequenceService } from './game-page-reveal-sequence.service';
+import { GamePageRoundTransitionService } from './game-page-round-transition.service';
+import { GamePageReshuffleSequenceService } from './game-page-reshuffle-sequence.service';
+import { GamePageScoreAnimationService } from './game-page-score-animation.service';
+import { GamePageUiShellService } from './game-page-ui-shell.service';
 
 @Component({
   selector: 'lib-game-page',
@@ -42,13 +35,20 @@ import {
   ],
   templateUrl: './game-page.html',
   styleUrls: [
+    './game-page.animation-tokens.css',
     './game-page.layout.css',
     './game-page.deal.css',
     './game-page.round-transition.css',
   ],
+  providers: [
+    GamePageRevealSequenceService,
+    GamePageRoundTransitionService,
+    GamePageReshuffleSequenceService,
+    GamePageScoreAnimationService,
+    GamePageUiShellService,
+  ],
 })
 export class GamePage implements OnInit, OnDestroy {
-  reshuffleSequenceActive = signal(false);
   private previousScoreDisplayValue: number | null = null;
   private previousReshuffleDrawValue: number | null = null;
   private previousReshuffleDiscardValue: number | null = null;
@@ -58,56 +58,84 @@ export class GamePage implements OnInit, OnDestroy {
   readonly store = inject(GameStore);
   readonly settingsService = inject(SettingsService);
   readonly audioManager = inject(GameAudioManager);
-  private readonly leaderboardService = inject(LeaderboardService);
+  private readonly revealSequence = inject(GamePageRevealSequenceService);
+  private readonly roundTransition = inject(GamePageRoundTransitionService);
+  private readonly reshuffleSequence = inject(GamePageReshuffleSequenceService);
+  private readonly scoreAnimation = inject(GamePageScoreAnimationService);
+  private readonly uiShell = inject(GamePageUiShellService);
   steadyHandsShouldDeal = signal(true);
-  roundTransitionActive = signal(false);
-  visibleHandExitActive = signal(false);
+  revealedHandPromoted = signal(false);
+  roundTransitionActive = this.roundTransition.roundTransitionActive;
+  visibleHandExitActive = this.roundTransition.visibleHandExitActive;
 
   // ── Expose enum to template ───────────────────────────────────────────
   readonly GamePhase = GamePhase;
 
   // ── UI-only overlay state ─────────────────────────────────────────────
-  settingsOpen = signal(false);
-  exitDialogOpen = signal(false);
-  scoreSaved = signal(false);
-  gameOverNameDraft = signal('');
+  settingsOpen = this.uiShell.settingsOpen;
+  exitDialogOpen = this.uiShell.exitDialogOpen;
+  scoreSaved = this.uiShell.scoreSaved;
+  gameOverNameDraft = this.uiShell.gameOverNameDraft;
   dealCount = signal(0);
   betControlsReady = signal(false);
-  promotedHandMoveActive = signal(false);
-  incomingHiddenEnterActive = signal(false);
-  incomingVisibleTotalActive = signal(false);
-  transitionOutgoingVisibleHand = signal(this.store.visibleHand());
-  transitionPromotedVisibleHand = signal(this.store.hiddenHand());
-  transitionIncomingHiddenHand = signal(this.store.hiddenHand());
-  transitionOutgoingVisibleTotal = signal<number | null>(null);
-  transitionIncomingVisibleTotal = signal<number | null>(null);
-  reshuffleSequenceExitActive = signal(false);
-  reshuffleDisplayDrawCount = signal<number | null>(null);
-  reshuffleDisplayDiscardCount = signal<number | null>(null);
-  reshuffleTransitionPendingIncoming = signal(false);
-  reshufflePattern = signal(0);
-  revealTileFaceUpIds = signal<string[] | null>(null);
-  revealTileValueVisibleIds = signal<string[] | null>(null);
-  revealWinBannerActive = signal(false);
-  revealHistoryReady = signal(false);
-  revealValueAnimationActive = signal(false);
-  revealSequenceLocked = signal(false);
-  scoreDisplayOverride = signal<number | null>(null);
-  scoreGainAnimationActive = signal(false);
-  revealTileValueOverrides = signal<Record<string, number> | null>(null);
-  revealHiddenTotalOverride = signal<number | null>(null);
-  scoreGainTravelActive = signal(false);
-  scoreGainAmount = signal(0);
-  scoreGainDirection = signal<'up' | 'down'>('down');
-  scoreGainStartX = signal(0);
-  scoreGainStartY = signal(0);
-  scoreGainDeltaX = signal(0);
-  scoreGainDeltaY = signal(0);
-  revealAllTilesRevealed = computed<boolean>(() => {
-    const hand = this.store.hiddenHand();
-    const valueVisibleIds = this.revealTileValueVisibleIds();
-    if (!hand || valueVisibleIds === null) return true;
-    return valueVisibleIds.length >= hand.tiles.length;
+  promotedHandMoveActive = this.roundTransition.promotedHandMoveActive;
+  incomingHiddenEnterActive = this.roundTransition.incomingHiddenEnterActive;
+  incomingVisibleTotalActive = this.roundTransition.incomingVisibleTotalActive;
+  transitionOutgoingVisibleHand = this.roundTransition.transitionOutgoingVisibleHand;
+  transitionPromotedVisibleHand = this.roundTransition.transitionPromotedVisibleHand;
+  transitionIncomingHiddenHand = this.roundTransition.transitionIncomingHiddenHand;
+  transitionOutgoingVisibleTotal = this.roundTransition.transitionOutgoingVisibleTotal;
+  transitionIncomingVisibleTotal = this.roundTransition.transitionIncomingVisibleTotal;
+  reshuffleSequenceActive = this.reshuffleSequence.reshuffleSequenceActive;
+  reshuffleSequenceExitActive = this.reshuffleSequence.reshuffleSequenceExitActive;
+  reshuffleDisplayDrawCount = this.reshuffleSequence.reshuffleDisplayDrawCount;
+  reshuffleDisplayDiscardCount = this.reshuffleSequence.reshuffleDisplayDiscardCount;
+  reshuffleTransitionPendingIncoming = this.reshuffleSequence.reshuffleTransitionPendingIncoming;
+  reshufflePattern = this.reshuffleSequence.reshufflePattern;
+  revealTileFaceUpIds = this.revealSequence.tileFaceUpIds;
+  revealTileValueVisibleIds = this.revealSequence.tileValueVisibleIds;
+  revealWinBannerActive = this.revealSequence.winBannerActive;
+  revealHistoryReady = this.revealSequence.historyReady;
+  revealValueAnimationActive = this.revealSequence.valueAnimationActive;
+  revealSequenceLocked = this.revealSequence.sequenceLocked;
+  scoreDisplayOverride = this.scoreAnimation.scoreDisplayOverride;
+  scoreGainAnimationActive = this.scoreAnimation.scoreGainAnimationActive;
+  revealTileValueOverrides = this.revealSequence.tileValueOverrides;
+  revealHiddenTotalOverride = this.revealSequence.hiddenTotalOverride;
+  scoreGainTravelActive = this.scoreAnimation.scoreGainTravelActive;
+  scoreGainAmount = this.scoreAnimation.scoreGainAmount;
+  scoreGainDirection = this.scoreAnimation.scoreGainDirection;
+  scoreGainStartX = this.scoreAnimation.scoreGainStartX;
+  scoreGainStartY = this.scoreAnimation.scoreGainStartY;
+  scoreGainDeltaX = this.scoreAnimation.scoreGainDeltaX;
+  scoreGainDeltaY = this.scoreAnimation.scoreGainDeltaY;
+  revealAllTilesRevealed = this.revealSequence.allTilesRevealed;
+  showVisibleHandTransition = computed<boolean>(() =>
+    this.roundTransitionActive() &&
+    (!!this.transitionOutgoingVisibleHand() || !!this.transitionPromotedVisibleHand()),
+  );
+  displayedVisibleHand = computed<HandModel | null>(() => {
+    if (
+      this.store.gamePhase() === GamePhase.Revealing &&
+      this.revealedHandPromoted()
+    ) {
+      return this.store.hiddenHand();
+    }
+
+    return this.store.visibleHand();
+  });
+  displayedVisibleTotal = computed<number | null>(
+    () => this.displayedVisibleHand()?.total ?? null,
+  );
+  showCenterHiddenHand = computed<boolean>(() => {
+    if (this.roundTransitionActive()) {
+      return false;
+    }
+
+    return !(
+      this.store.gamePhase() === GamePhase.Revealing &&
+      this.revealedHandPromoted()
+    );
   });
   revealResultBannerText = computed<'WIN' | 'LOSE' | null>(() => {
     if (
@@ -126,21 +154,13 @@ export class GamePage implements OnInit, OnDestroy {
     }
     return null;
   });
-  revealPreWinHiddenHand = signal<HandModel | null>(null);
-  revealPostWinHiddenHand = signal<HandModel | null>(null);
-  winRevealOldTileValues = computed<Record<string, number> | null>(() => {
-    const hand = this.revealPreWinHiddenHand();
-    if (!hand) return null;
-    return Object.fromEntries(hand.tiles.map((tile) => [tile.id, tile.currentValue]));
-  });
-  winRevealNewTileValues = computed<Record<string, number> | null>(() => {
-    const hand = this.revealPostWinHiddenHand();
-    if (!hand) return null;
-    return Object.fromEntries(hand.tiles.map((tile) => [tile.id, tile.currentValue]));
-  });
-  winRevealOldTotal = computed<number | null>(() => this.revealPreWinHiddenHand()?.total ?? null);
-  winRevealNewTotal = computed<number | null>(() => this.revealPostWinHiddenHand()?.total ?? null);
-  winRevealAnimationRunning = computed<boolean>(() => this.revealSequenceLocked());
+  revealPreWinHiddenHand = this.revealSequence.preWinHiddenHand;
+  revealPostWinHiddenHand = this.revealSequence.postWinHiddenHand;
+  winRevealOldTileValues = this.revealSequence.oldTileValues;
+  winRevealNewTileValues = this.revealSequence.newTileValues;
+  winRevealOldTotal = this.revealSequence.oldTotal;
+  winRevealNewTotal = this.revealSequence.newTotal;
+  winRevealAnimationRunning = this.revealSequence.animationRunning;
   visibleWinStreak = computed<number>(() => {
     if (
       this.store.gamePhase() === GamePhase.Revealing &&
@@ -154,27 +174,26 @@ export class GamePage implements OnInit, OnDestroy {
   debugForceReshuffleNextHand = signal(false);
   // DEV toggle: set true to show debug controls for forcing reshuffle flow.
   private readonly DEBUG_MODE = true;
-  transitionPromotedStartX = signal(0);
-  transitionPromotedStartY = signal(0);
-  transitionPromotedDeltaX = signal(0);
-  transitionPromotedDeltaY = signal(0);
+  transitionPromotedStartX = this.roundTransition.transitionPromotedStartX;
+  transitionPromotedStartY = this.roundTransition.transitionPromotedStartY;
+  transitionPromotedDeltaX = this.roundTransition.transitionPromotedDeltaX;
+  transitionPromotedDeltaY = this.roundTransition.transitionPromotedDeltaY;
   debugMode = signal(this.DEBUG_MODE);
   private readonly freshDeckSize = buildDeck().length;
   private readonly mainStageRef =
-    viewChild<ElementRef<HTMLElement>>('mainStage');
+    viewChild<ElementRef<globalThis.HTMLElement>>('mainStage');
   private readonly centerStageRef =
-    viewChild<ElementRef<HTMLElement>>('centerStage');
+    viewChild<ElementRef<globalThis.HTMLElement>>('centerStage');
+  private readonly hiddenHandSlotRef =
+    viewChild<ElementRef<globalThis.HTMLElement>>('hiddenHandSlot');
   private readonly pageFrameRef =
-    viewChild<ElementRef<HTMLElement>>('pageFrame');
+    viewChild<ElementRef<globalThis.HTMLElement>>('pageFrame');
   private readonly bottomHandSlotRef =
-    viewChild<ElementRef<HTMLElement>>('bottomHandSlot');
+    viewChild<ElementRef<globalThis.HTMLElement>>('bottomHandSlot');
   private readonly scoreDisplaySlotRef =
-    viewChild<ElementRef<HTMLElement>>('scoreDisplaySlot');
-  private betControlsTimer: ReturnType<typeof setTimeout> | null = null;
-  private readonly animationTimers = new Set<ReturnType<typeof setTimeout>>();
-  private readonly revealTimers = new Set<ReturnType<typeof setTimeout>>();
+    viewChild<ElementRef<globalThis.HTMLElement>>('scoreDisplaySlot');
+  private betControlsTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
   private readonly betControlsDelayMs = signal(0);
-
   // ── Deal animation timing ─────────────────────────────────────────────
   readonly singleHandDealDuration = computed(() => {
     return getSingleHandDealDuration(this.settingsService.settings().handSize);
@@ -202,7 +221,7 @@ export class GamePage implements OnInit, OnDestroy {
     const reason = this.store.gameOverReason();
     return reason ? messages[reason] : '';
   });
-  needsGameOverName = computed(() => !this.getTrimmedPlayerName());
+  needsGameOverName = this.uiShell.needsGameOverName;
 
   // ── Last 5 rounds for the sidebar history ────────────────────────────
   handHistory = computed(() => {
@@ -220,18 +239,6 @@ export class GamePage implements OnInit, OnDestroy {
   });
 
   constructor() {
-    effect(() => {
-      if (this.store.gamePhase() !== GamePhase.GameOver) {
-        return;
-      }
-
-      this.gameOverNameDraft.set(this.settingsService.settings().playerName ?? '');
-
-      if (!this.scoreSaved() && !this.needsGameOverName()) {
-        this.saveScore();
-      }
-    });
-
     effect(() => {
       const phase = this.store.gamePhase();
       const visibleHand = this.store.visibleHand();
@@ -252,7 +259,7 @@ export class GamePage implements OnInit, OnDestroy {
 
       this.clearBetControlsTimer();
       this.betControlsReady.set(false);
-      this.betControlsTimer = setTimeout(() => {
+      this.betControlsTimer = globalThis.setTimeout(() => {
         this.betControlsReady.set(true);
       }, this.betControlsDelay());
     });
@@ -331,10 +338,25 @@ export class GamePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.clearBetControlsTimer();
-    this.clearAnimationTimers();
-    this.clearRevealTimers();
-    this.resetReshuffleSequenceState();
+    this.clearTransientAnimationState();
+    this.reshuffleSequence.resetSequenceState();
     this.audioManager.syncMusic('none');
+  }
+
+  canLeaveGame(): boolean | Promise<boolean> {
+    return this.uiShell.requestLeave(this.hasActiveProgress(), () => {
+      this.store.exitGame();
+    });
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  onBeforeUnload(event: globalThis.BeforeUnloadEvent): void {
+    if (!this.hasActiveProgress()) {
+      return;
+    }
+
+    event.preventDefault();
+    event.returnValue = 'Leaving now will lose your current game progress.';
   }
 
   // ── Handlers ──────────────────────────────────────────────────────────
@@ -345,8 +367,9 @@ export class GamePage implements OnInit, OnDestroy {
     if (!hiddenHandBeforeBet) return;
     const scoreBeforeBet = this.store.currentScore();
 
-    this.clearRevealTimers();
+    this.revealSequence.clearTimers();
     this.resetRevealAnimationState();
+    this.revealedHandPromoted.set(false);
 
     const hiddenHandSnapshot: HandModel = {
       total: hiddenHandBeforeBet.total,
@@ -367,8 +390,6 @@ export class GamePage implements OnInit, OnDestroy {
     if (!hiddenHandAfterBet) return;
     const scoreAfterBet = this.store.currentScore();
 
-    this.revealPreWinHiddenHand.set(hiddenHandSnapshot);
-    this.revealPostWinHiddenHand.set(hiddenHandAfterBet);
     this.startHiddenHandRevealSequence(
       hiddenHandSnapshot,
       hiddenHandAfterBet,
@@ -383,18 +404,21 @@ export class GamePage implements OnInit, OnDestroy {
     }
     this.handleButtonInteraction();
 
+    if (
+      this.store.gamePhase() === GamePhase.Revealing &&
+      this.revealedHandPromoted()
+    ) {
+      this.advanceToNextHiddenHand();
+      return;
+    }
+
     const outgoingVisibleHand = this.store.visibleHand();
     const promotedVisibleHand = this.store.hiddenHand();
     if (!outgoingVisibleHand || !promotedVisibleHand) {
       return;
     }
 
-    this.clearAnimationTimers();
-    this.clearRevealTimers();
-    this.reshuffleTransitionPendingIncoming.set(false);
-    this.resetRevealAnimationState();
-    this.resetReshuffleSequenceState();
-    this.clearReshuffleDisplayCounts();
+    this.clearTransientAnimationState();
     this.clearBetControlsTimer();
 
     const drawBefore = this.store.drawPile().length;
@@ -412,7 +436,7 @@ export class GamePage implements OnInit, OnDestroy {
         ? Math.max(0, this.freshDeckSize + drawBefore + discardBefore)
         : drawBefore;
       const discardAfterReshuffle = actualReshuffle ? 0 : discardBefore;
-      this.startReshuffleSequence(drawBefore, discardBefore, drawAfterReshuffle, discardAfterReshuffle, () => {
+      this.reshuffleSequence.startReshuffleSequence(drawBefore, discardBefore, drawAfterReshuffle, discardAfterReshuffle, () => {
         this.completeDeferredIncomingAfterReshuffle();
       });
       this.debugForceReshuffleNextHand.set(false);
@@ -442,14 +466,9 @@ export class GamePage implements OnInit, OnDestroy {
 
   onPlayAgain() {
     this.handleButtonInteraction();
-    this.scoreSaved.set(false);
+    this.uiShell.resetScoreSaved();
     this.finishRoundTransition();
-    this.clearAnimationTimers();
-    this.clearRevealTimers();
-    this.reshuffleTransitionPendingIncoming.set(false);
-    this.resetRevealAnimationState();
-    this.resetReshuffleSequenceState();
-    this.clearReshuffleDisplayCounts();
+    this.clearTransientAnimationState();
     this.clearBetControlsTimer();
     this.steadyHandsShouldDeal.set(true);
     this.betControlsDelayMs.set(
@@ -461,114 +480,82 @@ export class GamePage implements OnInit, OnDestroy {
 
   onExitGame() {
     this.handleButtonInteraction();
-    this.scoreSaved.set(false);
+    this.uiShell.resetScoreSaved();
     this.store.exitGame();
     this.exitDialogOpen.set(false);
+    if (this.uiShell.resolvePendingLeave(true)) {
+      return;
+    }
     this.router.navigate(['/']);
   }
 
   private clearBetControlsTimer(): void {
     if (this.betControlsTimer !== null) {
-      clearTimeout(this.betControlsTimer);
+      globalThis.clearTimeout(this.betControlsTimer);
       this.betControlsTimer = null;
     }
   }
 
-  private startRoundTransition(deferIncomingHidden: boolean = false): void {
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        this.visibleHandExitActive.set(true);
-        this.audioManager.playTileOut();
+  private startRoundTransition(deferIncomingHidden = false): void {
+    this.roundTransition.startRoundTransition({
+      deferIncomingHidden,
+      onVisibleExit: () => this.audioManager.playTileOut(),
+      onPromote: () => this.audioManager.playTileIn(this.store.handSize()),
+      onIncoming: () => this.audioManager.playTileIn(this.store.handSize()),
+      onFinish: () => this.finishRoundTransition(),
+    });
+  }
 
-        this.queueAnimationTimer(() => {
-          this.promotedHandMoveActive.set(true);
-          this.audioManager.playTileIn(this.store.handSize());
-        }, NEXT_ROUND_PROMOTE_DELAY_MS);
+  private startRevealPromotionTransition(): void {
+    const outgoingVisibleHand = this.store.visibleHand();
+    const promotedVisibleHand = this.store.hiddenHand();
+    if (!outgoingVisibleHand || !promotedVisibleHand) {
+      this.revealedHandPromoted.set(true);
+      return;
+    }
 
-        if (!deferIncomingHidden) {
-          this.queueAnimationTimer(() => {
-            this.incomingHiddenEnterActive.set(true);
-            this.audioManager.playTileIn(this.store.handSize());
-          }, NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS);
-
-          this.queueAnimationTimer(() => {
-            this.incomingVisibleTotalActive.set(true);
-          }, NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS);
-
-          this.queueAnimationTimer(() => {
-            this.finishRoundTransition();
-          }, NEXT_ROUND_TRANSITION_TOTAL_MS);
-        }
-      }),
-    );
+    this.measureRoundTransition();
+    this.roundTransition.prepareTransition(outgoingVisibleHand, promotedVisibleHand);
+    this.steadyHandsShouldDeal.set(false);
+    this.roundTransition.startPromotionOnlyTransition({
+      onVisibleExit: () => this.audioManager.playTileOut(),
+      onPromote: () => this.audioManager.playTileIn(this.store.handSize()),
+      onFinish: () => {
+        this.finishRoundTransition();
+        this.revealedHandPromoted.set(true);
+      },
+    });
   }
 
   private finishRoundTransition(): void {
     this.clearAnimationTimers();
-    this.roundTransitionActive.set(false);
-    this.visibleHandExitActive.set(false);
-    this.promotedHandMoveActive.set(false);
-    this.incomingHiddenEnterActive.set(false);
-    this.incomingVisibleTotalActive.set(false);
-    this.transitionOutgoingVisibleHand.set(null);
-    this.transitionPromotedVisibleHand.set(null);
-    this.transitionIncomingHiddenHand.set(null);
-    this.transitionOutgoingVisibleTotal.set(null);
-    this.transitionIncomingVisibleTotal.set(null);
+    this.roundTransition.reset();
     this.steadyHandsShouldDeal.set(false);
   }
 
   private measureRoundTransition(): void {
-    const main = this.mainStageRef()?.nativeElement;
-    const center = this.centerStageRef()?.nativeElement;
-    const bottom = this.bottomHandSlotRef()?.nativeElement;
-    if (!main || !center || !bottom) return;
-
-    const mainRect = main.getBoundingClientRect();
-    const centerRect = center.getBoundingClientRect();
-    const bottomRect = bottom.getBoundingClientRect();
-    const centerX = centerRect.left + centerRect.width / 2 - mainRect.left;
-    const centerY = centerRect.top + centerRect.height / 2 - mainRect.top;
-    const bottomX = bottomRect.left + bottomRect.width / 2 - mainRect.left;
-    const bottomY = bottomRect.top + bottomRect.height / 2 - mainRect.top;
-
-    this.transitionPromotedStartX.set(centerX);
-    this.transitionPromotedStartY.set(centerY);
-    this.transitionPromotedDeltaX.set(bottomX - centerX);
-    this.transitionPromotedDeltaY.set(bottomY - centerY);
+    this.roundTransition.measureRoundTransition(
+      this.mainStageRef()?.nativeElement,
+      this.hiddenHandSlotRef()?.nativeElement,
+      this.bottomHandSlotRef()?.nativeElement,
+    );
   }
 
   private queueAnimationTimer(fn: () => void, delay: number): void {
-    const timer = setTimeout(() => {
-      this.animationTimers.delete(timer);
-      fn();
-    }, delay);
-    this.animationTimers.add(timer);
+    this.roundTransition.queueTimer(fn, delay);
   }
 
   private clearAnimationTimers(): void {
-    for (const timer of this.animationTimers) {
-      clearTimeout(timer);
-    }
-    this.animationTimers.clear();
+    this.roundTransition.clearTimers();
   }
 
   private executeNextHandTransition(
     outgoingVisibleHand: HandModel,
     promotedVisibleHand: HandModel,
-    deferIncomingHidden: boolean = false,
+    deferIncomingHidden = false,
   ): void {
     this.measureRoundTransition();
-    this.transitionOutgoingVisibleHand.set(outgoingVisibleHand);
-    this.transitionPromotedVisibleHand.set(promotedVisibleHand);
-    this.transitionOutgoingVisibleTotal.set(outgoingVisibleHand.total);
-    this.transitionIncomingVisibleTotal.set(promotedVisibleHand.total);
-    this.transitionIncomingHiddenHand.set(null);
-    this.roundTransitionActive.set(true);
-    this.visibleHandExitActive.set(false);
-    this.promotedHandMoveActive.set(false);
-    this.incomingHiddenEnterActive.set(false);
-    this.incomingVisibleTotalActive.set(false);
+    this.roundTransition.prepareTransition(outgoingVisibleHand, promotedVisibleHand);
     this.steadyHandsShouldDeal.set(false);
     this.betControlsDelayMs.set(getNextRoundBetControlsDelay());
 
@@ -579,71 +566,8 @@ export class GamePage implements OnInit, OnDestroy {
     }
 
     this.store.nextHand();
-    this.transitionIncomingHiddenHand.set(this.store.hiddenHand());
+    this.roundTransition.setIncomingHiddenHand(this.store.hiddenHand());
     this.startRoundTransition(false);
-  }
-
-  private startReshuffleSequence(
-    drawFrom: number,
-    discardFrom: number,
-    drawTo: number,
-    discardTo: number,
-    onDone: () => void,
-  ): void {
-    this.reshufflePattern.update(v => (v + 1) % 3);
-    this.reshuffleSequenceActive.set(true);
-    this.reshuffleSequenceExitActive.set(false);
-    this.reshuffleDisplayDrawCount.set(drawFrom);
-    this.reshuffleDisplayDiscardCount.set(discardFrom);
-
-    const stepMs = 220;
-    let cursorMs = 0;
-
-    const scheduleSeries = (
-      from: number,
-      to: number,
-      setValue: (v: number) => void,
-      maxSteps: number,
-    ): void => {
-      const delta = to - from;
-      if (delta === 0) return;
-      const steps = Math.min(Math.abs(delta), maxSteps);
-      const unit = Math.sign(delta);
-      const baseJump = Math.floor(Math.abs(delta) / steps);
-      let remainder = Math.abs(delta) % steps;
-      let value = from;
-
-      for (let i = 0; i < steps; i += 1) {
-        const jump = baseJump + (remainder > 0 ? 1 : 0);
-        if (remainder > 0) remainder -= 1;
-        value += unit * jump;
-        cursorMs += stepMs;
-        const next = value;
-        this.queueAnimationTimer(() => setValue(next), cursorMs);
-      }
-    };
-
-    // 1) Discard first: animate down to 0 (slot up motion).
-    scheduleSeries(discardFrom, discardTo, v => this.reshuffleDisplayDiscardCount.set(v), 14);
-    // small pause between phases
-    cursorMs += 240;
-    // 2) Then draw: animate up to freshDeck+discard-handSize (slot down motion).
-    scheduleSeries(drawFrom, drawTo, v => this.reshuffleDisplayDrawCount.set(v), 18);
-
-    const settleDelay = cursorMs + 420;
-    this.queueAnimationTimer(() => {
-      this.reshuffleSequenceExitActive.set(true);
-    }, settleDelay);
-
-    this.queueAnimationTimer(() => {
-      onDone();
-      this.resetReshuffleSequenceState();
-    }, settleDelay + 320);
-  }
-
-  private resetReshuffleSequenceState(): void {
-    this.reshuffleSequenceActive.set(false);
-    this.reshuffleSequenceExitActive.set(false);
   }
 
   private completeDeferredIncomingAfterReshuffle(): void {
@@ -655,75 +579,30 @@ export class GamePage implements OnInit, OnDestroy {
     this.store.nextHand();
     this.reshuffleDisplayDrawCount.set(this.store.drawPile().length);
     this.reshuffleDisplayDiscardCount.set(this.store.discard().length);
-    this.transitionIncomingHiddenHand.set(this.store.hiddenHand());
-    this.incomingHiddenEnterActive.set(false);
-    this.incomingVisibleTotalActive.set(false);
+    this.roundTransition.setIncomingHiddenHand(this.store.hiddenHand());
+    this.roundTransition.setIncomingPhaseIdle();
 
     if (!this.roundTransitionActive()) {
       return;
     }
 
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        this.incomingHiddenEnterActive.set(true);
-        this.audioManager.playTileIn(this.store.handSize());
-        this.queueAnimationTimer(() => {
-          this.incomingVisibleTotalActive.set(true);
-        }, 0);
-        this.queueAnimationTimer(() => {
-          this.finishRoundTransition();
-          this.clearReshuffleDisplayCounts();
-        }, NEXT_ROUND_INCOMING_HIDDEN_MS + 30);
-      }),
-    );
-  }
-
-  private clearReshuffleDisplayCounts(): void {
-    const displayDraw = this.reshuffleDisplayDrawCount();
-    const displayDiscard = this.reshuffleDisplayDiscardCount();
-
-    if (displayDraw !== null && displayDraw !== this.store.drawPile().length) {
-      return;
-    }
-
-    if (displayDiscard !== null && displayDiscard !== this.store.discard().length) {
-      return;
-    }
-
-    this.reshuffleDisplayDrawCount.set(null);
-    this.reshuffleDisplayDiscardCount.set(null);
-  }
-
-  private queueRevealTimer(fn: () => void, delay: number): void {
-    const timer = setTimeout(() => {
-      this.revealTimers.delete(timer);
-      fn();
-    }, delay);
-    this.revealTimers.add(timer);
-  }
-
-  private clearRevealTimers(): void {
-    for (const timer of this.revealTimers) {
-      clearTimeout(timer);
-    }
-    this.revealTimers.clear();
+    this.roundTransition.activateDeferredIncoming({
+      finishDelay: NEXT_ROUND_INCOMING_HIDDEN_MS + TRANSITION_FINISH_BUFFER_MS,
+      onIncoming: () => this.audioManager.playTileIn(this.store.handSize()),
+      onFinish: () => {
+        this.finishRoundTransition();
+        this.reshuffleSequence.clearDisplayCountsIfSynced(
+          this.store.drawPile().length,
+          this.store.discard().length,
+        );
+      },
+    });
   }
 
   private resetRevealAnimationState(): void {
-    this.revealWinBannerActive.set(false);
-    this.revealHistoryReady.set(false);
-    this.revealValueAnimationActive.set(false);
-    this.revealSequenceLocked.set(false);
-    this.revealTileFaceUpIds.set(null);
-    this.revealTileValueVisibleIds.set(null);
-    this.revealTileValueOverrides.set(null);
-    this.revealHiddenTotalOverride.set(null);
-    this.scoreDisplayOverride.set(null);
-    this.scoreGainAnimationActive.set(false);
-    this.scoreGainTravelActive.set(false);
-    this.scoreGainAmount.set(0);
-    this.revealPreWinHiddenHand.set(null);
-    this.revealPostWinHiddenHand.set(null);
+    this.revealSequence.reset();
+    this.scoreAnimation.reset();
+    this.revealedHandPromoted.set(false);
   }
 
   private startHiddenHandRevealSequence(
@@ -732,55 +611,51 @@ export class GamePage implements OnInit, OnDestroy {
     scoreBefore: number,
     scoreAfter: number,
   ): void {
-    const revealValues = Object.fromEntries(
-      preWinHand.tiles.map((tile) => [tile.id, tile.currentValue]),
+    this.revealSequence.startHiddenHandRevealSequence({
+      animationsEnabled: this.settingsService.settings().animationsEnabled,
+      scoreBefore,
+      scoreAfter,
+      lastResult: this.store.lastResult(),
+      preWinHand,
+      postWinHand,
+      setScoreDisplayOverride: (value) => this.scoreDisplayOverride.set(value),
+      startScoreGainAnimation: (startScore, endScore, onDone) =>
+        this.startScoreGainAnimation(startScore, endScore, onDone),
+      playTileFlip: () => this.audioManager.playTileFlip(),
+      playWin: () => this.audioManager.playWin(),
+      playLose: () => this.audioManager.playLose(),
+      playCardValueChange: () => this.audioManager.playCardValueChange(),
+      onRevealSettled: () => this.startRevealPromotionTransition(),
+    });
+  }
+
+  private advanceToNextHiddenHand(): void {
+    this.clearBetControlsTimer();
+    this.debugForceReshuffleNextHand.set(false);
+    this.store.nextHand();
+    this.resetRevealAnimationState();
+    this.revealedHandPromoted.set(false);
+    this.steadyHandsShouldDeal.set(false);
+    this.betControlsDelayMs.set(
+      getBetControlsDelay(this.settingsService.settings().handSize),
     );
 
-    this.revealSequenceLocked.set(true);
-    this.revealTileFaceUpIds.set([]);
-    this.revealTileValueVisibleIds.set([]);
-    this.revealTileValueOverrides.set(revealValues);
-    this.revealHiddenTotalOverride.set(0);
-    if (scoreBefore !== scoreAfter) {
-      this.scoreDisplayOverride.set(scoreBefore);
+    const incomingHiddenHand = this.store.hiddenHand();
+    if (this.store.gamePhase() !== GamePhase.Betting || !incomingHiddenHand) {
+      return;
     }
 
-    let runningTotal = 0;
-    let cursorMs = 0;
-
-    preWinHand.tiles.forEach((tile) => {
-      const revealDelay = cursorMs;
-      this.queueRevealTimer(() => {
-        const currentFaceUp = this.revealTileFaceUpIds() ?? [];
-        this.revealTileFaceUpIds.set([...currentFaceUp, tile.id]);
-        this.audioManager.playTileFlip();
-      }, revealDelay);
-
-      const showValueDelay = revealDelay + HIDDEN_REVEAL_VALUE_DELAY_MS;
-      this.queueRevealTimer(() => {
-        const currentVisible = this.revealTileValueVisibleIds() ?? [];
-        this.revealTileValueVisibleIds.set([...currentVisible, tile.id]);
-      }, showValueDelay);
-
-      const nextTotal = runningTotal + tile.currentValue;
-      this.queueRevealTimer(() => {
-        this.revealHiddenTotalOverride.set(nextTotal);
-      }, showValueDelay + HIDDEN_REVEAL_TOTAL_STEP_MS);
-
-      runningTotal = nextTotal;
-      cursorMs =
-        showValueDelay +
-        HIDDEN_REVEAL_TOTAL_STEP_MS +
-        HIDDEN_REVEAL_POST_TILE_MS;
+    this.roundTransition.measureRoundTransition(
+      this.mainStageRef()?.nativeElement,
+      this.centerStageRef()?.nativeElement,
+      this.bottomHandSlotRef()?.nativeElement,
+    );
+    this.roundTransition.prepareIncomingOnlyTransition(incomingHiddenHand);
+    this.roundTransition.startIncomingOnlyTransition({
+      finishDelay: NEXT_ROUND_INCOMING_HIDDEN_MS + TRANSITION_FINISH_BUFFER_MS,
+      onIncoming: () => this.audioManager.playTileIn(this.store.handSize()),
+      onFinish: () => this.finishRoundTransition(),
     });
-
-    const handRevealDoneMs = cursorMs + HIDDEN_REVEAL_SETTLE_MS;
-
-    this.queueRevealTimer(() => {
-      this.startScoreGainAnimation(scoreBefore, scoreAfter, () => {
-        this.startWinRevealAnimation(preWinHand, postWinHand);
-      });
-    }, handRevealDoneMs);
   }
 
   private startScoreGainAnimation(
@@ -788,133 +663,19 @@ export class GamePage implements OnInit, OnDestroy {
     scoreAfter: number,
     onDone: () => void,
   ): void {
-    const delta = scoreAfter - scoreBefore;
-    if (delta === 0) {
-      this.scoreDisplayOverride.set(null);
-      onDone();
-      return;
-    }
-
-    this.measureScoreGainTransition();
-    this.scoreGainAmount.set(Math.abs(delta));
-    this.scoreGainDirection.set(delta > 0 ? 'down' : 'up');
-    this.scoreGainAnimationActive.set(true);
-    this.scoreGainTravelActive.set(false);
-    if (delta > 0) {
-      this.audioManager.playScoreIncrease();
-    } else {
-      this.audioManager.playScoreDecrease();
-    }
-
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        this.scoreGainTravelActive.set(true);
-      }),
+    this.scoreAnimation.measureScoreGainTransition(
+      this.pageFrameRef()?.nativeElement,
+      this.centerStageRef()?.nativeElement,
+      this.scoreDisplaySlotRef()?.nativeElement,
     );
-
-    this.queueRevealTimer(() => {
-      this.scoreDisplayOverride.set(scoreAfter);
-    }, SCORE_GAIN_FLY_MS);
-
-    this.queueRevealTimer(() => {
-      this.scoreGainAnimationActive.set(false);
-      this.scoreGainTravelActive.set(false);
-      this.scoreDisplayOverride.set(null);
-      onDone();
-    }, SCORE_GAIN_FLY_MS + SCORE_GAIN_SETTLE_MS);
-  }
-
-  private measureScoreGainTransition(): void {
-    const page = this.pageFrameRef()?.nativeElement;
-    const center = this.centerStageRef()?.nativeElement;
-    const scoreSlot = this.scoreDisplaySlotRef()?.nativeElement;
-    if (!page || !center || !scoreSlot) return;
-
-    const pageRect = page.getBoundingClientRect();
-    const centerRect = center.getBoundingClientRect();
-    const scoreRect = scoreSlot.getBoundingClientRect();
-    const startX = centerRect.left + centerRect.width / 2 - pageRect.left;
-    const startY = centerRect.top + centerRect.height / 2 + 54 - pageRect.top;
-    const endX = scoreRect.left + scoreRect.width / 2 - pageRect.left;
-    const endY = scoreRect.top + scoreRect.height / 2 - pageRect.top;
-
-    this.scoreGainStartX.set(startX);
-    this.scoreGainStartY.set(startY);
-    this.scoreGainDeltaX.set(endX - startX);
-    this.scoreGainDeltaY.set(endY - startY);
-  }
-
-  private startWinRevealAnimation(
-    preWinHand: HandModel,
-    postWinHand: HandModel,
-  ): void {
-    const startValues = Object.fromEntries(
-      preWinHand.tiles.map((tile) => [tile.id, tile.currentValue]),
-    );
-    const finalValues = Object.fromEntries(
-      postWinHand.tiles.map((tile) => [tile.id, tile.currentValue]),
-    );
-    const valueSteps: Array<{ id: string; value: number; total: number }> = [];
-    let runningTotal = preWinHand.total;
-
-    for (const tile of postWinHand.tiles) {
-      const oldValue = startValues[tile.id] ?? tile.currentValue;
-      const delta = tile.currentValue - oldValue;
-      if (delta === 0) continue;
-
-      const direction = delta > 0 ? 1 : -1;
-      let nextValue = oldValue;
-      for (let i = 0; i < Math.abs(delta); i += 1) {
-        nextValue += direction;
-        runningTotal += direction;
-        valueSteps.push({ id: tile.id, value: nextValue, total: runningTotal });
-      }
-    }
-
-    this.revealSequenceLocked.set(true);
-    this.revealWinBannerActive.set(true);
-    this.revealHistoryReady.set(true);
-    this.revealTileValueOverrides.set(startValues);
-    this.revealHiddenTotalOverride.set(preWinHand.total);
-
-    this.queueRevealTimer(() => {
-      this.revealValueAnimationActive.set(true);
-      if (this.store.lastResult() === 'win') {
-        this.audioManager.playWin();
-      } else if (this.store.lastResult() === 'lose') {
-        this.audioManager.playLose();
-      }
-    }, WIN_BANNER_SHOW_MS);
-
-    valueSteps.forEach((step, index) => {
-      this.queueRevealTimer(
-        () => {
-          const currentValues = this.revealTileValueOverrides() ?? {};
-          this.revealTileValueOverrides.set({
-            ...currentValues,
-            [step.id]: step.value,
-          });
-          this.revealHiddenTotalOverride.set(step.total);
-        },
-        WIN_BANNER_SHOW_MS + (index + 1) * WIN_VALUE_STEP_MS,
-      );
+    this.scoreAnimation.startScoreGainAnimation({
+      animationsEnabled: this.settingsService.settings().animationsEnabled,
+      scoreBefore,
+      scoreAfter,
+      onDone,
+      onIncrease: () => this.audioManager.playScoreIncrease(),
+      onDecrease: () => this.audioManager.playScoreDecrease(),
     });
-
-    const finishDelay =
-      WIN_BANNER_SHOW_MS + valueSteps.length * WIN_VALUE_STEP_MS + WIN_POST_VALUE_SETTLE_MS;
-    this.queueRevealTimer(() => {
-      this.revealTileValueOverrides.set(finalValues);
-      this.revealHiddenTotalOverride.set(postWinHand.total);
-      this.revealWinBannerActive.set(false);
-      this.revealValueAnimationActive.set(false);
-      this.revealSequenceLocked.set(false);
-      this.revealPreWinHiddenHand.set(null);
-      this.revealPostWinHiddenHand.set(null);
-      this.queueRevealTimer(() => {
-        this.revealTileValueOverrides.set(null);
-        this.revealHiddenTotalOverride.set(null);
-      }, 40);
-    }, finishDelay);
   }
 
   openExitDialog(): void {
@@ -924,7 +685,7 @@ export class GamePage implements OnInit, OnDestroy {
 
   closeExitDialog(): void {
     this.handleButtonInteraction();
-    this.exitDialogOpen.set(false);
+    this.uiShell.resolvePendingLeave(false);
   }
 
   onPauseToggle(): void {
@@ -954,18 +715,12 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   onGameOverNameInput(value: string): void {
-    this.gameOverNameDraft.set(value);
+    this.uiShell.onGameOverNameInput(value);
   }
 
   onSaveScoreWithName(): void {
     this.handleButtonInteraction();
-    const playerName = this.gameOverNameDraft().trim();
-    if (!playerName || this.scoreSaved()) {
-      return;
-    }
-
-    this.settingsService.update({ playerName });
-    this.saveScore(playerName);
+    this.uiShell.saveScoreWithName();
   }
 
   private handleButtonInteraction(): void {
@@ -973,24 +728,21 @@ export class GamePage implements OnInit, OnDestroy {
     this.audioManager.playButtonClick();
   }
 
-  private getTrimmedPlayerName(): string | null {
-    const playerName = this.settingsService.settings().playerName?.trim();
-    return playerName ? playerName : null;
+  private hasActiveProgress(): boolean {
+    const phase = this.store.gamePhase();
+    return phase !== GamePhase.Idle && phase !== GamePhase.GameOver;
   }
 
-  private saveScore(playerName: string | null = this.getTrimmedPlayerName()): void {
-    if (!playerName || this.scoreSaved()) {
-      return;
-    }
-
-    this.scoreSaved.set(true);
-    this.leaderboardService
-      .saveScore({
-        playerName,
-        totalScore: this.store.currentScore(),
-        date: Date.now(),
-      })
-      .subscribe();
+  private clearTransientAnimationState(): void {
+    this.clearAnimationTimers();
+    this.revealSequence.clearTimers();
+    this.reshuffleTransitionPendingIncoming.set(false);
+    this.resetRevealAnimationState();
+    this.reshuffleSequence.resetSequenceState();
+    this.reshuffleSequence.clearDisplayCountsIfSynced(
+      this.store.drawPile().length,
+      this.store.discard().length,
+    );
   }
 
   private playStepSoundForValueChange(

@@ -1,6 +1,6 @@
 :host {
   display: block;
-  animation: bc-fade-in 250ms ease both;
+  animation: bc-fade-in var(--gui-bet-controls-enter-ms) ease both;
 }
 
 @keyframes bc-fade-in {

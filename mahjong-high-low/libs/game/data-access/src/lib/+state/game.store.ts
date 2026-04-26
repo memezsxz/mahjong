@@ -72,12 +72,14 @@ export const GameStore = signalStore(
             })
         },
         placeBet(playerBet: Bet) {
-            const result = evaluateBet(store.visibleHand()!, store.hiddenHand()!, playerBet)
+            const visibleHand = store.visibleHand()!
+            const hiddenHand = store.hiddenHand()!
+            const result = evaluateBet(visibleHand, hiddenHand, playerBet)
             const {
                 newWinStreak,
                 calculatedScore
-            } = calculateScore(store.hiddenHand()!, store.currentScore(), store.winStreak(), result)
-            const newHiddenHand = scaleHandValues(store.hiddenHand()!, result)
+            } = calculateScore(hiddenHand, store.currentScore(), store.winStreak(), result)
+            const newHiddenHand = scaleHandValues(hiddenHand, result)
             const isGameOver = checkGameOverHand(newHiddenHand.tiles)
             const scoreChange = calculatedScore - store.currentScore()
 
@@ -87,12 +89,12 @@ export const GameStore = signalStore(
                 result,
                 scoreChange,
                 visibleHand: {
-                    total: store.visibleHand()!.total,
-                    tiles: store.visibleHand()!.tiles.map((tile) => ({ ...tile })),
+                    total: visibleHand.total,
+                    tiles: visibleHand.tiles.map((tile) => ({ ...tile })),
                 },
                 hiddenHand: {
-                    total: newHiddenHand.total,
-                    tiles: newHiddenHand.tiles.map((tile) => ({ ...tile })),
+                    total: hiddenHand.total,
+                    tiles: hiddenHand.tiles.map((tile) => ({ ...tile })),
                 },
             }
 

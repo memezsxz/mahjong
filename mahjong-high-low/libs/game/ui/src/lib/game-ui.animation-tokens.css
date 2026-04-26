@@ -1,0 +1,11 @@
+:host {
+  /* Edit shared UI animation visuals here. */
+  --gui-tile-deal-ms: 520ms;
+  --gui-tile-deal-stagger-ms: 65ms;
+  --gui-tile-flip-ms: 520ms;
+  --gui-tile-value-roll-ms: 700ms;
+  --gui-hand-total-roll-ms: 700ms;
+  --gui-deck-counter-roll-ms: 420ms;
+  --gui-history-row-enter-ms: 220ms;
+  --gui-bet-controls-enter-ms: 250ms;
+}

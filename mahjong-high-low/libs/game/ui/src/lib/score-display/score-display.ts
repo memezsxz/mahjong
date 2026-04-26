@@ -1,5 +1,9 @@
 import { Component, effect, input, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import {
+  UI_SCORE_STEP_MS,
+  UI_SCORE_STEP_SOUND_TAIL_PADDING_MS,
+} from '../game-ui.animations';
 
 @Component({
   selector: 'lib-score-display',
@@ -8,9 +12,9 @@ import { DecimalPipe } from '@angular/common';
   styleUrl: './score-display.css',
 })
 export class ScoreDisplay {
-  private readonly scoreStepMs = 70;
+  private readonly scoreStepMs = UI_SCORE_STEP_MS;
   private readonly scoreStepSoundVolume = 0.12;
-  private readonly scoreStepSoundTailPaddingMs = 35;
+  private readonly scoreStepSoundTailPaddingMs = UI_SCORE_STEP_SOUND_TAIL_PADDING_MS;
   score = input.required<number>();
   winStreak = input.required<number>();
   soundEnabled = input<boolean>(false);

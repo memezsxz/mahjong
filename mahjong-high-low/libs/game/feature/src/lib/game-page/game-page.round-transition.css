@@ -35,7 +35,7 @@
 }
 
 .gp-promoted-hand {
-  transition: transform 430ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform var(--gp-promoted-hand-ms) cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .gp-promoted-hand-active {
@@ -47,7 +47,7 @@
 
 .gp-incoming-hidden-hand {
   transform: translate(-50%, calc(-50% - 60vh));
-  transition: transform 430ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform var(--gp-incoming-hidden-ms) cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .gp-incoming-hidden-hand-active {
@@ -60,7 +60,7 @@
 }
 
 .gp-outgoing-visible-hand-active {
-  animation: gp-outgoing-visible-hand 260ms cubic-bezier(0.4, 0, 1, 1) forwards;
+  animation: gp-outgoing-visible-hand var(--gp-visible-hand-exit-ms) cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
 .gp-visible-total-slot {
@@ -89,11 +89,11 @@
 }
 
 .gp-visible-total-out {
-  animation: gp-visible-total-out 260ms ease forwards;
+  animation: gp-visible-total-out var(--gp-visible-total-out-ms) ease forwards;
 }
 
 .gp-visible-total-in {
-  animation: gp-visible-total-in 220ms ease forwards;
+  animation: gp-visible-total-in var(--gp-visible-total-in-ms) ease forwards;
 }
 
 @keyframes gp-visible-total-out {
@@ -144,7 +144,7 @@
   text-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
   line-height: 1;
   pointer-events: none;
-  animation: gp-result-scale 420ms ease-in-out infinite alternate;
+  animation: gp-result-scale var(--gp-result-scale-ms) ease-in-out infinite alternate;
 }
 
 .gp-win-reveal-banner--lose {
@@ -152,7 +152,7 @@
 }
 
 .gp-win-reveal-banner-pulse {
-  animation: gp-win-reveal-banner-pulse 220ms ease-in-out infinite alternate;
+  animation: gp-win-reveal-banner-pulse var(--gp-result-pulse-ms) ease-in-out infinite alternate;
 }
 
 @keyframes gp-win-reveal-banner-pulse {
@@ -185,7 +185,7 @@
   justify-content: center;
   gap: 0.65rem;
   pointer-events: none;
-  transition: opacity 280ms ease, transform 280ms ease;
+  transition: opacity var(--gp-overlay-exit-ms) ease, transform var(--gp-overlay-exit-ms) ease;
 }
 
 .gp-reshuffle-overlay-exit {
@@ -215,7 +215,7 @@
   width: 6.5rem;
   height: 2.8rem;
   pointer-events: none;
-  transition: opacity 280ms ease, transform 280ms ease;
+  transition: opacity var(--gp-overlay-exit-ms) ease, transform var(--gp-overlay-exit-ms) ease;
 }
 
 .gp-reshuffle-swirl-exit {
@@ -235,19 +235,19 @@
 .gp-reshuffle-tile-a {
   left: 50%;
   top: 50%;
-  animation: gp-reshuffle-triangle-a 1800ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: gp-reshuffle-triangle-a var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1) infinite;
 }
 
 .gp-reshuffle-tile-b {
   left: 50%;
   top: 50%;
-  animation: gp-reshuffle-triangle-b 1800ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: gp-reshuffle-triangle-b var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1) infinite;
 }
 
 .gp-reshuffle-tile-c {
   left: 50%;
   top: 50%;
-  animation: gp-reshuffle-triangle-c 1800ms cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: gp-reshuffle-triangle-c var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1) infinite;
 }
 
 @keyframes gp-reshuffle-triangle-a {
@@ -294,7 +294,7 @@
 }
 
 .gp-score-gain-active {
-  animation: gp-score-gain-fly 650ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: gp-score-gain-fly var(--gp-score-gain-fly-ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .gp-score-gain--lose {

@@ -31,21 +31,23 @@
         class="gp-center relative flex-1 min-h-0 overflow-hidden flex items-center justify-center pb-8"
         [style.--hand-base-delay.ms]="hiddenHandBaseDelay()"
       >
-        @if (!roundTransitionActive()) {
-          <lib-hand
-            [hand]="store.hiddenHand()!"
-            [showTileValue]="store.gamePhase() === GamePhase.Revealing"
-            [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
-            [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
-            [reserveTotalSlot]="true"
-            [faceUpTileIds]="store.gamePhase() === GamePhase.Revealing ? revealTileFaceUpIds() : null"
-            [valueVisibleTileIds]="store.gamePhase() === GamePhase.Revealing ? revealTileValueVisibleIds() : null"
-            [tileValueOverrides]="store.gamePhase() === GamePhase.Revealing ? revealTileValueOverrides() : null"
-            [playTileValueChangeSound]="store.gamePhase() === GamePhase.Revealing && revealValueAnimationActive()"
-            [handTotalOverride]="store.gamePhase() === GamePhase.Revealing ? revealHiddenTotalOverride() : null"
-            [dealTrigger]="dealCount()"
-            [animateDeal]="steadyHandsShouldDeal()"
-          />
+        @if (showCenterHiddenHand()) {
+          <div #hiddenHandSlot class="relative">
+            <lib-hand
+              [hand]="store.hiddenHand()!"
+              [showTileValue]="store.gamePhase() === GamePhase.Revealing"
+              [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
+              [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
+              [reserveTotalSlot]="true"
+              [faceUpTileIds]="store.gamePhase() === GamePhase.Revealing ? revealTileFaceUpIds() : null"
+              [valueVisibleTileIds]="store.gamePhase() === GamePhase.Revealing ? revealTileValueVisibleIds() : null"
+              [tileValueOverrides]="store.gamePhase() === GamePhase.Revealing ? revealTileValueOverrides() : null"
+              [playTileValueChangeSound]="store.gamePhase() === GamePhase.Revealing && revealValueAnimationActive()"
+              [handTotalOverride]="store.gamePhase() === GamePhase.Revealing ? revealHiddenTotalOverride() : null"
+              [dealTrigger]="dealCount()"
+              [animateDeal]="steadyHandsShouldDeal()"
+            />
+          </div>
 
           @if (revealResultBannerText()) {
             <div
@@ -107,10 +109,12 @@
       <!-- Bottom: visible hand (deals first) -->
       <div #bottomStage class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7 relative">
         <div class="gp-visible-total-slot">
-          @if (!roundTransitionActive()) {
-            <span class="font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo">
-              {{ store.visibleHand()!.total }}
-            </span>
+          @if (!showVisibleHandTransition()) {
+            @if (displayedVisibleTotal() !== null) {
+              <span class="font-mono text-2xl lg:text-3xl font-bold leading-none text-c-indigo">
+                {{ displayedVisibleTotal() }}
+              </span>
+            }
           } @else {
             <span class="gp-visible-total-placeholder font-mono text-2xl lg:text-3xl font-bold leading-none">
               88
@@ -137,15 +141,17 @@
         </div>
 
         <div #bottomHandSlot class="gp-bottom-hand-slot">
-          @if (!roundTransitionActive()) {
-            <lib-hand
-              [hand]="store.visibleHand()!"
-              [showTileValue]="settingsService.settings().showTileValues"
-              [showHandTiles]="true"
-              [showFullHandValue]="false"
-              [dealTrigger]="dealCount()"
-              [animateDeal]="steadyHandsShouldDeal()"
-            />
+          @if (!showVisibleHandTransition()) {
+            @if (displayedVisibleHand()) {
+              <lib-hand
+                [hand]="displayedVisibleHand()!"
+                [showTileValue]="settingsService.settings().showTileValues"
+                [showHandTiles]="true"
+                [showFullHandValue]="false"
+                [dealTrigger]="dealCount()"
+                [animateDeal]="steadyHandsShouldDeal()"
+              />
+            }
           } @else {
             @if (transitionOutgoingVisibleHand()) {
               <div class="gp-outgoing-visible-hand" [class.gp-outgoing-visible-hand-active]="visibleHandExitActive()">
