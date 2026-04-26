@@ -3,6 +3,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": ".",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -14,13 +15,11 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "lib": ["es2022", "dom"],
     "paths": {
-      "@hbg/shared-models": ["libs/models/index.ts"],
-      "@hbg/shared-util-game": ["libs/util-game/index.ts"],
-      "@hbg/game-data-access": ["libs/data-access/index.ts"],
-      "@hbg/game-feature": ["libs/game/feature/src/index.ts"],
-      "@hbg/game-ui": ["libs/game/ui/src/index.ts"]
+      "@hbg/shared-models": ["src/app/libs/models/index.ts"],
+      "@hbg/shared-util-game": ["src/app/libs/util-game/index.ts"],
+      "@hbg/game-data-access": ["src/app/libs/data-access/index.ts"],
+      "@hbg/game-ui": ["src/app/libs/ui/index.ts"]
     }
   },
   "angularCompilerOptions": {

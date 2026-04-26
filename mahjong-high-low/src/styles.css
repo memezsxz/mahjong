@@ -1,27 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
-@layer tailwind-base, primeng, tailwind-utilities;
+@import "tailwindcss";
+@layer tailwind, primeng;
 
-@layer tailwind-base {
-  @tailwind base;
-}
+@theme {
+  --color-c-bg: #f5f4f0;
+  --color-c-surface: #ffffff;
+  --color-c-indigo: #26287b;
+  --color-c-indigo-dark: #1e206a;
+  --color-c-pink: #e6578f;
+  --color-c-pink-dark: #cc3c74;
+  --color-c-green: #3b8435;
+  --color-c-green-dark: #2f6b29;
+  --color-c-text: #1a1b3a;
+  --color-c-muted: #8486a8;
 
-@tailwind components;
-
-@layer tailwind-utilities {
-  @tailwind utilities;
+  --font-display: "DM Sans", sans-serif;
+  --font-mono: "Space Mono", monospace;
 }
 
 :root {
-  --c-bg:      #f5f4f0;
+  --c-bg: #f5f4f0;
   --c-surface: #ffffff;
-  --c-indigo:  #26287b;
-  --c-pink:    #e6578f;
-  --c-green:   #3b8435;
-  --c-text:    #1a1b3a;
-  --c-muted:   #8486a8;
-  --c-border:  rgba(38, 40, 123, 0.10);
-  --font-display: 'DM Sans', sans-serif;
-  --font-mono:    'Space Mono', monospace;
+  --c-indigo: #26287b;
+  --c-pink: #e6578f;
+  --c-green: #3b8435;
+  --c-text: #1a1b3a;
+  --c-muted: #8486a8;
+  --c-border: rgba(38, 40, 123, 0.1);
+  --font-display: "DM Sans", sans-serif;
+  --font-mono: "Space Mono", monospace;
 }
 
 * {
