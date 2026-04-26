@@ -19,35 +19,3 @@
   white-space: nowrap;
   text-align: left;
 }
-
-/* ── PrimeNG button overrides ─────────────────────────────────────────── */
-
-::ng-deep .lp-start-btn.p-button {
-  background: var(--c-indigo) !important;
-  border-color: var(--c-indigo) !important;
-  color: #fff !important;
-  font-family: var(--font-mono) !important;
-  font-size: 0.85rem !important;
-  letter-spacing: 0.12em !important;
-  border-radius: 0 !important;
-  padding: 1rem 2.5rem !important;
-  transition: background 0.15s;
-}
-
-::ng-deep .lp-start-btn.p-button:hover {
-  background: var(--c-indigo-dark, #1e206a) !important;
-  border-color: var(--c-indigo-dark, #1e206a) !important;
-}
-
-::ng-deep .lp-settings-btn.p-button {
-  border-radius: 0 !important;
-  border-color: var(--c-indigo) !important;
-  color: var(--c-indigo) !important;
-  background: transparent !important;
-  width: 3.25rem !important;
-  height: 3.25rem !important;
-}
-
-::ng-deep .lp-settings-btn.p-button:hover {
-  background: rgba(38, 40, 123, 0.06) !important;
-}

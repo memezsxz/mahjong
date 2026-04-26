@@ -45,3 +45,110 @@ app-root {
   color: var(--c-text);
   font-family: var(--font-display);
 }
+
+.p-button.lp-start-btn,
+.p-button.lp-settings-btn,
+.p-button.gp-dialog-btn,
+.p-button.gp-next-btn,
+.p-button.gp-sidebar-btn,
+.p-button.bc-btn {
+  border-radius: 0;
+  font-family: var(--font-mono);
+}
+
+.p-button.lp-start-btn {
+  background: var(--c-indigo);
+  border-color: var(--c-indigo);
+  color: #fff;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  padding: 1rem 2.5rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.p-button.lp-start-btn:enabled:hover {
+  background: color-mix(in srgb, var(--c-indigo) 80%, white);
+  border-color: color-mix(in srgb, var(--c-indigo) 80%, white);
+  color: white;
+}
+
+.p-button.lp-settings-btn {
+  background: transparent;
+  border-color: var(--c-indigo);
+  color: var(--c-indigo);
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+.p-button.lp-settings-btn:hover {
+  background: rgba(38, 40, 123, 0.06);
+}
+
+.p-button.gp-dialog-btn,
+.p-button.gp-next-btn {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.p-button.gp-dialog-btn-danger {
+  background: #c62828;
+  border-color: #c62828;
+  color: #fff;
+}
+
+.p-button.gp-dialog-btn-danger:enabled:hover {
+  background: color-mix(in srgb, #c62828 80%, white);
+  border-color: color-mix(in srgb, #c62828 80%, white);
+}
+
+.p-button.gp-sidebar-btn {
+  background: var(--c-indigo);
+  border-color: var(--c-indigo);
+  color: #fff;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.p-button.gp-sidebar-btn:enabled:hover {
+  background: color-mix(in srgb, var(--c-indigo) 80%, white);
+  border-color: color-mix(in srgb, var(--c-indigo) 80%, white);
+}
+
+.p-button.gp-sidebar-btn-danger {
+  background: #c62828;
+  border-color: #c62828;
+}
+
+.p-button.gp-sidebar-btn-danger:enabled:hover {
+  background: color-mix(in srgb, #c62828 80%, white);
+  border-color: color-mix(in srgb, #c62828 80%, white);
+}
+
+.p-button.bc-btn {
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  min-width: 8.5rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.p-button.bc-btn--higher {
+  background: var(--c-green);
+  border-color: var(--c-green);
+  color: #fff;
+}
+
+.p-button.bc-btn--higher:enabled:hover {
+  background: color-mix(in srgb, var(--c-green) 80%, white);
+  border-color: color-mix(in srgb, var(--c-green) 80%, white);
+}
+
+.p-button.bc-btn--lower {
+  background: var(--c-pink);
+  border-color: var(--c-pink);
+  color: #fff;
+}
+
+.p-button.bc-btn--lower:enabled:hover {
+  background: color-mix(in srgb, var(--c-pink) 80%, white);
+  border-color: color-mix(in srgb, var(--c-pink) 80%, white);
+}
