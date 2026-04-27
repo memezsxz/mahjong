@@ -33,7 +33,6 @@
     "@angular/service-worker": "^21.2.10",
     "@nestjs/config": "^4.0.4",
     "@nestjs/mongoose": "^11.0.4",
-    "@ngrx/component-store": "^21.1.0",
     "@ngrx/signals": "^21.1.0",
     "@primeng/themes": "^21.0.4",
     "@primeuix/themes": "^2.0.3",

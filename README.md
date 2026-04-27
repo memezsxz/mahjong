@@ -18,8 +18,7 @@ The run continues hand by hand until a tile reaches `0` or `10`, or the reshuffl
 ## Project Stack
 
 - Angular `21.2.x` is the application framework used to build the SPA, routing, component structure, templates, dependency injection, and app lifecycle.
-- RxJS is available for reactive programming and stream-based flows where Angular or supporting libraries need observable-style behavior.
-- NgRx Signals and Component Store are used for reactive local state and game-facing state management patterns.
+- NgRx Signals and Component Store are used for reactive local state and game-facing state management patterns.- PrimeNG provides ready-made UI components such as buttons, while `primeicons` provides the icon set used by those components.
 - PrimeNG provides ready-made UI components such as buttons, while `primeicons` provides the icon set used by those components.
 - `@primeng/themes`, `@primeuix/themes`, and `tailwindcss-primeui` support PrimeNG theming and make PrimeNG components fit the project’s visual system.
 - Tailwind CSS 4 is used for utility-first styling and layout throughout templates and feature screens.
