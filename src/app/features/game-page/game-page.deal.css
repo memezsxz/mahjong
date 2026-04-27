@@ -1,4 +1,4 @@
-/* ── Tile size overrides (CSS custom props — Tailwind can't do this) ── */
+/* -- Tile size overrides (CSS custom props - Tailwind can't do this) -- */
 
 ::ng-deep .gp-center lib-tile {
   --tile-w: 86px;
