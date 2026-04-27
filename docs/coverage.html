@@ -1,0 +1,1635 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mahjong documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+        <link rel="stylesheet" href="./styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">mahjong documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content coverage">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Documentation coverage</li>
+</ol>
+
+<div>
+    <img src="./images/coverage-badge-documentation.svg">
+</div>
+
+<table class="table table-bordered coverage" id="coverage-table">
+    <thead class="coverage-header">
+        <tr>
+            <th>File</th>
+            <th>Type</th>
+            <th>Identifier</th>
+            <th style="text-align:right" class="statements" data-sort-default>Statements</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#appConfig">src/app/app.config.ts</a>
+            </td>
+            <td>variable</td>
+            <td>appConfig</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#appRoutes">src/app/app.routes.ts</a>
+            </td>
+            <td>variable</td>
+            <td>appRoutes</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#canDeactivateGamePage">src/app/app.routes.ts</a>
+            </td>
+            <td>variable</td>
+            <td>canDeactivateGamePage</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/App.html">src/app/app.ts</a>
+            </td>
+            <td>component</td>
+            <td>App</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/GamePageAudioStateService.html">src/app/features/game-page/game-page-audio-state.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GamePageAudioStateService</td>
+            <td align="right" data-sort="57">
+                <span class="coverage-percent">57 %</span>
+                <span class="coverage-count">(4/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#AudioStateBindings">src/app/features/game-page/game-page-audio-state.service.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>AudioStateBindings</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#TrackedValueKey">src/app/features/game-page/game-page-audio-state.service.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>TrackedValueKey</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#resolveNextHandPlan">src/app/features/game-page/game-page-next-hand-plan.ts</a>
+            </td>
+            <td>function</td>
+            <td>resolveNextHandPlan</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#GamePageNextHandPlan">src/app/features/game-page/game-page-next-hand-plan.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>GamePageNextHandPlan</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/GamePageReshuffleSequenceService.html">src/app/features/game-page/game-page-reshuffle-sequence.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GamePageReshuffleSequenceService</td>
+            <td align="right" data-sort="46">
+                <span class="coverage-percent">46 %</span>
+                <span class="coverage-count">(6/13)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/GamePageRevealSequenceService.html">src/app/features/game-page/game-page-reveal-sequence.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GamePageRevealSequenceService</td>
+            <td align="right" data-sort="25">
+                <span class="coverage-percent">25 %</span>
+                <span class="coverage-count">(6/24)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/StartHiddenHandRevealSequenceOptions.html">src/app/features/game-page/game-page-reveal-sequence.service.ts</a>
+            </td>
+            <td>interface</td>
+            <td>StartHiddenHandRevealSequenceOptions</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/14)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#RevealResult">src/app/features/game-page/game-page-reveal-sequence.service.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>RevealResult</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/GamePageRoundTransitionService.html">src/app/features/game-page/game-page-round-transition.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GamePageRoundTransitionService</td>
+            <td align="right" data-sort="46">
+                <span class="coverage-percent">46 %</span>
+                <span class="coverage-count">(13/28)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/GamePageScoreAnimationService.html">src/app/features/game-page/game-page-score-animation.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GamePageScoreAnimationService</td>
+            <td align="right" data-sort="37">
+                <span class="coverage-percent">37 %</span>
+                <span class="coverage-count">(6/16)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/GamePageUiShellService.html">src/app/features/game-page/game-page-ui-shell.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GamePageUiShellService</td>
+            <td align="right" data-sort="3">
+                <span class="coverage-percent">3 %</span>
+                <span class="coverage-count">(1/29)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/GamePageViewStateService.html">src/app/features/game-page/game-page-view-state.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GamePageViewStateService</td>
+            <td align="right" data-sort="7">
+                <span class="coverage-percent">7 %</span>
+                <span class="coverage-count">(1/13)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#getBetControlsDelay">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>function</td>
+            <td>getBetControlsDelay</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#getHiddenHandBaseDelay">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>function</td>
+            <td>getHiddenHandBaseDelay</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#getNextRoundBetControlsDelay">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>function</td>
+            <td>getNextRoundBetControlsDelay</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#getSingleHandDealDuration">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>function</td>
+            <td>getSingleHandDealDuration</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#BET_CONTROLS_BUFFER_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>BET_CONTROLS_BUFFER_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#HIDDEN_HAND_GAP_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>HIDDEN_HAND_GAP_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#HIDDEN_REVEAL_POST_TILE_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>HIDDEN_REVEAL_POST_TILE_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#HIDDEN_REVEAL_SETTLE_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>HIDDEN_REVEAL_SETTLE_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#HIDDEN_REVEAL_TILE_STEP_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>HIDDEN_REVEAL_TILE_STEP_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#HIDDEN_REVEAL_TOTAL_STEP_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>HIDDEN_REVEAL_TOTAL_STEP_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#HIDDEN_REVEAL_VALUE_DELAY_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>HIDDEN_REVEAL_VALUE_DELAY_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#NEXT_ROUND_INCOMING_HIDDEN_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NEXT_ROUND_INCOMING_HIDDEN_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#NEXT_ROUND_PROMOTE_DELAY_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NEXT_ROUND_PROMOTE_DELAY_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#NEXT_ROUND_PROMOTE_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NEXT_ROUND_PROMOTE_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#NEXT_ROUND_TRANSITION_TOTAL_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NEXT_ROUND_TRANSITION_TOTAL_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#NEXT_ROUND_VISIBLE_EXIT_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NEXT_ROUND_VISIBLE_EXIT_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#RESHUFFLE_EXIT_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>RESHUFFLE_EXIT_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#RESHUFFLE_MID_GAP_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>RESHUFFLE_MID_GAP_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#RESHUFFLE_SETTLE_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>RESHUFFLE_SETTLE_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#RESHUFFLE_STEP_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>RESHUFFLE_STEP_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#REVEAL_PROMOTION_FINISH_BUFFER_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>REVEAL_PROMOTION_FINISH_BUFFER_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#SCORE_GAIN_FLY_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>SCORE_GAIN_FLY_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#SCORE_GAIN_SETTLE_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>SCORE_GAIN_SETTLE_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#TILE_DEAL_DURATION_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>TILE_DEAL_DURATION_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#TILE_DEAL_STAGGER_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>TILE_DEAL_STAGGER_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#TRANSITION_FINISH_BUFFER_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>TRANSITION_FINISH_BUFFER_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#WIN_BANNER_SHOW_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>WIN_BANNER_SHOW_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#WIN_NO_ANIMATION_RESULT_PAUSE_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>WIN_NO_ANIMATION_RESULT_PAUSE_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#WIN_POST_VALUE_SETTLE_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>WIN_POST_VALUE_SETTLE_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#WIN_PRE_VALUE_DELAY_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>WIN_PRE_VALUE_DELAY_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#WIN_VALUE_STEP_MS">src/app/features/game-page/game-page.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>WIN_VALUE_STEP_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/GamePage.html">src/app/features/game-page/game-page.ts</a>
+            </td>
+            <td>component</td>
+            <td>GamePage</td>
+            <td align="right" data-sort="24">
+                <span class="coverage-percent">24 %</span>
+                <span class="coverage-count">(37/153)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/LandingPage.html">src/app/features/landing-page/landing-page.ts</a>
+            </td>
+            <td>component</td>
+            <td>LandingPage</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/8)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#cloneHand">src/app/libs/data-access/+state/game.store.ts</a>
+            </td>
+            <td>function</td>
+            <td>cloneHand</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#GameStore">src/app/libs/data-access/+state/game.store.ts</a>
+            </td>
+            <td>variable</td>
+            <td>GameStore</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/GameAudioManager.html">src/app/libs/data-access/game-audio-manager.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>GameAudioManager</td>
+            <td align="right" data-sort="75">
+                <span class="coverage-percent">75 %</span>
+                <span class="coverage-count">(42/56)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#MusicMode">src/app/libs/data-access/game-audio-manager.service.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>MusicMode</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#MusicTrack">src/app/libs/data-access/game-audio-manager.service.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>MusicTrack</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#PendingAssetPlayback">src/app/libs/data-access/game-audio-manager.service.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>PendingAssetPlayback</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#ResultSound">src/app/libs/data-access/game-audio-manager.service.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>ResultSound</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/ScoresService.html">src/app/libs/data-access/scores.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>ScoresService</td>
+            <td align="right" data-sort="75">
+                <span class="coverage-percent">75 %</span>
+                <span class="coverage-count">(9/12)</span>
+            </td>
+        </tr>
+        <tr class="good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./injectables/SettingsService.html">src/app/libs/data-access/settings.service.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>SettingsService</td>
+            <td align="right" data-sort="70">
+                <span class="coverage-percent">70 %</span>
+                <span class="coverage-count">(7/10)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/GameStateModel.html">src/app/libs/models/game-state.model.ts</a>
+            </td>
+            <td>interface</td>
+            <td>GameStateModel</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/15)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#GameOverReason">src/app/libs/models/game-state.model.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>GameOverReason</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#HandResult">src/app/libs/models/game-state.model.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>HandResult</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/HandHistoryItem.html">src/app/libs/models/hand-history-item.model.ts</a>
+            </td>
+            <td>interface</td>
+            <td>HandHistoryItem</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/HandModel.html">src/app/libs/models/hand.model.ts</a>
+            </td>
+            <td>interface</td>
+            <td>HandModel</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/LeaderboardEntryModel.html">src/app/libs/models/leaderboard-entry.model.ts</a>
+            </td>
+            <td>interface</td>
+            <td>LeaderboardEntryModel</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/PlayerSettingsModel.html">src/app/libs/models/player-settings.model.ts</a>
+            </td>
+            <td>interface</td>
+            <td>PlayerSettingsModel</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#HandSizeOptions">src/app/libs/models/player-settings.model.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>HandSizeOptions</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/DragonTile.html">src/app/libs/models/tile.model.ts</a>
+            </td>
+            <td>interface</td>
+            <td>DragonTile</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/NumberTile.html">src/app/libs/models/tile.model.ts</a>
+            </td>
+            <td>interface</td>
+            <td>NumberTile</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./interfaces/WindTile.html">src/app/libs/models/tile.model.ts</a>
+            </td>
+            <td>interface</td>
+            <td>WindTile</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#TileDefinition">src/app/libs/models/tile.model.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>TileDefinition</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#TileInfo">src/app/libs/models/tile.model.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>TileInfo</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/typealiases.html#TileInstance">src/app/libs/models/tile.model.ts</a>
+            </td>
+            <td>type alias</td>
+            <td>TileInstance</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/BetControls.html">src/app/libs/ui/bet-controls/bet-controls.ts</a>
+            </td>
+            <td>component</td>
+            <td>BetControls</td>
+            <td align="right" data-sort="20">
+                <span class="coverage-percent">20 %</span>
+                <span class="coverage-count">(1/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/DeckCounter.html">src/app/libs/ui/deck-counter/deck-counter.ts</a>
+            </td>
+            <td>component</td>
+            <td>DeckCounter</td>
+            <td align="right" data-sort="13">
+                <span class="coverage-percent">13 %</span>
+                <span class="coverage-count">(3/22)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#UI_DECK_COUNTER_ROLL_DURATION_MS">src/app/libs/ui/game-ui.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>UI_DECK_COUNTER_ROLL_DURATION_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#UI_HAND_TOTAL_ROLL_DURATION_MS">src/app/libs/ui/game-ui.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>UI_HAND_TOTAL_ROLL_DURATION_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#UI_SCORE_STEP_MS">src/app/libs/ui/game-ui.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>UI_SCORE_STEP_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#UI_SCORE_STEP_SOUND_TAIL_PADDING_MS">src/app/libs/ui/game-ui.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>UI_SCORE_STEP_SOUND_TAIL_PADDING_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#UI_TILE_DEAL_DURATION_MS">src/app/libs/ui/game-ui.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>UI_TILE_DEAL_DURATION_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#UI_TILE_DEAL_STAGGER_MS">src/app/libs/ui/game-ui.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>UI_TILE_DEAL_STAGGER_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#UI_TILE_REVEAL_FLIP_DURATION_MS">src/app/libs/ui/game-ui.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>UI_TILE_REVEAL_FLIP_DURATION_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#UI_TILE_VALUE_ROLL_DURATION_MS">src/app/libs/ui/game-ui.animations.ts</a>
+            </td>
+            <td>variable</td>
+            <td>UI_TILE_VALUE_ROLL_DURATION_MS</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/HandHistory.html">src/app/libs/ui/hand-history/hand-history.ts</a>
+            </td>
+            <td>component</td>
+            <td>HandHistory</td>
+            <td align="right" data-sort="25">
+                <span class="coverage-percent">25 %</span>
+                <span class="coverage-count">(1/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/Hand.html">src/app/libs/ui/hand/hand.ts</a>
+            </td>
+            <td>component</td>
+            <td>Hand</td>
+            <td align="right" data-sort="7">
+                <span class="coverage-percent">7 %</span>
+                <span class="coverage-count">(2/26)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/ScoreDisplay.html">src/app/libs/ui/score-display/score-display.ts</a>
+            </td>
+            <td>component</td>
+            <td>ScoreDisplay</td>
+            <td align="right" data-sort="23">
+                <span class="coverage-percent">23 %</span>
+                <span class="coverage-count">(3/13)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/SettingsPanel.html">src/app/libs/ui/settings-panel/settings-panel.ts</a>
+            </td>
+            <td>component</td>
+            <td>SettingsPanel</td>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(2/6)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#getTileAssetPath">src/app/libs/ui/tile-asset-path.ts</a>
+            </td>
+            <td>function</td>
+            <td>getTileAssetPath</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#TILE_ASSET_DIRECTORY">src/app/libs/ui/tile-asset-path.ts</a>
+            </td>
+            <td>variable</td>
+            <td>TILE_ASSET_DIRECTORY</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#TILE_ASSET_EXTENSION">src/app/libs/ui/tile-asset-path.ts</a>
+            </td>
+            <td>variable</td>
+            <td>TILE_ASSET_EXTENSION</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./components/Tile.html">src/app/libs/ui/tile/tile.ts</a>
+            </td>
+            <td>component</td>
+            <td>Tile</td>
+            <td align="right" data-sort="14">
+                <span class="coverage-percent">14 %</span>
+                <span class="coverage-count">(4/27)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#buildDeck">src/app/libs/util-game/deck.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>buildDeck</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#buildHonorTiles">src/app/libs/util-game/deck.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>buildHonorTiles</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#buildNumberTiles">src/app/libs/util-game/deck.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>buildNumberTiles</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#drawHand">src/app/libs/util-game/deck.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>drawHand</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#reshuffleDeck">src/app/libs/util-game/deck.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>reshuffleDeck</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#shuffleDeck">src/app/libs/util-game/deck.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>shuffleDeck</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#reshuffleDeckSequence">src/app/libs/util-game/deck.utils.ts</a>
+            </td>
+            <td>variable</td>
+            <td>reshuffleDeckSequence</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#checkGameOverHand">src/app/libs/util-game/game-over.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>checkGameOverHand</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#checkGameOverShuffle">src/app/libs/util-game/game-over.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>checkGameOverShuffle</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#assertOneOf">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>function</td>
+            <td>assertOneOf</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#assertRange">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>function</td>
+            <td>assertRange</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#DEFAULT_HAND_SIZE">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>variable</td>
+            <td>DEFAULT_HAND_SIZE</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#HONOR_TILE_BASE_VALUE">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>variable</td>
+            <td>HONOR_TILE_BASE_VALUE</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#MAX_RESHUFFLES">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>variable</td>
+            <td>MAX_RESHUFFLES</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#MAX_TILE_VALUE">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>variable</td>
+            <td>MAX_TILE_VALUE</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#MAX_WIN_STREAK">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>variable</td>
+            <td>MAX_WIN_STREAK</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#MIN_TILE_VALUE">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>variable</td>
+            <td>MIN_TILE_VALUE</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#VALID_HAND_SIZES">src/app/libs/util-game/game.config.ts</a>
+            </td>
+            <td>variable</td>
+            <td>VALID_HAND_SIZES</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#calculateHandTotal">src/app/libs/util-game/hand-evaluator.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>calculateHandTotal</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#evaluateBet">src/app/libs/util-game/hand-evaluator.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>evaluateBet</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#calculateScore">src/app/libs/util-game/score.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>calculateScore</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#scaleHandValues">src/app/libs/util-game/tile-value.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>scaleHandValues</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/functions.html#scaleTileValue">src/app/libs/util-game/tile-value.utils.ts</a>
+            </td>
+            <td>function</td>
+            <td>scaleTileValue</td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(1/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#environment">src/environments/environment.prod.ts</a>
+            </td>
+            <td>variable</td>
+            <td>environment</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                        <a href="./miscellaneous/variables.html#environment">src/environments/environment.ts</a>
+            </td>
+            <td>variable</td>
+            <td>environment</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script src="js/libs/tablesort.min.js"></script>
+<script src="js/libs/tablesort.number.min.js"></script>
+<script>
+    new Tablesort(document.getElementById('coverage-table'));
+</script>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'coverage';
+            var COMPODOC_CURRENT_PAGE_URL = 'coverage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

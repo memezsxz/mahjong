@@ -1,0 +1,3576 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>mahjong documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">mahjong documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >GameAudioManager</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/app/libs/data-access/game-audio-manager.service.ts</code>
+        </p>
+
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Central audio controller for the game.</p>
+<p>This service coordinates:</p>
+<ul>
+<li>music state based on gameplay/pause state,</li>
+<li>one-shot sound effects for tile motion, reveals, scoring, and results,</li>
+<li>browser audio unlock behavior after the first user interaction,</li>
+<li>cached media playback for repeated assets.</li>
+</ul>
+
+            </p>
+
+
+
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#activeMusic" >activeMusic</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#activeMusicMode" >activeMusicMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#audioContext" >audioContext</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#boundInteractionUnlock" >boundInteractionUnlock</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#buttonVolume" >buttonVolume</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#cardValueChangeSource" >cardValueChangeSource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#desiredMusicMode" >desiredMusicMode</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#gameplayMusicVolume" >gameplayMusicVolume</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#interactionListenersAttached" >interactionListenersAttached</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#lastTileFlipIndex" >lastTileFlipIndex</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#mediaPlaybackReady" >mediaPlaybackReady</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#mediaUnlockRequested" >mediaUnlockRequested</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#musicCache" >musicCache</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#musicSources" >musicSources</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#pauseMusicVolume" >pauseMusicVolume</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#pendingAssetPlaybacks" >pendingAssetPlaybacks</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#resultSources" >resultSources</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#scoreStepSource" >scoreStepSource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#scoreStepTailPaddingMs" >scoreStepTailPaddingMs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#scoreStepVolume" >scoreStepVolume</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#settingsService" >settingsService</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#tileFlipSources" >tileFlipSources</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#tileSlideSource" >tileSlideSource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#tileSlideVolume" >tileSlideVolume</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#unlocked" >unlocked</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#applyMusicState" >applyMusicState</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#attachInteractionUnlockListeners" >attachInteractionUnlockListeners</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#detachInteractionUnlockListeners" >detachInteractionUnlockListeners</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#flushPendingAssetPlaybacks" >flushPendingAssetPlaybacks</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getAudioContext" >getAudioContext</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getCachedMusic" >getCachedMusic</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getMusicTrack" >getMusicTrack</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#getNextTileFlipSource" >getNextTileFlipSource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#nowMs" >nowMs</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#playAsset" >playAsset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#playAssetAtOffset" >playAssetAtOffset</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#playAssetTail" >playAssetTail</a>
+                            </li>
+                            <li>
+                                <a href="#playButtonClick" >playButtonClick</a>
+                            </li>
+                            <li>
+                                <a href="#playCardValueChange" >playCardValueChange</a>
+                            </li>
+                            <li>
+                                <a href="#playLose" >playLose</a>
+                            </li>
+                            <li>
+                                <a href="#playScoreDecrease" >playScoreDecrease</a>
+                            </li>
+                            <li>
+                                <a href="#playScoreIncrease" >playScoreIncrease</a>
+                            </li>
+                            <li>
+                                <a href="#playScoreStep" >playScoreStep</a>
+                            </li>
+                            <li>
+                                <a href="#playTileFlip" >playTileFlip</a>
+                            </li>
+                            <li>
+                                <a href="#playTileIn" >playTileIn</a>
+                            </li>
+                            <li>
+                                <a href="#playTileOut" >playTileOut</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#playTone" >playTone</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#playToneAtOffset" >playToneAtOffset</a>
+                            </li>
+                            <li>
+                                <a href="#playWin" >playWin</a>
+                            </li>
+                            <li>
+                                <a href="#registerInteraction" >registerInteraction</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#resumeAudioContext" >resumeAudioContext</a>
+                            </li>
+                            <li>
+                                <a href="#stopMusic" >stopMusic</a>
+                            </li>
+                            <li>
+                                <a href="#syncMusic" >syncMusic</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#unlockMediaPlayback" >unlockMediaPlayback</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:74</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="applyMusicState"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>applyMusicState</b></span>
+                        <a href="#applyMusicState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>applyMusicState()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="193"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:193</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Applies the desired music state if audio is unlocked and music is enabled.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="attachInteractionUnlockListeners"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>attachInteractionUnlockListeners</b></span>
+                        <a href="#attachInteractionUnlockListeners"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>attachInteractionUnlockListeners()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="449"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:449</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Attaches one-time global interaction listeners used to unlock audio.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="detachInteractionUnlockListeners"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>detachInteractionUnlockListeners</b></span>
+                        <a href="#detachInteractionUnlockListeners"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>detachInteractionUnlockListeners()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="465"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:465</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Removes the temporary global interaction listeners once audio is unlocked.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="flushPendingAssetPlaybacks"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>flushPendingAssetPlaybacks</b></span>
+                        <a href="#flushPendingAssetPlaybacks"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>flushPendingAssetPlaybacks()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="506"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:506</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Flushes any asset play requests that were queued before media playback was ready.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getAudioContext"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getAudioContext</b></span>
+                        <a href="#getAudioContext"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getAudioContext()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="416"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:416</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns a lazily created AudioContext when available in the browser.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>AudioContext | null</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCachedMusic"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getCachedMusic</b></span>
+                        <a href="#getCachedMusic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCachedMusic(track: <a href="../miscellaneous/typealiases.html#MusicTrack" target="_self">MusicTrack</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="236"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:236</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns a cached HTMLAudioElement for a looping music track.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>track</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#MusicTrack" target="_self" >MusicTrack</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>HTMLAudioElement</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getMusicTrack"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getMusicTrack</b></span>
+                        <a href="#getMusicTrack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getMusicTrack(mode: <a href="../miscellaneous/typealiases.html#MusicMode" target="_self">MusicMode</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="227"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:227</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Maps a requested music mode to a concrete music track.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>mode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#MusicMode" target="_self" >MusicMode</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="../miscellaneous/typealiases.html#MusicTrack" target="_self" >MusicTrack | null</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getNextTileFlipSource"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>getNextTileFlipSource</b></span>
+                        <a href="#getNextTileFlipSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getNextTileFlipSource()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="252"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:252</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Picks the next tile-flip sound source while avoiding immediate repeats when possible.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nowMs"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>nowMs</b></span>
+                        <a href="#nowMs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>nowMs()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="531"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:531</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Returns the current high-resolution timestamp in milliseconds.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playAsset"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>playAsset</b></span>
+                        <a href="#playAsset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>playAsset(src: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, volume: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="269"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays an asset immediately from the beginning.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>src</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>volume</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playAssetAtOffset"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>playAssetAtOffset</b></span>
+                        <a href="#playAssetAtOffset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>playAssetAtOffset(src: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, volume: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, offsetSeconds: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="277"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:277</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays an asset after an optional time offset, queuing it until media
+playback is unlocked if needed.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>src</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>volume</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>offsetSeconds</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playAssetTail"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>playAssetTail</b></span>
+                        <a href="#playAssetTail"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>playAssetTail(src: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, volume: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, clipDurationMs: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="308"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:308</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays only the tail portion of an asset after metadata becomes available.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>src</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>volume</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>clipDurationMs</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playButtonClick"></a>
+                    <span class="name">
+                        <span ><b>playButtonClick</b></span>
+                        <a href="#playButtonClick"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playButtonClick()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:122</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the UI click sound used for button interactions.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playCardValueChange"></a>
+                    <span class="name">
+                        <span ><b>playCardValueChange</b></span>
+                        <a href="#playCardValueChange"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playCardValueChange()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="151"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:151</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the sound used when a tile&#39;s displayed value changes.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playLose"></a>
+                    <span class="name">
+                        <span ><b>playLose</b></span>
+                        <a href="#playLose"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playLose()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="186"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:186</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the lose result sound.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playScoreDecrease"></a>
+                    <span class="name">
+                        <span ><b>playScoreDecrease</b></span>
+                        <a href="#playScoreDecrease"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playScoreDecrease()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="172"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:172</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the negative score-change tone.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playScoreIncrease"></a>
+                    <span class="name">
+                        <span ><b>playScoreIncrease</b></span>
+                        <a href="#playScoreIncrease"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playScoreIncrease()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="165"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:165</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the positive score-change tone.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playScoreStep"></a>
+                    <span class="name">
+                        <span ><b>playScoreStep</b></span>
+                        <a href="#playScoreStep"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playScoreStep()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="158"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:158</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the clipped tail of the stepped numeric sound effect.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playTileFlip"></a>
+                    <span class="name">
+                        <span ><b>playTileFlip</b></span>
+                        <a href="#playTileFlip"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playTileFlip()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="144"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:144</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays a randomized tile-flip sound variation.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playTileIn"></a>
+                    <span class="name">
+                        <span ><b>playTileIn</b></span>
+                        <a href="#playTileIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playTileIn(count: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the tile slide-in sound used for deal/promotion/incoming motion.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Default value</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>count</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+                                            <td>
+                                                    <code>1</code>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playTileOut"></a>
+                    <span class="name">
+                        <span ><b>playTileOut</b></span>
+                        <a href="#playTileOut"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playTileOut()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="137"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:137</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the tile slide-out sound used when the visible hand exits.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playTone"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>playTone</b></span>
+                        <a href="#playTone"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>playTone(frequency: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, durationSeconds: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, type: OscillatorType, volume: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, frequencyEnd?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="352"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:352</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Convenience wrapper for scheduling a synthesized tone immediately.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>frequency</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>durationSeconds</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                        <code>OscillatorType</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>volume</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>frequencyEnd</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playToneAtOffset"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>playToneAtOffset</b></span>
+                        <a href="#playToneAtOffset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>playToneAtOffset(frequency: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, durationSeconds: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, type: OscillatorType, volume: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, offsetSeconds: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, frequencyEnd?: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="372"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:372</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Schedules a synthesized tone through the Web Audio API.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>frequency</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>durationSeconds</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>type</td>
+                                            <td>
+                                                        <code>OscillatorType</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>volume</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>offsetSeconds</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>frequencyEnd</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="playWin"></a>
+                    <span class="name">
+                        <span ><b>playWin</b></span>
+                        <a href="#playWin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>playWin()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="179"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:179</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Plays the win result sound.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="registerInteraction"></a>
+                    <span class="name">
+                        <span ><b>registerInteraction</b></span>
+                        <a href="#registerInteraction"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>registerInteraction()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="92"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:92</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Unlocks browser audio after a user gesture and applies the current music state.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resumeAudioContext"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>resumeAudioContext</b></span>
+                        <a href="#resumeAudioContext"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>resumeAudioContext()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="440"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:440</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Resumes a suspended AudioContext after user interaction.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stopMusic"></a>
+                    <span class="name">
+                        <span ><b>stopMusic</b></span>
+                        <a href="#stopMusic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>stopMusic()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="110"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Stops any currently active looping music track and resets playback position.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="syncMusic"></a>
+                    <span class="name">
+                        <span ><b>syncMusic</b></span>
+                        <a href="#syncMusic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>syncMusic(mode: <a href="../miscellaneous/typealiases.html#MusicMode" target="_self">MusicMode</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="102"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:102</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Requests the target music mode for the current game state.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>mode</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#MusicMode" target="_self" >MusicMode</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unlockMediaPlayback"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>unlockMediaPlayback</b></span>
+                        <a href="#unlockMediaPlayback"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>unlockMediaPlayback()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="479"
+                                    class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:479</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Attempts a muted playback to unlock browser media playback for future assets.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeMusic"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>activeMusic</b></span>
+                        <a href="#activeMusic"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>HTMLAudioElement | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeMusicMode"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>activeMusicMode</b></span>
+                        <a href="#activeMusicMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#MusicMode" target="_self" >MusicMode</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;none&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="audioContext"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>audioContext</b></span>
+                        <a href="#audioContext"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>AudioContext | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="boundInteractionUnlock"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>boundInteractionUnlock</b></span>
+                        <a href="#boundInteractionUnlock"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="buttonVolume"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>buttonVolume</b></span>
+                        <a href="#buttonVolume"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.035</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:30</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Volume used for the UI button click tone.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cardValueChangeSource"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>cardValueChangeSource</b></span>
+                        <a href="#cardValueChangeSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;assets/sounds/card_value_change.mp3&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:45</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sound file used when a tile value changes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="desiredMusicMode"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>desiredMusicMode</b></span>
+                        <a href="#desiredMusicMode"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#MusicMode" target="_self" >MusicMode</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;none&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:64</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="gameplayMusicVolume"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>gameplayMusicVolume</b></span>
+                        <a href="#gameplayMusicVolume"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.24</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:26</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Volume used for gameplay background music.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="interactionListenersAttached"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>interactionListenersAttached</b></span>
+                        <a href="#interactionListenersAttached"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="lastTileFlipIndex"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>lastTileFlipIndex</b></span>
+                        <a href="#lastTileFlipIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>-1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mediaPlaybackReady"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>mediaPlaybackReady</b></span>
+                        <a href="#mediaPlaybackReady"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mediaUnlockRequested"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>mediaUnlockRequested</b></span>
+                        <a href="#mediaUnlockRequested"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="musicCache"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>musicCache</b></span>
+                        <a href="#musicCache"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Map&lt;string, HTMLAudioElement&gt;()</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="musicSources"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>musicSources</b></span>
+                        <a href="#musicSources"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#MusicTrack" target="_self" >Record&lt;MusicTrack | string&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    gameplay: &#x27;assets/sounds/game_loop_music.mp3&#x27;,
+    pause: &#x27;assets/sounds/pause_music.mp3&#x27;,
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:35</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Source map for looping music tracks.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pauseMusicVolume"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>pauseMusicVolume</b></span>
+                        <a href="#pauseMusicVolume"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.34</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:28</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Volume used for pause-state background music.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pendingAssetPlaybacks"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>pendingAssetPlaybacks</b></span>
+                        <a href="#pendingAssetPlaybacks"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#PendingAssetPlayback" target="_self" >PendingAssetPlayback[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resultSources"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>resultSources</b></span>
+                        <a href="#resultSources"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#ResultSound" target="_self" >Record&lt;ResultSound | string&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+    win: &#x27;assets/sounds/win.mp3&#x27;,
+    lose: &#x27;assets/sounds/lose.mp3&#x27;,
+  }</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:40</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Source map for end-of-bet result sounds.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scoreStepSource"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>scoreStepSource</b></span>
+                        <a href="#scoreStepSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;assets/sounds/number_change.mp3&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:47</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sound file used for stepped numeric updates.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scoreStepTailPaddingMs"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>scoreStepTailPaddingMs</b></span>
+                        <a href="#scoreStepTailPaddingMs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>40</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:51</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tail length kept when playing the stepped score sound.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="scoreStepVolume"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>scoreStepVolume</b></span>
+                        <a href="#scoreStepVolume"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.12</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:49</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Volume used for stepped numeric update sounds.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="settingsService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>settingsService</b></span>
+                        <a href="#settingsService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SettingsService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tileFlipSources"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>tileFlipSources</b></span>
+                        <a href="#tileFlipSources"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    &#x27;assets/sounds/piece_flip_1.mp3&#x27;,
+    &#x27;assets/sounds/piece_flip_2.mp3&#x27;,
+    &#x27;assets/sounds/piece_flip_3.mp3&#x27;,
+    &#x27;assets/sounds/piece_flip_4.mp3&#x27;,
+    &#x27;assets/sounds/piece_flip_5.mp3&#x27;,
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:55</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Pool of tile-flip sound variations.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tileSlideSource"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>tileSlideSource</b></span>
+                        <a href="#tileSlideSource"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;assets/sounds/piece_slide.mp3&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:53</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sound file used for tile slide movement.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tileSlideVolume"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>tileSlideVolume</b></span>
+                        <a href="#tileSlideVolume"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0.32</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:32</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Volume used for tile slide in/out sounds.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="unlocked"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>unlocked</b></span>
+                        <a href="#unlocked"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/app/libs/data-access/game-audio-manager.service.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, effect, inject } from &#x27;@angular/core&#x27;;
+import { SettingsService } from &#x27;./settings.service&#x27;;
+
+type MusicMode &#x3D; &#x27;none&#x27; | &#x27;gameplay&#x27; | &#x27;pause&#x27;;
+type MusicTrack &#x3D; &#x27;gameplay&#x27; | &#x27;pause&#x27;;
+type ResultSound &#x3D; &#x27;win&#x27; | &#x27;lose&#x27;;
+type PendingAssetPlayback &#x3D; {
+  src: string;
+  volume: number;
+  requestedAtMs: number;
+  offsetMs: number;
+};
+
+/**
+ * Central audio controller for the game.
+ *
+ * This service coordinates:
+ * - music state based on gameplay/pause state,
+ * - one-shot sound effects for tile motion, reveals, scoring, and results,
+ * - browser audio unlock behavior after the first user interaction,
+ * - cached media playback for repeated assets.
+ */
+@Injectable({ providedIn: &#x27;root&#x27; })
+export class GameAudioManager {
+  /** Volume used for gameplay background music. */
+  private readonly gameplayMusicVolume &#x3D; 0.24;
+  /** Volume used for pause-state background music. */
+  private readonly pauseMusicVolume &#x3D; 0.34;
+  /** Volume used for the UI button click tone. */
+  private readonly buttonVolume &#x3D; 0.035;
+  /** Volume used for tile slide in/out sounds. */
+  private readonly tileSlideVolume &#x3D; 0.32;
+  private readonly settingsService &#x3D; inject(SettingsService);
+  /** Source map for looping music tracks. */
+  private readonly musicSources: Record&lt;MusicTrack, string&gt; &#x3D; {
+    gameplay: &#x27;assets/sounds/game_loop_music.mp3&#x27;,
+    pause: &#x27;assets/sounds/pause_music.mp3&#x27;,
+  };
+  /** Source map for end-of-bet result sounds. */
+  private readonly resultSources: Record&lt;ResultSound, string&gt; &#x3D; {
+    win: &#x27;assets/sounds/win.mp3&#x27;,
+    lose: &#x27;assets/sounds/lose.mp3&#x27;,
+  };
+  /** Sound file used when a tile value changes. */
+  private readonly cardValueChangeSource &#x3D; &#x27;assets/sounds/card_value_change.mp3&#x27;;
+  /** Sound file used for stepped numeric updates. */
+  private readonly scoreStepSource &#x3D; &#x27;assets/sounds/number_change.mp3&#x27;;
+  /** Volume used for stepped numeric update sounds. */
+  private readonly scoreStepVolume &#x3D; 0.12;
+  /** Tail length kept when playing the stepped score sound. */
+  private readonly scoreStepTailPaddingMs &#x3D; 40;
+  /** Sound file used for tile slide movement. */
+  private readonly tileSlideSource &#x3D; &#x27;assets/sounds/piece_slide.mp3&#x27;;
+  /** Pool of tile-flip sound variations. */
+  private readonly tileFlipSources &#x3D; [
+    &#x27;assets/sounds/piece_flip_1.mp3&#x27;,
+    &#x27;assets/sounds/piece_flip_2.mp3&#x27;,
+    &#x27;assets/sounds/piece_flip_3.mp3&#x27;,
+    &#x27;assets/sounds/piece_flip_4.mp3&#x27;,
+    &#x27;assets/sounds/piece_flip_5.mp3&#x27;,
+  ];
+
+  private activeMusicMode: MusicMode &#x3D; &#x27;none&#x27;;
+  private desiredMusicMode: MusicMode &#x3D; &#x27;none&#x27;;
+  private activeMusic: HTMLAudioElement | null &#x3D; null;
+  private unlocked &#x3D; false;
+  private mediaUnlockRequested &#x3D; false;
+  private mediaPlaybackReady &#x3D; false;
+  private audioContext: AudioContext | null &#x3D; null;
+  private musicCache &#x3D; new Map&lt;string, HTMLAudioElement&gt;();
+  private lastTileFlipIndex &#x3D; -1;
+  private pendingAssetPlaybacks: PendingAssetPlayback[] &#x3D; [];
+  private interactionListenersAttached &#x3D; false;
+  private readonly boundInteractionUnlock &#x3D; () &#x3D;&gt; this.registerInteraction();
+
+  constructor() {
+    this.attachInteractionUnlockListeners();
+
+    effect(() &#x3D;&gt; {
+      if (!this.settingsService.settings().musicEnabled) {
+        this.stopMusic();
+        return;
+      }
+
+      this.applyMusicState();
+    });
+  }
+
+  /**
+   * Unlocks browser audio after a user gesture and applies the current music state.
+   */
+  registerInteraction(): void {
+    this.unlocked &#x3D; true;
+    this.resumeAudioContext();
+    this.unlockMediaPlayback();
+    this.applyMusicState();
+  }
+
+  /**
+   * Requests the target music mode for the current game state.
+   */
+  syncMusic(mode: MusicMode): void {
+    this.desiredMusicMode &#x3D; mode;
+    this.applyMusicState();
+  }
+
+  /**
+   * Stops any currently active looping music track and resets playback position.
+   */
+  stopMusic(): void {
+    if (this.activeMusic) {
+      this.activeMusic.pause();
+      this.activeMusic.currentTime &#x3D; 0;
+      this.activeMusic &#x3D; null;
+    }
+    this.activeMusicMode &#x3D; &#x27;none&#x27;;
+  }
+
+  /**
+   * Plays the UI click sound used for button interactions.
+   */
+  playButtonClick(): void {
+    this.playTone(700, 0.035, &#x27;square&#x27;, this.buttonVolume);
+  }
+
+  /**
+   * Plays the tile slide-in sound used for deal/promotion/incoming motion.
+   */
+  playTileIn(count &#x3D; 1): void {
+    void count;
+    this.playAsset(this.tileSlideSource, this.tileSlideVolume);
+  }
+
+  /**
+   * Plays the tile slide-out sound used when the visible hand exits.
+   */
+  playTileOut(): void {
+    this.playAsset(this.tileSlideSource, this.tileSlideVolume);
+  }
+
+  /**
+   * Plays a randomized tile-flip sound variation.
+   */
+  playTileFlip(): void {
+    this.playAsset(this.getNextTileFlipSource(), 0.34);
+  }
+
+  /**
+   * Plays the sound used when a tile&#x27;s displayed value changes.
+   */
+  playCardValueChange(): void {
+    this.playAsset(this.cardValueChangeSource, 0.24);
+  }
+
+  /**
+   * Plays the clipped tail of the stepped numeric sound effect.
+   */
+  playScoreStep(): void {
+    this.playAssetTail(this.scoreStepSource, this.scoreStepVolume, this.scoreStepTailPaddingMs);
+  }
+
+  /**
+   * Plays the positive score-change tone.
+   */
+  playScoreIncrease(): void {
+    this.playTone(760, 0.12, &#x27;sine&#x27;, 0.055, 980);
+  }
+
+  /**
+   * Plays the negative score-change tone.
+   */
+  playScoreDecrease(): void {
+    this.playTone(520, 0.12, &#x27;sine&#x27;, 0.055, 320);
+  }
+
+  /**
+   * Plays the win result sound.
+   */
+  playWin(): void {
+    this.playAsset(this.resultSources.win, 0.8);
+  }
+
+  /**
+   * Plays the lose result sound.
+   */
+  playLose(): void {
+    this.playAsset(this.resultSources.lose, 0.82);
+  }
+
+  /**
+   * Applies the desired music state if audio is unlocked and music is enabled.
+   */
+  private applyMusicState(): void {
+    if (!this.unlocked || !this.settingsService.settings().musicEnabled) {
+      this.stopMusic();
+      return;
+    }
+
+    if (this.desiredMusicMode &#x3D;&#x3D;&#x3D; &#x27;none&#x27;) {
+      this.stopMusic();
+      return;
+    }
+
+    if (this.activeMusicMode &#x3D;&#x3D;&#x3D; this.desiredMusicMode &amp;&amp; this.activeMusic) {
+      return;
+    }
+
+    const nextTrack &#x3D; this.getMusicTrack(this.desiredMusicMode);
+    if (!nextTrack) {
+      this.stopMusic();
+      return;
+    }
+
+    this.stopMusic();
+    const audio &#x3D; this.getCachedMusic(nextTrack);
+    audio.currentTime &#x3D; 0;
+    audio.loop &#x3D; true;
+    audio.volume &#x3D; nextTrack &#x3D;&#x3D;&#x3D; &#x27;pause&#x27; ? this.pauseMusicVolume : this.gameplayMusicVolume;
+    audio.play().catch(() &#x3D;&gt; undefined);
+    this.activeMusic &#x3D; audio;
+    this.activeMusicMode &#x3D; this.desiredMusicMode;
+  }
+
+  /**
+   * Maps a requested music mode to a concrete music track.
+   */
+  private getMusicTrack(mode: MusicMode): MusicTrack | null {
+    // if (mode &#x3D;&#x3D;&#x3D; &#x27;gameplay&#x27;) return &#x27;gameplay&#x27;;
+    if (mode &#x3D;&#x3D;&#x3D; &#x27;pause&#x27;) return &#x27;pause&#x27;;
+    return null;
+  }
+
+  /**
+   * Returns a cached HTMLAudioElement for a looping music track.
+   */
+  private getCachedMusic(track: MusicTrack): HTMLAudioElement {
+    const src &#x3D; this.musicSources[track];
+    const cached &#x3D; this.musicCache.get(src);
+    if (cached) {
+      return cached;
+    }
+
+    const audio &#x3D; new Audio(src);
+    audio.preload &#x3D; &#x27;auto&#x27;;
+    this.musicCache.set(src, audio);
+    return audio;
+  }
+
+  /**
+   * Picks the next tile-flip sound source while avoiding immediate repeats when possible.
+   */
+  private getNextTileFlipSource(): string {
+    if (this.tileFlipSources.length &#x3D;&#x3D;&#x3D; 1) {
+      return this.tileFlipSources[0];
+    }
+
+    let nextIndex &#x3D; Math.floor(Math.random() * this.tileFlipSources.length);
+    if (nextIndex &#x3D;&#x3D;&#x3D; this.lastTileFlipIndex) {
+      nextIndex &#x3D; (nextIndex + 1) % this.tileFlipSources.length;
+    }
+
+    this.lastTileFlipIndex &#x3D; nextIndex;
+    return this.tileFlipSources[nextIndex];
+  }
+
+  /**
+   * Plays an asset immediately from the beginning.
+   */
+  private playAsset(src: string, volume: number): void {
+    this.playAssetAtOffset(src, volume, 0);
+  }
+
+  /**
+   * Plays an asset after an optional time offset, queuing it until media
+   * playback is unlocked if needed.
+   */
+  private playAssetAtOffset(
+    src: string,
+    volume: number,
+    offsetSeconds: number,
+  ): void {
+    if (!this.settingsService.settings().soundEnabled || !this.unlocked) {
+      return;
+    }
+
+    if (!this.mediaPlaybackReady) {
+      this.pendingAssetPlaybacks.push({
+        src,
+        volume,
+        requestedAtMs: this.nowMs(),
+        offsetMs: offsetSeconds * 1000,
+      });
+      this.unlockMediaPlayback();
+      return;
+    }
+
+    window.setTimeout(() &#x3D;&gt; {
+      const audio &#x3D; new Audio(src);
+      audio.preload &#x3D; &#x27;auto&#x27;;
+      audio.volume &#x3D; volume;
+      audio.play().catch(() &#x3D;&gt; undefined);
+    }, offsetSeconds * 1000);
+  }
+
+  /**
+   * Plays only the tail portion of an asset after metadata becomes available.
+   */
+  private playAssetTail(src: string, volume: number, clipDurationMs: number): void {
+    if (!this.settingsService.settings().soundEnabled || !this.unlocked) {
+      return;
+    }
+
+    if (!this.mediaPlaybackReady) {
+      this.pendingAssetPlaybacks.push({
+        src,
+        volume,
+        requestedAtMs: this.nowMs(),
+        offsetMs: 0,
+      });
+      this.unlockMediaPlayback();
+      return;
+    }
+
+    const audio &#x3D; new Audio(src);
+    audio.preload &#x3D; &#x27;metadata&#x27;;
+    audio.volume &#x3D; volume;
+
+    const playTail &#x3D; () &#x3D;&gt; {
+      const durationMs &#x3D; Number.isFinite(audio.duration)
+        ? audio.duration * 1000
+        : clipDurationMs;
+      const startAtSeconds &#x3D; Math.max(0, (durationMs - clipDurationMs) / 1000);
+      audio.currentTime &#x3D; startAtSeconds;
+      audio.play().catch(() &#x3D;&gt; undefined);
+      window.setTimeout(() &#x3D;&gt; {
+        audio.pause();
+      }, clipDurationMs + 20);
+    };
+
+    if (audio.readyState &gt;&#x3D; 1) {
+      playTail();
+      return;
+    }
+
+    audio.addEventListener(&#x27;loadedmetadata&#x27;, playTail, { once: true });
+    audio.load();
+  }
+
+  /**
+   * Convenience wrapper for scheduling a synthesized tone immediately.
+   */
+  private playTone(
+    frequency: number,
+    durationSeconds: number,
+    type: OscillatorType,
+    volume: number,
+    frequencyEnd?: number,
+  ): void {
+    this.playToneAtOffset(
+      frequency,
+      durationSeconds,
+      type,
+      volume,
+      0,
+      frequencyEnd,
+    );
+  }
+
+  /**
+   * Schedules a synthesized tone through the Web Audio API.
+   */
+  private playToneAtOffset(
+    frequency: number,
+    durationSeconds: number,
+    type: OscillatorType,
+    volume: number,
+    offsetSeconds: number,
+    frequencyEnd?: number,
+  ): void {
+    if (!this.settingsService.settings().soundEnabled || !this.unlocked) {
+      return;
+    }
+
+    const context &#x3D; this.getAudioContext();
+    if (!context) return;
+
+    const now &#x3D; context.currentTime + offsetSeconds;
+    const oscillator &#x3D; context.createOscillator();
+    const gain &#x3D; context.createGain();
+
+    oscillator.type &#x3D; type;
+    oscillator.frequency.setValueAtTime(frequency, now);
+    if (frequencyEnd !&#x3D;&#x3D; undefined) {
+      oscillator.frequency.linearRampToValueAtTime(
+        frequencyEnd,
+        now + durationSeconds,
+      );
+    }
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(volume, now + 0.01);
+    gain.gain.exponentialRampToValueAtTime(
+      0.0001,
+      now + durationSeconds,
+    );
+
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start(now);
+    oscillator.stop(now + durationSeconds);
+  }
+
+  /**
+   * Returns a lazily created AudioContext when available in the browser.
+   */
+  private getAudioContext(): AudioContext | null {
+    if (typeof window &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      return null;
+    }
+
+    if (this.audioContext) {
+      return this.audioContext;
+    }
+
+    const AudioContextCtor &#x3D;
+      window.AudioContext ||
+      (window as Window &amp; { webkitAudioContext?: typeof AudioContext })
+        .webkitAudioContext;
+    if (!AudioContextCtor) {
+      return null;
+    }
+
+    this.audioContext &#x3D; new AudioContextCtor();
+    return this.audioContext;
+  }
+
+  /**
+   * Resumes a suspended AudioContext after user interaction.
+   */
+  private resumeAudioContext(): void {
+    const context &#x3D; this.getAudioContext();
+    if (!context || context.state !&#x3D;&#x3D; &#x27;suspended&#x27;) return;
+    context.resume().catch(() &#x3D;&gt; undefined);
+  }
+
+  /**
+   * Attaches one-time global interaction listeners used to unlock audio.
+   */
+  private attachInteractionUnlockListeners(): void {
+    if (this.interactionListenersAttached || typeof window &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      return;
+    }
+
+    this.interactionListenersAttached &#x3D; true;
+    const options: AddEventListenerOptions &#x3D; { passive: true };
+
+    window.addEventListener(&#x27;pointerdown&#x27;, this.boundInteractionUnlock, options);
+    window.addEventListener(&#x27;keydown&#x27;, this.boundInteractionUnlock, options);
+    window.addEventListener(&#x27;touchstart&#x27;, this.boundInteractionUnlock, options);
+  }
+
+  /**
+   * Removes the temporary global interaction listeners once audio is unlocked.
+   */
+  private detachInteractionUnlockListeners(): void {
+    if (!this.interactionListenersAttached || typeof window &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      return;
+    }
+
+    window.removeEventListener(&#x27;pointerdown&#x27;, this.boundInteractionUnlock);
+    window.removeEventListener(&#x27;keydown&#x27;, this.boundInteractionUnlock);
+    window.removeEventListener(&#x27;touchstart&#x27;, this.boundInteractionUnlock);
+    this.interactionListenersAttached &#x3D; false;
+  }
+
+  /**
+   * Attempts a muted playback to unlock browser media playback for future assets.
+   */
+  private unlockMediaPlayback(): void {
+    if (this.mediaPlaybackReady || this.mediaUnlockRequested || typeof Audio &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      return;
+    }
+
+    this.mediaUnlockRequested &#x3D; true;
+    const audio &#x3D; new Audio(this.tileSlideSource);
+    audio.preload &#x3D; &#x27;auto&#x27;;
+    audio.muted &#x3D; true;
+    audio.volume &#x3D; 0;
+    audio.play()
+      .then(() &#x3D;&gt; {
+        audio.pause();
+        audio.currentTime &#x3D; 0;
+        audio.muted &#x3D; false;
+        this.mediaPlaybackReady &#x3D; true;
+        this.detachInteractionUnlockListeners();
+        this.flushPendingAssetPlaybacks();
+      })
+      .catch(() &#x3D;&gt; {
+        this.mediaUnlockRequested &#x3D; false;
+      });
+  }
+
+  /**
+   * Flushes any asset play requests that were queued before media playback was ready.
+   */
+  private flushPendingAssetPlaybacks(): void {
+    if (this.pendingAssetPlaybacks.length &#x3D;&#x3D;&#x3D; 0) {
+      return;
+    }
+
+    const queuedPlaybacks &#x3D; [...this.pendingAssetPlaybacks];
+    this.pendingAssetPlaybacks &#x3D; [];
+    const nowMs &#x3D; this.nowMs();
+
+    for (const playback of queuedPlaybacks) {
+      const elapsedMs &#x3D; nowMs - playback.requestedAtMs;
+      const remainingMs &#x3D; Math.max(0, playback.offsetMs - elapsedMs);
+
+      window.setTimeout(() &#x3D;&gt; {
+        const audio &#x3D; new Audio(playback.src);
+        audio.preload &#x3D; &#x27;auto&#x27;;
+        audio.volume &#x3D; playback.volume;
+        audio.play().catch(() &#x3D;&gt; undefined);
+      }, remainingMs);
+    }
+  }
+
+  /**
+   * Returns the current high-resolution timestamp in milliseconds.
+   */
+  private nowMs(): number {
+    if (typeof performance !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+      return performance.now();
+    }
+
+    return Date.now();
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'GameAudioManager.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
