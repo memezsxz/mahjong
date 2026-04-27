@@ -1,5 +1,5 @@
 {
-  "name": "temp-angular",
+  "name": "mahjong",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "docs": "compodoc -p tsconfig.app.json --theme material --output dist/mahjong-high-low/browser/docs"
+    "docs": "compodoc -p tsconfig.app.json --theme material --output dist/mahjong/browser/docs"
   },
   "prettier": {
     "printWidth": 100,
