@@ -40,7 +40,8 @@ app-root {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background: var(--c-bg);
   color: var(--c-text);
   font-family: var(--font-display);
@@ -85,6 +86,20 @@ app-root {
   border-color: var(--c-indigo);
   color: var(--c-indigo);
   box-shadow: none;
+}
+
+@media (max-width: 639px) {
+  .p-button.lp-start-btn {
+    width: auto;
+    justify-content: center;
+    padding: 0.95rem 1.5rem;
+  }
+
+  .p-button.lp-settings-btn {
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 auto;
+  }
 }
 
 .p-button.gp-dialog-btn,

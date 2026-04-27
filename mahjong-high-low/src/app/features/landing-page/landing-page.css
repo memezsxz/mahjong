@@ -19,3 +19,35 @@
   white-space: nowrap;
   text-align: left;
 }
+
+@media (max-width: 639px) {
+  .lp-score-row {
+    grid-template-columns: 2rem minmax(0, 1fr) auto;
+    grid-template-areas:
+      "rank name score"
+      "rank date score";
+    column-gap: 0.875rem;
+    row-gap: 0.25rem;
+    align-items: center;
+  }
+
+  .lp-score-rank {
+    grid-area: rank;
+    align-self: start;
+  }
+
+  .lp-score-name {
+    grid-area: name;
+  }
+
+  .lp-score-value {
+    grid-area: score;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .lp-score-date {
+    grid-area: date;
+    white-space: normal;
+  }
+}
