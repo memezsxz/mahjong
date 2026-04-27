@@ -90,16 +90,19 @@ src/app
 ## Code Quality
 
 **Lint:**
+
 ```bash
 ng lint
 ```
 
 **Format:**
+
 ```bash
 npx prettier --write .
 ```
 
 **Check formatting without writing:**
+
 ```bash
 npx prettier --check .
 ```
