@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777269489791,
+  "timestamp": 1777269658162,
   "index": "/mahjong/index.html",
   "assetGroups": [
     {
@@ -131,7 +131,7 @@
     "/mahjong/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "/mahjong/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "/mahjong/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "/mahjong/index.html": "c42c741a9260fe39c57dbb3726f66664b60c222e",
+    "/mahjong/index.html": "90d809080d4d9825f7c6d5578d903bdb5f3e0b5e",
     "/mahjong/main-4NWUQIJI.js": "fb211a0fcc01f8e4d838906adae47f8b3209f949",
     "/mahjong/manifest.webmanifest": "b149ead37a9e5119aa601f769602b4e1fa48a7a8",
     "/mahjong/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
