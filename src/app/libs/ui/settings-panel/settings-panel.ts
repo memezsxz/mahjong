@@ -11,11 +11,11 @@ import { VALID_HAND_SIZES } from '@hbg/shared-util-game';
   imports: [ButtonModule],
   templateUrl: './settings-panel.html',
   styleUrl: './settings-panel.css',
-  standalone: true
+  standalone: true,
 })
 export class SettingsPanel {
   settings = input.required<PlayerSettingsModel>();
-  inGame   = input<boolean>(false);
+  inGame = input<boolean>(false);
   settingsChanged = output<Partial<PlayerSettingsModel>>();
   closed = output<void>();
 

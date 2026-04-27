@@ -69,21 +69,37 @@
 }
 
 @keyframes dc-old-down {
-  0% { transform: translate(-50%, 0); }
-  100% { transform: translate(-50%, 125%); }
+  0% {
+    transform: translate(-50%, 0);
+  }
+  100% {
+    transform: translate(-50%, 125%);
+  }
 }
 
 @keyframes dc-new-down {
-  0% { transform: translate(-50%, -125%); }
-  100% { transform: translate(-50%, 0); }
+  0% {
+    transform: translate(-50%, -125%);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
 }
 
 @keyframes dc-old-up {
-  0% { transform: translate(-50%, 0); }
-  100% { transform: translate(-50%, -125%); }
+  0% {
+    transform: translate(-50%, 0);
+  }
+  100% {
+    transform: translate(-50%, -125%);
+  }
 }
 
 @keyframes dc-new-up {
-  0% { transform: translate(-50%, 125%); }
-  100% { transform: translate(-50%, 0); }
+  0% {
+    transform: translate(-50%, 125%);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
 }

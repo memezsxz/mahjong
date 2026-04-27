@@ -7,7 +7,7 @@
       [class.score-display-value--down]="scoreStepping() && scoreStepDirection() === 'down'"
       [class.score-display-value--idle]="!scoreStepping()"
     >
-      {{ (currentScore() ?? score()) | number }}
+      {{ currentScore() ?? score() | number }}
     </span>
     @if (winStreak() > 1) {
       <span class="font-mono text-sm font-bold leading-none text-c-pink">×{{ winStreak() }}</span>

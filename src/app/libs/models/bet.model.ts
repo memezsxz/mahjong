@@ -1,4 +1,4 @@
 export enum Bet {
-    High = "high",
-    Low = "low",
+  High = 'high',
+  Low = 'low',
 }

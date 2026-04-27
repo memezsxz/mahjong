@@ -89,19 +89,14 @@ export class ScoresService {
   private persistLocalCache(scores: LeaderboardEntryModel[]): void {
     const normalizedScores = this.normalizeScores(scores);
     this._topScores.set(normalizedScores);
-    localStorage.setItem(
-      ScoresService.STORAGE_KEY,
-      JSON.stringify(normalizedScores),
-    );
+    localStorage.setItem(ScoresService.STORAGE_KEY, JSON.stringify(normalizedScores));
   }
 
   /**
    * Sorts leaderboard entries by score, then by most recent date, and trims the
    * list to the configured maximum size.
    */
-  private normalizeScores(
-    scores: LeaderboardEntryModel[],
-  ): LeaderboardEntryModel[] {
+  private normalizeScores(scores: LeaderboardEntryModel[]): LeaderboardEntryModel[] {
     return [...scores]
       .sort((a, b) => {
         if (b.totalScore !== a.totalScore) {

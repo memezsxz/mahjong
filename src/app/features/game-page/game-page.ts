@@ -1,8 +1,27 @@
-import { Component, computed, effect, ElementRef, HostListener, inject, OnDestroy, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { BetControls, DeckCounter, getTileAssetPath, Hand, HandHistory, ScoreDisplay, SettingsPanel } from '@hbg/game-ui';
+import {
+  BetControls,
+  DeckCounter,
+  getTileAssetPath,
+  Hand,
+  HandHistory,
+  ScoreDisplay,
+  SettingsPanel,
+} from '@hbg/game-ui';
 import { Bet, GamePhase, HandModel, PlayerSettingsModel } from '@hbg/shared-models';
 import { GameAudioManager, GameStore, SettingsService } from '@hbg/game-data-access';
 import { buildDeck, MAX_RESHUFFLES } from '@hbg/shared-util-game';
@@ -51,7 +70,7 @@ import { GamePageViewStateService } from './game-page-view-state.service';
     GamePageUiShellService,
     GamePageViewStateService,
   ],
-  standalone: true
+  standalone: true,
 })
 /**
  * Container component for the full in-run game experience.
@@ -153,14 +172,11 @@ export class GamePage implements OnInit, OnDestroy {
   transitionPromotedDeltaY = this.roundTransition.transitionPromotedDeltaY;
   // debugMode = signal(this.DEBUG_MODE);
   private readonly freshDeckSize = buildDeck().length;
-  private readonly mainStageRef =
-    viewChild<ElementRef<globalThis.HTMLElement>>('mainStage');
-  private readonly centerStageRef =
-    viewChild<ElementRef<globalThis.HTMLElement>>('centerStage');
+  private readonly mainStageRef = viewChild<ElementRef<globalThis.HTMLElement>>('mainStage');
+  private readonly centerStageRef = viewChild<ElementRef<globalThis.HTMLElement>>('centerStage');
   private readonly hiddenHandSlotRef =
     viewChild<ElementRef<globalThis.HTMLElement>>('hiddenHandSlot');
-  private readonly pageFrameRef =
-    viewChild<ElementRef<globalThis.HTMLElement>>('pageFrame');
+  private readonly pageFrameRef = viewChild<ElementRef<globalThis.HTMLElement>>('pageFrame');
   private readonly bottomHandSlotRef =
     viewChild<ElementRef<globalThis.HTMLElement>>('bottomHandSlot');
   private readonly scoreDisplaySlotRef =
@@ -203,12 +219,7 @@ export class GamePage implements OnInit, OnDestroy {
       const initialDeal = this.steadyHandsShouldDeal();
       this.dealCount();
 
-      if (
-        transitionActive ||
-        phase !== GamePhase.Betting ||
-        !visibleHand ||
-        !hiddenHand
-      ) {
+      if (transitionActive || phase !== GamePhase.Betting || !visibleHand || !hiddenHand) {
         this.clearBetControlsTimer();
         this.betControlsReady.set(false);
         return;
@@ -346,10 +357,7 @@ export class GamePage implements OnInit, OnDestroy {
     this.store.placeBet(bet === 'higher' ? Bet.High : Bet.Low);
 
     const result = this.store.lastResult();
-    if (
-      (result !== 'win' && result !== 'lose') ||
-      this.store.gamePhase() !== GamePhase.Revealing
-    ) {
+    if ((result !== 'win' && result !== 'lose') || this.store.gamePhase() !== GamePhase.Revealing) {
       return;
     }
 
@@ -370,15 +378,16 @@ export class GamePage implements OnInit, OnDestroy {
    * state if the player is already ready for the next hand.
    */
   onNextHand(): void {
-    if (this.roundTransitionActive() || this.revealSequenceLocked() || this.reshuffleSequenceActive()) {
+    if (
+      this.roundTransitionActive() ||
+      this.revealSequenceLocked() ||
+      this.reshuffleSequenceActive()
+    ) {
       return;
     }
     this.handleButtonInteraction();
 
-    if (
-      this.store.gamePhase() === GamePhase.Revealing &&
-      this.revealedHandPromoted()
-    ) {
+    if (this.store.gamePhase() === GamePhase.Revealing && this.revealedHandPromoted()) {
       this.advanceToNextHiddenHand();
       return;
     }
@@ -825,10 +834,7 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   private finishMobileSidebarDrag(event: globalThis.PointerEvent): void {
-    if (
-      !this.mobileSidebarDragActive() ||
-      event.pointerId !== this.activeSidebarPointerId
-    ) {
+    if (!this.mobileSidebarDragActive() || event.pointerId !== this.activeSidebarPointerId) {
       return;
     }
 
@@ -842,7 +848,7 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   private preloadHandImages(hand: HandModel): void {
-    hand.tiles.forEach(tile => {
+    hand.tiles.forEach((tile) => {
       const img = new Image();
       img.src = getTileAssetPath(tile);
     });

@@ -44,7 +44,9 @@ export const GameStore = signalStore(
 
   withComputed((state) => ({
     isDrawPileEmpty: computed(() => state.drawPile().length === 0), // TODO: we should handle the draw pile not having enough to draw the hand
-    isGameActive: computed(() => state.gamePhase() !== GamePhase.Idle && state.gamePhase() !== GamePhase.GameOver),
+    isGameActive: computed(
+      () => state.gamePhase() !== GamePhase.Idle && state.gamePhase() !== GamePhase.GameOver,
+    ),
     isGameOver: computed(() => state.gamePhase() === GamePhase.GameOver),
     totalTileCount: computed(() => state.drawPile().length + state.discard().length),
   })),
@@ -60,10 +62,16 @@ export const GameStore = signalStore(
         const selectedHandSize = playerSettings.settings().handSize;
         let nextDeck = buildDeck();
         // The first drawn hand is the player's visible hand.
-        const { hand: firstHand, drawPile: firstRemainingDeck } = drawHand(selectedHandSize, nextDeck);
+        const { hand: firstHand, drawPile: firstRemainingDeck } = drawHand(
+          selectedHandSize,
+          nextDeck,
+        );
         nextDeck = firstRemainingDeck;
         // The second drawn hand becomes the opening hidden hand.
-        const { hand: secondHand, drawPile: secondRemainingDeck } = drawHand(selectedHandSize, nextDeck);
+        const { hand: secondHand, drawPile: secondRemainingDeck } = drawHand(
+          selectedHandSize,
+          nextDeck,
+        );
 
         patchState(store, {
           drawPile: secondRemainingDeck,
@@ -215,17 +223,14 @@ export const GameStore = signalStore(
           return false;
         }
 
-        patchState(
-          store,
-          {
-            visibleHand: currentHiddenHand,
-            discard: [...store.discard(), ...currentHiddenHand.tiles],
-            gamePhase: GamePhase.GameOver,
-            lastResult: null,
-            lastScoreChange: null,
-            gameOverReason: reshuffleGameOver,
-          },
-        );
+        patchState(store, {
+          visibleHand: currentHiddenHand,
+          discard: [...store.discard(), ...currentHiddenHand.tiles],
+          gamePhase: GamePhase.GameOver,
+          lastResult: null,
+          lastScoreChange: null,
+          gameOverReason: reshuffleGameOver,
+        });
 
         return true;
       },

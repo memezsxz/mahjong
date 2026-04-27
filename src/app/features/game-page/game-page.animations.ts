@@ -62,11 +62,13 @@ export const NEXT_ROUND_PROMOTE_MS = 430;
 /** Duration of the incoming hidden-hand entrance motion. */
 export const NEXT_ROUND_INCOMING_HIDDEN_MS = 430;
 /** Delay before the incoming hidden hand begins entering. */
-export const NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS = NEXT_ROUND_PROMOTE_DELAY_MS + NEXT_ROUND_PROMOTE_MS;
+export const NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS =
+  NEXT_ROUND_PROMOTE_DELAY_MS + NEXT_ROUND_PROMOTE_MS;
 /** Delay before the incoming visible total animates in. */
 export const NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS = 520;
 /** Total duration of the standard next-round transition sequence. */
-export const NEXT_ROUND_TRANSITION_TOTAL_MS = NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS + NEXT_ROUND_INCOMING_HIDDEN_MS + 50;
+export const NEXT_ROUND_TRANSITION_TOTAL_MS =
+  NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS + NEXT_ROUND_INCOMING_HIDDEN_MS + 50;
 /** Time the win/lose banner remains visible before the next reveal step. */
 export const WIN_BANNER_SHOW_MS = 1150;
 /** Delay before post-reveal value updates begin on a win. */
@@ -116,7 +118,9 @@ export function getHiddenHandBaseDelay(handSize: HandSizeOptions): number {
 
 /** Calculates when bet controls should appear for the initial deal. */
 export function getBetControlsDelay(handSize: HandSizeOptions): number {
-  return getHiddenHandBaseDelay(handSize) + getSingleHandDealDuration(handSize) + BET_CONTROLS_BUFFER_MS;
+  return (
+    getHiddenHandBaseDelay(handSize) + getSingleHandDealDuration(handSize) + BET_CONTROLS_BUFFER_MS
+  );
 }
 
 /** Returns the fallback timed buffer for later-round bet controls. */

@@ -36,9 +36,7 @@ export class GamePageUiShellService {
     });
   }
 
-  requestLeave(
-    hasActiveProgress: boolean,
-  ): boolean | Promise<boolean> {
+  requestLeave(hasActiveProgress: boolean): boolean | Promise<boolean> {
     if (!hasActiveProgress) {
       return true;
     }
@@ -50,9 +48,7 @@ export class GamePageUiShellService {
     });
   }
 
-  openExitFlow(
-    hasActiveProgress: boolean,
-  ): 'exit-now' | 'dialog-opened' {
+  openExitFlow(hasActiveProgress: boolean): 'exit-now' | 'dialog-opened' {
     if (!hasActiveProgress) {
       return 'exit-now';
     }
@@ -126,10 +122,7 @@ export class GamePageUiShellService {
       return;
     }
 
-    const scoreSaved = this.scoresService.submitScore(
-      playerName,
-      this.store.currentScore(),
-    );
+    const scoreSaved = this.scoresService.submitScore(playerName, this.store.currentScore());
     if (!scoreSaved) {
       return;
     }

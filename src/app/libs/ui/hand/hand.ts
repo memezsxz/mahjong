@@ -1,4 +1,14 @@
-import { afterNextRender, Component, computed, effect, input, OnDestroy, output, signal, viewChildren } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  effect,
+  input,
+  OnDestroy,
+  output,
+  signal,
+  viewChildren,
+} from '@angular/core';
 import { HandModel } from '@hbg/shared-models';
 import { Tile } from '../tile/tile';
 import { UI_HAND_TOTAL_ROLL_DURATION_MS } from '../game-ui.animations';
@@ -11,22 +21,22 @@ import { UI_HAND_TOTAL_ROLL_DURATION_MS } from '../game-ui.animations';
   imports: [Tile],
   templateUrl: './hand.html',
   styleUrls: ['../game-ui.animation-tokens.css', './hand.css'],
-  standalone: true
+  standalone: true,
 })
 export class Hand implements OnDestroy {
-  hand              = input.required<HandModel>();
-  showTileValue     = input.required<boolean>();
-  showHandTiles     = input.required<boolean>();
+  hand = input.required<HandModel>();
+  showTileValue = input.required<boolean>();
+  showHandTiles = input.required<boolean>();
   showFullHandValue = input<boolean>(true);
-  reserveTotalSlot  = input<boolean>(false);
+  reserveTotalSlot = input<boolean>(false);
   tileValueOverrides = input<Record<string, number> | null>(null);
-  handTotalOverride  = input<number | null>(null);
+  handTotalOverride = input<number | null>(null);
   playTileValueChangeSound = input<boolean>(false);
   faceUpTileIds = input<string[] | null>(null);
   valueVisibleTileIds = input<string[] | null>(null);
-  dealTrigger       = input<number>(0);
-  animateDeal       = input<boolean>(true);
-  dealStarted       = output<void>();
+  dealTrigger = input<number>(0);
+  animateDeal = input<boolean>(true);
+  dealStarted = output<void>();
   tileValueChangeSoundRequested = output<void>();
 
   private tileComponents = viewChildren(Tile);
@@ -86,7 +96,7 @@ export class Hand implements OnDestroy {
    */
   private deal(): void {
     this.dealStarted.emit();
-    this.tileComponents().forEach(t => t.restartDealAnimation());
+    this.tileComponents().forEach((t) => t.restartDealAnimation());
   }
 
   ngOnDestroy(): void {

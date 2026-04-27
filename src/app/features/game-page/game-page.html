@@ -1,10 +1,13 @@
-<div #pageFrame class="gp-page-frame relative flex h-full overflow-hidden bg-c-bg text-c-text font-display">
-
+<div
+  #pageFrame
+  class="gp-page-frame relative flex h-full overflow-hidden bg-c-bg text-c-text font-display"
+>
   @if (store.visibleHand() && store.hiddenHand()) {
-
     <!-- ── Main ──────────────────────────────────────────────────────────── -->
-    <main #mainStage class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-5 sm:px-8 lg:px-12 relative">
-
+    <main
+      #mainStage
+      class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-5 sm:px-8 lg:px-12 relative"
+    >
       <!-- Topbar -->
       <div class="shrink-0 flex items-center py-4 border-b border-c-indigo/10">
         <button
@@ -14,15 +17,15 @@
           Mahjong High · Low
         </button>
 
-<!--        @if (debugMode()) {-->
-<!--          <button-->
-<!--            class="ml-auto h-8 px-3 border border-c-pink/50 bg-c-bg font-mono text-[0.62rem] font-bold tracking-[0.1em] text-c-pink cursor-pointer"-->
-<!--            [disabled]="roundTransitionActive() || revealSequenceLocked() || reshuffleSequenceActive()"-->
-<!--            (click)="onDebugForceReshuffle()"-->
-<!--          >-->
-<!--            DEBUG RESHUFFLE-->
-<!--          </button>-->
-<!--        }-->
+        <!--        @if (debugMode()) {-->
+        <!--          <button-->
+        <!--            class="ml-auto h-8 px-3 border border-c-pink/50 bg-c-bg font-mono text-[0.62rem] font-bold tracking-[0.1em] text-c-pink cursor-pointer"-->
+        <!--            [disabled]="roundTransitionActive() || revealSequenceLocked() || reshuffleSequenceActive()"-->
+        <!--            (click)="onDebugForceReshuffle()"-->
+        <!--          >-->
+        <!--            DEBUG RESHUFFLE-->
+        <!--          </button>-->
+        <!--        }-->
       </div>
 
       <!-- Center: hidden hand (deals second) -->
@@ -39,11 +42,21 @@
               [showHandTiles]="store.gamePhase() === GamePhase.Revealing"
               [showFullHandValue]="store.gamePhase() === GamePhase.Revealing"
               [reserveTotalSlot]="true"
-              [faceUpTileIds]="store.gamePhase() === GamePhase.Revealing ? revealTileFaceUpIds() : null"
-              [valueVisibleTileIds]="store.gamePhase() === GamePhase.Revealing ? revealTileValueVisibleIds() : null"
-              [tileValueOverrides]="store.gamePhase() === GamePhase.Revealing ? revealTileValueOverrides() : null"
-              [playTileValueChangeSound]="store.gamePhase() === GamePhase.Revealing && revealValueAnimationActive()"
-              [handTotalOverride]="store.gamePhase() === GamePhase.Revealing ? revealHiddenTotalOverride() : null"
+              [faceUpTileIds]="
+                store.gamePhase() === GamePhase.Revealing ? revealTileFaceUpIds() : null
+              "
+              [valueVisibleTileIds]="
+                store.gamePhase() === GamePhase.Revealing ? revealTileValueVisibleIds() : null
+              "
+              [tileValueOverrides]="
+                store.gamePhase() === GamePhase.Revealing ? revealTileValueOverrides() : null
+              "
+              [playTileValueChangeSound]="
+                store.gamePhase() === GamePhase.Revealing && revealValueAnimationActive()
+              "
+              [handTotalOverride]="
+                store.gamePhase() === GamePhase.Revealing ? revealHiddenTotalOverride() : null
+              "
               [dealTrigger]="dealCount()"
               [animateDeal]="steadyHandsShouldDeal()"
               (dealStarted)="onHiddenHandDealStarted()"
@@ -55,7 +68,9 @@
             <div
               class="gp-win-reveal-banner"
               [class.gp-win-reveal-banner--lose]="revealResultBannerText() === 'LOSE'"
-              [class.gp-win-reveal-banner-pulse]="revealResultBannerText() === 'WIN' && revealValueAnimationActive()"
+              [class.gp-win-reveal-banner-pulse]="
+                revealResultBannerText() === 'WIN' && revealValueAnimationActive()
+              "
             >
               {{ revealResultBannerText() }}
             </div>
@@ -63,23 +78,40 @@
         }
 
         @if (reshuffleSequenceActive()) {
-          <div class="gp-reshuffle-overlay" [class.gp-reshuffle-overlay-exit]="reshuffleSequenceExitActive()">
+          <div
+            class="gp-reshuffle-overlay"
+            [class.gp-reshuffle-overlay-exit]="reshuffleSequenceExitActive()"
+          >
             <span class="gp-reshuffle-title">RESHUFFLE</span>
             <span class="gp-reshuffle-subtitle">adding a new deck to keep this fun game going</span>
             <div
               class="gp-reshuffle-swirl"
               [class.gp-reshuffle-swirl-exit]="reshuffleSequenceExitActive()"
             >
-              <img class="gp-reshuffle-tile gp-reshuffle-tile-a" src="assets/tiles/tile.png" alt="" />
-              <img class="gp-reshuffle-tile gp-reshuffle-tile-b" src="assets/tiles/tile.png" alt="" />
-              <img class="gp-reshuffle-tile gp-reshuffle-tile-c" src="assets/tiles/tile.png" alt="" />
+              <img
+                class="gp-reshuffle-tile gp-reshuffle-tile-a"
+                src="assets/tiles/tile.png"
+                alt=""
+              />
+              <img
+                class="gp-reshuffle-tile gp-reshuffle-tile-b"
+                src="assets/tiles/tile.png"
+                alt=""
+              />
+              <img
+                class="gp-reshuffle-tile gp-reshuffle-tile-c"
+                src="assets/tiles/tile.png"
+                alt=""
+              />
             </div>
           </div>
         }
       </div>
 
       <!-- Bet strip -->
-      <div class="gp-bet-strip shrink-0 flex items-center justify-center gap-6 py-5 border-t border-c-indigo/10 border-b">
+      <div
+        class="gp-bet-strip shrink-0 flex items-center justify-center gap-6 py-5 border-t border-c-indigo/10 border-b"
+      >
         @if (store.gamePhase() === GamePhase.Revealing) {
           @if (!revealSequenceLocked() && !reshuffleSequenceActive() && !roundTransitionActive()) {
             <p-button
@@ -93,7 +125,6 @@
           } @else {
             <div class="gp-bet-strip-placeholder" aria-hidden="true"></div>
           }
-
         } @else {
           @if (betControlsReady()) {
             <lib-bet-controls
@@ -109,7 +140,10 @@
       </div>
 
       <!-- Bottom: visible hand (deals first) -->
-      <div #bottomStage class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7 relative">
+      <div
+        #bottomStage
+        class="gp-bottom shrink-0 flex flex-col items-center gap-2 py-5 pb-7 relative"
+      >
         <div class="gp-visible-total-slot">
           @if (!showVisibleHandTransition()) {
             @if (displayedVisibleTotal() !== null) {
@@ -118,7 +152,9 @@
               </span>
             }
           } @else {
-            <span class="gp-visible-total-placeholder font-mono text-2xl lg:text-3xl font-bold leading-none">
+            <span
+              class="gp-visible-total-placeholder font-mono text-2xl lg:text-3xl font-bold leading-none"
+            >
               88
             </span>
 
@@ -157,7 +193,10 @@
             }
           } @else {
             @if (transitionOutgoingVisibleHand()) {
-              <div class="gp-outgoing-visible-hand" [class.gp-outgoing-visible-hand-active]="visibleHandExitActive()">
+              <div
+                class="gp-outgoing-visible-hand"
+                [class.gp-outgoing-visible-hand-active]="visibleHandExitActive()"
+              >
                 <lib-hand
                   [hand]="transitionOutgoingVisibleHand()!"
                   [showTileValue]="settingsService.settings().showTileValues"
@@ -221,10 +260,10 @@
           (keydown.space)="closeExitDialog()"
           (keydown.escape)="closeExitDialog()"
         >
-          <div
-            class="bg-c-surface border border-c-indigo/10 p-8 w-80 flex flex-col gap-4"
-          >
-            <span class="font-mono text-[0.82rem] font-bold tracking-[0.15em] uppercase text-c-indigo">
+          <div class="bg-c-surface border border-c-indigo/10 p-8 w-80 flex flex-col gap-4">
+            <span
+              class="font-mono text-[0.82rem] font-bold tracking-[0.15em] uppercase text-c-indigo"
+            >
               Leave game?
             </span>
             <p class="text-sm text-c-muted leading-[1.5] m-0">
@@ -232,11 +271,11 @@
             </p>
             <div class="flex gap-2 justify-end mt-2">
               <p-button
-              label="Keep playing"
-              styleClass="gp-dialog-btn"
-              severity="secondary"
-              (onClick)="closeExitDialog()"
-            />
+                label="Keep playing"
+                styleClass="gp-dialog-btn"
+                severity="secondary"
+                (onClick)="closeExitDialog()"
+              />
               <p-button
                 label="Exit"
                 styleClass="gp-dialog-btn"
@@ -260,9 +299,10 @@
 
       <!-- Game Over overlay -->
       @if (store.gamePhase() === GamePhase.GameOver || exitSavePanelOpen()) {
-        <div class="absolute inset-0 bg-c-bg/92 backdrop-blur-sm flex items-center justify-center z-40">
+        <div
+          class="absolute inset-0 bg-c-bg/92 backdrop-blur-sm flex items-center justify-center z-40"
+        >
           <div class="bg-c-surface border border-c-indigo/10 p-10 w-88 flex flex-col gap-6">
-
             <div class="flex flex-col gap-2">
               <span class="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-pink">
                 {{ exitSavePanelOpen() ? 'Exit Game' : 'Game Over' }}
@@ -270,7 +310,7 @@
               <p class="text-sm text-c-muted leading-relaxed m-0">
                 {{
                   exitSavePanelOpen()
-                    ? "Save your current score before leaving, or leave without saving."
+                    ? 'Save your current score before leaving, or leave without saving.'
                     : gameOverMessage()
                 }}
               </p>
@@ -290,7 +330,9 @@
                 <div class="flex flex-col gap-0.5">
                   <span class="text-sm font-semibold text-c-text">Name This Run</span>
                   <span class="text-sm font-semibold text-c-pink">You made a new high score.</span>
-                  <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Choose the name that will appear on the leaderboard for this score</span>
+                  <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]"
+                    >Choose the name that will appear on the leaderboard for this score</span
+                  >
                 </div>
                 <input
                   class="w-full h-9 px-3 border border-c-indigo/10 bg-c-bg font-display text-sm text-c-text outline-none transition-colors duration-100 placeholder:text-c-muted"
@@ -310,15 +352,21 @@
               </div>
             } @else if (!scoreQualifiesForLeaderboard()) {
               <div class="flex flex-col gap-1">
-                <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">Leaderboard</span>
+                <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted"
+                  >Leaderboard</span
+                >
                 <span class="text-sm text-c-text">
                   This score did not make the top 5 leaderboard.
                 </span>
               </div>
             } @else {
               <div class="flex flex-col gap-1">
-                <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">Saved</span>
-                <span class="text-sm text-c-text">This score has been added to the leaderboard.</span>
+                <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted"
+                  >Saved</span
+                >
+                <span class="text-sm text-c-text"
+                  >This score has been added to the leaderboard.</span
+                >
               </div>
             }
 
@@ -346,11 +394,9 @@
                 (onClick)="onExitGame()"
               />
             </div>
-
           </div>
         </div>
       }
-
     </main>
 
     <!-- ── Sidebar ────────────────────────────────────────────────────────── -->
@@ -360,10 +406,7 @@
       [class.gp-sidebar-mobile-open]="mobileSidebarOpen()"
       [class.gp-sidebar-mobile-dragging]="mobileSidebarDragActive()"
     >
-      <div
-        class="gp-sidebar-shell"
-        [style.--gp-sidebar-drag-offset.px]="mobileSidebarDragOffset()"
-      >
+      <div class="gp-sidebar-shell" [style.--gp-sidebar-drag-offset.px]="mobileSidebarDragOffset()">
         <div
           class="gp-sidebar-summary"
           [attr.aria-expanded]="mobileSidebarEnabled() ? mobileSidebarOpen() : null"
@@ -396,11 +439,7 @@
           </div>
 
           <div class="gp-sidebar-actions">
-            <p-button
-              icon="pi pi-cog"
-              styleClass="gp-sidebar-btn"
-              (onClick)="onSettingsOpened()"
-            />
+            <p-button icon="pi pi-cog" styleClass="gp-sidebar-btn" (onClick)="onSettingsOpened()" />
             <p-button
               icon="pi pi-sign-out"
               styleClass="gp-sidebar-btn gp-sidebar-btn-danger"
@@ -424,12 +463,12 @@
         {{ scoreGainDirection() === 'down' ? '+' : '-' }}{{ scoreGainAmount() }}
       </div>
     }
-
   } @else {
     <!-- Loading state while store initialises -->
     <div class="flex-1 flex items-center justify-center">
-      <span class="font-mono text-[0.62rem] tracking-[0.18em] uppercase text-c-muted">Loading…</span>
+      <span class="font-mono text-[0.62rem] tracking-[0.18em] uppercase text-c-muted"
+        >Loading…</span
+      >
     </div>
   }
-
 </div>

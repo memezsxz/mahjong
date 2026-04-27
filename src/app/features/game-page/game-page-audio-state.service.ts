@@ -2,10 +2,7 @@ import { effect, inject, Injectable } from '@angular/core';
 import { GameAudioManager } from '@hbg/game-data-access';
 import { GamePhase } from '@hbg/shared-models';
 
-type TrackedValueKey =
-  | 'scoreDisplay'
-  | 'reshuffleDraw'
-  | 'reshuffleDiscard';
+type TrackedValueKey = 'scoreDisplay' | 'reshuffleDraw' | 'reshuffleDiscard';
 
 interface AudioStateBindings {
   scoreDisplayValue: () => number | null;
@@ -46,24 +43,15 @@ export class GamePageAudioStateService {
     this.effectsRegistered = true;
 
     effect(() => {
-      this.playStepSoundForValueChange(
-        bindings.scoreDisplayValue(),
-        'scoreDisplay',
-      );
+      this.playStepSoundForValueChange(bindings.scoreDisplayValue(), 'scoreDisplay');
     });
 
     effect(() => {
-      this.playStepSoundForValueChange(
-        bindings.reshuffleDrawValue(),
-        'reshuffleDraw',
-      );
+      this.playStepSoundForValueChange(bindings.reshuffleDrawValue(), 'reshuffleDraw');
     });
 
     effect(() => {
-      this.playStepSoundForValueChange(
-        bindings.reshuffleDiscardValue(),
-        'reshuffleDiscard',
-      );
+      this.playStepSoundForValueChange(bindings.reshuffleDiscardValue(), 'reshuffleDiscard');
     });
 
     effect(() => {
@@ -91,10 +79,7 @@ export class GamePageAudioStateService {
    * Initial values are treated as baseline state so opening the page does not
    * immediately emit step sounds before any animated change occurs.
    */
-  private playStepSoundForValueChange(
-    nextValue: number | null,
-    key: TrackedValueKey,
-  ): void {
+  private playStepSoundForValueChange(nextValue: number | null, key: TrackedValueKey): void {
     const previousValue = this.previousValues[key];
 
     if (nextValue === null) {

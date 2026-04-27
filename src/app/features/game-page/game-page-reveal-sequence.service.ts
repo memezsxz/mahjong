@@ -22,11 +22,7 @@ interface StartHiddenHandRevealSequenceOptions {
   preWinHand: HandModel;
   postWinHand: HandModel;
   setScoreDisplayOverride: (value: number | null) => void;
-  startScoreGainAnimation: (
-    scoreBefore: number,
-    scoreAfter: number,
-    onDone: () => void,
-  ) => void;
+  startScoreGainAnimation: (scoreBefore: number, scoreAfter: number, onDone: () => void) => void;
   playTileFlip: () => void;
   playWin: () => void;
   playLose: () => void;
@@ -65,25 +61,17 @@ export class GamePageRevealSequenceService implements OnDestroy {
   readonly oldTileValues = computed<Record<string, number> | null>(() => {
     const hand = this.preWinHiddenHand();
     if (!hand) return null;
-    return Object.fromEntries(
-      hand.tiles.map((tile) => [tile.id, tile.currentValue]),
-    );
+    return Object.fromEntries(hand.tiles.map((tile) => [tile.id, tile.currentValue]));
   });
 
   readonly newTileValues = computed<Record<string, number> | null>(() => {
     const hand = this.postWinHiddenHand();
     if (!hand) return null;
-    return Object.fromEntries(
-      hand.tiles.map((tile) => [tile.id, tile.currentValue]),
-    );
+    return Object.fromEntries(hand.tiles.map((tile) => [tile.id, tile.currentValue]));
   });
 
-  readonly oldTotal = computed<number | null>(
-    () => this.preWinHiddenHand()?.total ?? null,
-  );
-  readonly newTotal = computed<number | null>(
-    () => this.postWinHiddenHand()?.total ?? null,
-  );
+  readonly oldTotal = computed<number | null>(() => this.preWinHiddenHand()?.total ?? null);
+  readonly newTotal = computed<number | null>(() => this.postWinHiddenHand()?.total ?? null);
   readonly animationRunning = computed<boolean>(() => this.sequenceLocked());
 
   private readonly revealTimers = new Set<ReturnType<typeof globalThis.setTimeout>>();
@@ -121,9 +109,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
    * staged timing collapses into immediate state changes with only the minimum
    * pause needed to preserve result readability.
    */
-  startHiddenHandRevealSequence(
-    options: StartHiddenHandRevealSequenceOptions,
-  ): void {
+  startHiddenHandRevealSequence(options: StartHiddenHandRevealSequenceOptions): void {
     const {
       animationsEnabled,
       scoreBefore,
@@ -210,10 +196,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
       }, showValueDelay + HIDDEN_REVEAL_TOTAL_STEP_MS);
 
       runningTotal = nextTotal;
-      cursorMs =
-        showValueDelay +
-        HIDDEN_REVEAL_TOTAL_STEP_MS +
-        HIDDEN_REVEAL_POST_TILE_MS;
+      cursorMs = showValueDelay + HIDDEN_REVEAL_TOTAL_STEP_MS + HIDDEN_REVEAL_POST_TILE_MS;
     });
 
     const handRevealDoneMs = cursorMs + HIDDEN_REVEAL_SETTLE_MS;
@@ -283,9 +266,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
       this.queueTimer(() => {
         this.historyReady.set(true);
         this.tileValueOverrides.set(
-          Object.fromEntries(
-            postWinHand.tiles.map((tile) => [tile.id, tile.currentValue]),
-          ),
+          Object.fromEntries(postWinHand.tiles.map((tile) => [tile.id, tile.currentValue])),
         );
         this.hiddenTotalOverride.set(postWinHand.total);
         if (hasValueChange) {

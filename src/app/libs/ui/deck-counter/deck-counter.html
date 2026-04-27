@@ -9,14 +9,16 @@
             class="dc-roll"
             [class.dc-old]="drawRollDirection() === 'down'"
             [class.dc-old-up]="drawRollDirection() === 'up'"
-          >{{ previousDrawValue() }}</span>
+            >{{ previousDrawValue() }}</span
+          >
           <span
             class="dc-roll"
             [class.dc-new]="drawRollDirection() === 'down'"
             [class.dc-new-up]="drawRollDirection() === 'up'"
-          >{{ currentDrawValue() }}</span>
+            >{{ currentDrawValue() }}</span
+          >
         } @else {
-          <span>{{ currentDrawValue() ?? (displayDrawCount() ?? drawCount()) }}</span>
+          <span>{{ currentDrawValue() ?? displayDrawCount() ?? drawCount() }}</span>
         }
       </span>
       <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">draw</span>
@@ -29,14 +31,16 @@
             class="dc-roll"
             [class.dc-old]="discardRollDirection() === 'down'"
             [class.dc-old-up]="discardRollDirection() === 'up'"
-          >{{ previousDiscardValue() }}</span>
+            >{{ previousDiscardValue() }}</span
+          >
           <span
             class="dc-roll"
             [class.dc-new]="discardRollDirection() === 'down'"
             [class.dc-new-up]="discardRollDirection() === 'up'"
-          >{{ currentDiscardValue() }}</span>
+            >{{ currentDiscardValue() }}</span
+          >
         } @else {
-          <span>{{ currentDiscardValue() ?? (displayDiscardCount() ?? discardCount()) }}</span>
+          <span>{{ currentDiscardValue() ?? displayDiscardCount() ?? discardCount() }}</span>
         }
       </span>
       <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">discard</span>

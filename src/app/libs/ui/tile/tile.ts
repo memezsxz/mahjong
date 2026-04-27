@@ -1,4 +1,14 @@
-import { Component, computed, effect, ElementRef, inject, input, OnDestroy, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  OnDestroy,
+  output,
+  signal,
+} from '@angular/core';
 import { TileInstance } from '@hbg/shared-models';
 import {
   UI_TILE_REVEAL_FLIP_DURATION_MS,
@@ -10,15 +20,15 @@ import { getTileAssetPath } from '../tile-asset-path';
  * Renders a single Mahjong tile and coordinates deal, flip, and value-roll UI state.
  */
 @Component({
-    selector: 'lib-tile',
-    imports: [],
-    templateUrl: './tile.html',
-    styleUrls: ['../game-ui.animation-tokens.css', './tile.css'],
-    host: {
-        '[style.--tile-index]': 'tileIndex()',
-        '[class.tile-flipping]': 'flipActive()',
-    },
-    standalone: true
+  selector: 'lib-tile',
+  imports: [],
+  templateUrl: './tile.html',
+  styleUrls: ['../game-ui.animation-tokens.css', './tile.css'],
+  host: {
+    '[style.--tile-index]': 'tileIndex()',
+    '[class.tile-flipping]': 'flipActive()',
+  },
+  standalone: true,
 })
 export class Tile implements OnDestroy {
   private el = inject(ElementRef<HTMLElement>);
@@ -28,12 +38,12 @@ export class Tile implements OnDestroy {
   private previousFaceDown: boolean | null = null;
   private readonly revealFlipDurationMs = UI_TILE_REVEAL_FLIP_DURATION_MS;
 
-  tile      = input.required<TileInstance>();
+  tile = input.required<TileInstance>();
   showValue = input<boolean>(true);
   displayValue = input<number | null>(null);
   playValueChangeSound = input<boolean>(false);
   valueChangeSoundRequested = output<void>();
-  faceDown  = input<boolean>(false);
+  faceDown = input<boolean>(false);
   tileIndex = input<number>(0);
   flipActive = signal(false);
   flipShowFront = signal(false);

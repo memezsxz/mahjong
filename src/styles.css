@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @layer tailwind, primeng;
 
 @theme {
@@ -13,8 +13,8 @@
   --color-c-text: #1a1b3a;
   --color-c-muted: #8486a8;
 
-  --font-display: "DM Sans", sans-serif;
-  --font-mono: "Space Mono", monospace;
+  --font-display: 'DM Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
 }
 
 :root {
@@ -26,8 +26,8 @@
   --c-text: #1a1b3a;
   --c-muted: #8486a8;
   --c-border: rgba(38, 40, 123, 0.1);
-  --font-display: "DM Sans", sans-serif;
-  --font-mono: "Space Mono", monospace;
+  --font-display: 'DM Sans', sans-serif;
+  --font-mono: 'Space Mono', monospace;
 }
 
 * {
@@ -64,7 +64,9 @@ app-root {
   font-size: 0.85rem;
   letter-spacing: 0.12em;
   padding: 1rem 2.5rem;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 
 .p-button.lp-start-btn:enabled:hover {
@@ -107,8 +109,6 @@ app-root {
   font-size: 0.72rem;
   letter-spacing: 0.08em;
 }
-
-
 
 .p-button.gp-dialog-btn:enabled:hover {
   color: var(--p-button-primary-color);
@@ -163,7 +163,9 @@ app-root {
   font-size: 0.82rem;
   letter-spacing: 0.12em;
   min-width: 8.5rem;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 
 .p-button.bc-btn--higher {

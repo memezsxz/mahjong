@@ -72,7 +72,7 @@ export class GamePageRoundTransitionService {
     const centerRect = center.getBoundingClientRect();
     const bottomRect = bottom.getBoundingClientRect();
     const centerX = centerRect.left + centerRect.width / 2 - mainRect.left;
-     let centerY = centerRect.top + centerRect.height / 2 - mainRect.top;
+    let centerY = centerRect.top + centerRect.height / 2 - mainRect.top;
     const bottomX = bottomRect.left + bottomRect.width / 2 - mainRect.left;
     const bottomY = bottomRect.top + bottomRect.height / 2 - mainRect.top;
 
@@ -101,10 +101,7 @@ export class GamePageRoundTransitionService {
   }
 
   /** Captures the hand snapshots used by the outgoing and promoted overlays. */
-  prepareTransition(
-    outgoingVisibleHand: HandModel,
-    promotedVisibleHand: HandModel,
-  ): void {
+  prepareTransition(outgoingVisibleHand: HandModel, promotedVisibleHand: HandModel): void {
     this.transitionOutgoingVisibleHand.set(outgoingVisibleHand);
     this.transitionPromotedVisibleHand.set(promotedVisibleHand);
     this.transitionOutgoingVisibleTotal.set(outgoingVisibleHand.total);
@@ -189,12 +186,7 @@ export class GamePageRoundTransitionService {
     onIncomingVisibleTotal?: () => void;
     onFinish?: () => void;
   }): void {
-    const {
-      onVisibleExit,
-      onPromote,
-      onIncomingVisibleTotal,
-      onFinish,
-    } = options;
+    const { onVisibleExit, onPromote, onIncomingVisibleTotal, onFinish } = options;
 
     globalThis.requestAnimationFrame(() =>
       globalThis.requestAnimationFrame(() => {
@@ -208,9 +200,12 @@ export class GamePageRoundTransitionService {
           onPromote?.();
         }, NEXT_ROUND_PROMOTE_DELAY_MS);
 
-        this.queueTimer(() => {
-          onFinish?.();
-        }, NEXT_ROUND_PROMOTE_DELAY_MS + NEXT_ROUND_PROMOTE_MS + REVEAL_PROMOTION_FINISH_BUFFER_MS);
+        this.queueTimer(
+          () => {
+            onFinish?.();
+          },
+          NEXT_ROUND_PROMOTE_DELAY_MS + NEXT_ROUND_PROMOTE_MS + REVEAL_PROMOTION_FINISH_BUFFER_MS,
+        );
       }),
     );
   }

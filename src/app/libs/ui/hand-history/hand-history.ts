@@ -9,7 +9,7 @@ import { getTileAssetPath } from '../tile-asset-path';
   selector: 'lib-hand-history',
   templateUrl: './hand-history.html',
   styleUrls: ['../game-ui.animation-tokens.css', './hand-history.css'],
-  standalone: true
+  standalone: true,
 })
 export class HandHistory {
   history = input.required<HandHistoryItem[]>();

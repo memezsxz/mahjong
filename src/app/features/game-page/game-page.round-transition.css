@@ -82,7 +82,8 @@
 }
 
 .gp-outgoing-visible-hand-active {
-  animation: gp-outgoing-visible-hand var(--gp-visible-hand-exit-ms) cubic-bezier(0.4, 0, 1, 1) forwards;
+  animation: gp-outgoing-visible-hand var(--gp-visible-hand-exit-ms) cubic-bezier(0.4, 0, 1, 1)
+    forwards;
 }
 
 .gp-visible-total-slot {
@@ -207,7 +208,9 @@
   justify-content: center;
   gap: 0.65rem;
   pointer-events: none;
-  transition: opacity var(--gp-overlay-exit-ms) ease, transform var(--gp-overlay-exit-ms) ease;
+  transition:
+    opacity var(--gp-overlay-exit-ms) ease,
+    transform var(--gp-overlay-exit-ms) ease;
 }
 
 .gp-reshuffle-overlay-exit {
@@ -237,7 +240,9 @@
   width: 6.5rem;
   height: 2.8rem;
   pointer-events: none;
-  transition: opacity var(--gp-overlay-exit-ms) ease, transform var(--gp-overlay-exit-ms) ease;
+  transition:
+    opacity var(--gp-overlay-exit-ms) ease,
+    transform var(--gp-overlay-exit-ms) ease;
 }
 
 .gp-reshuffle-swirl-exit {
@@ -257,49 +262,133 @@
 .gp-reshuffle-tile-a {
   left: 50%;
   top: 50%;
-  animation: gp-reshuffle-triangle-a var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: gp-reshuffle-triangle-a var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1)
+    infinite;
 }
 
 .gp-reshuffle-tile-b {
   left: 50%;
   top: 50%;
-  animation: gp-reshuffle-triangle-b var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: gp-reshuffle-triangle-b var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1)
+    infinite;
 }
 
 .gp-reshuffle-tile-c {
   left: 50%;
   top: 50%;
-  animation: gp-reshuffle-triangle-c var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1) infinite;
+  animation: gp-reshuffle-triangle-c var(--gp-reshuffle-swirl-ms) cubic-bezier(0.42, 0, 0.58, 1)
+    infinite;
 }
 
 @keyframes gp-reshuffle-triangle-a {
-  0%, 10% { transform: translate(-26px, 8px) rotate(-15deg); z-index: 3; }
-  16%, 26% { transform: translate(0, -16px) rotate(2deg); z-index: 4; }
-  32%, 42% { transform: translate(26px, 8px) rotate(15deg); z-index: 2; }
-  48%, 58% { transform: translate(0, -16px) rotate(-6deg); z-index: 4; }
-  64%, 74% { transform: translate(-26px, 8px) rotate(-12deg); z-index: 3; }
-  80%, 90% { transform: translate(26px, 8px) rotate(12deg); z-index: 2; }
-  100% { transform: translate(-26px, 8px) rotate(-15deg); z-index: 3; }
+  0%,
+  10% {
+    transform: translate(-26px, 8px) rotate(-15deg);
+    z-index: 3;
+  }
+  16%,
+  26% {
+    transform: translate(0, -16px) rotate(2deg);
+    z-index: 4;
+  }
+  32%,
+  42% {
+    transform: translate(26px, 8px) rotate(15deg);
+    z-index: 2;
+  }
+  48%,
+  58% {
+    transform: translate(0, -16px) rotate(-6deg);
+    z-index: 4;
+  }
+  64%,
+  74% {
+    transform: translate(-26px, 8px) rotate(-12deg);
+    z-index: 3;
+  }
+  80%,
+  90% {
+    transform: translate(26px, 8px) rotate(12deg);
+    z-index: 2;
+  }
+  100% {
+    transform: translate(-26px, 8px) rotate(-15deg);
+    z-index: 3;
+  }
 }
 
 @keyframes gp-reshuffle-triangle-b {
-  0%, 10% { transform: translate(0, -16px) rotate(3deg); z-index: 2; }
-  16%, 26% { transform: translate(26px, 8px) rotate(15deg); z-index: 4; }
-  32%, 42% { transform: translate(-26px, 8px) rotate(-15deg); z-index: 3; }
-  48%, 58% { transform: translate(26px, 8px) rotate(10deg); z-index: 4; }
-  64%, 74% { transform: translate(0, -16px) rotate(0deg); z-index: 2; }
-  80%, 90% { transform: translate(-26px, 8px) rotate(-10deg); z-index: 3; }
-  100% { transform: translate(0, -16px) rotate(3deg); z-index: 2; }
+  0%,
+  10% {
+    transform: translate(0, -16px) rotate(3deg);
+    z-index: 2;
+  }
+  16%,
+  26% {
+    transform: translate(26px, 8px) rotate(15deg);
+    z-index: 4;
+  }
+  32%,
+  42% {
+    transform: translate(-26px, 8px) rotate(-15deg);
+    z-index: 3;
+  }
+  48%,
+  58% {
+    transform: translate(26px, 8px) rotate(10deg);
+    z-index: 4;
+  }
+  64%,
+  74% {
+    transform: translate(0, -16px) rotate(0deg);
+    z-index: 2;
+  }
+  80%,
+  90% {
+    transform: translate(-26px, 8px) rotate(-10deg);
+    z-index: 3;
+  }
+  100% {
+    transform: translate(0, -16px) rotate(3deg);
+    z-index: 2;
+  }
 }
 
 @keyframes gp-reshuffle-triangle-c {
-  0%, 10% { transform: translate(26px, 8px) rotate(15deg); z-index: 1; }
-  16%, 26% { transform: translate(-26px, 8px) rotate(-15deg); z-index: 4; }
-  32%, 42% { transform: translate(0, -16px) rotate(3deg); z-index: 3; }
-  48%, 58% { transform: translate(-26px, 8px) rotate(-10deg); z-index: 4; }
-  64%, 74% { transform: translate(26px, 8px) rotate(10deg); z-index: 1; }
-  80%, 90% { transform: translate(0, -16px) rotate(0deg); z-index: 3; }
-  100% { transform: translate(26px, 8px) rotate(15deg); z-index: 1; }
+  0%,
+  10% {
+    transform: translate(26px, 8px) rotate(15deg);
+    z-index: 1;
+  }
+  16%,
+  26% {
+    transform: translate(-26px, 8px) rotate(-15deg);
+    z-index: 4;
+  }
+  32%,
+  42% {
+    transform: translate(0, -16px) rotate(3deg);
+    z-index: 3;
+  }
+  48%,
+  58% {
+    transform: translate(-26px, 8px) rotate(-10deg);
+    z-index: 4;
+  }
+  64%,
+  74% {
+    transform: translate(26px, 8px) rotate(10deg);
+    z-index: 1;
+  }
+  80%,
+  90% {
+    transform: translate(0, -16px) rotate(0deg);
+    z-index: 3;
+  }
+  100% {
+    transform: translate(26px, 8px) rotate(15deg);
+    z-index: 1;
+  }
 }
 
 .gp-score-gain {
@@ -331,15 +420,17 @@
   72% {
     opacity: 1;
     transform: translate(
-      calc(-50% + var(--gp-score-gain-dx, 0px)),
-      calc(-50% + var(--gp-score-gain-dy, 0px))
-    ) scale(1);
+        calc(-50% + var(--gp-score-gain-dx, 0px)),
+        calc(-50% + var(--gp-score-gain-dy, 0px))
+      )
+      scale(1);
   }
   100% {
     opacity: 0;
     transform: translate(
-      calc(-50% + var(--gp-score-gain-dx, 0px)),
-      calc(-50% + var(--gp-score-gain-dy, 0px))
-    ) scale(0.45);
+        calc(-50% + var(--gp-score-gain-dx, 0px)),
+        calc(-50% + var(--gp-score-gain-dy, 0px))
+      )
+      scale(0.45);
   }
 }

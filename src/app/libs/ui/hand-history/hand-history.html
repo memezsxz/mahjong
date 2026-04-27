@@ -1,5 +1,8 @@
 <div class="flex flex-col gap-2">
-  <span class="sticky top-0 block font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted text-center bg-c-bg pb-1 z-10">HISTORY</span>
+  <span
+    class="sticky top-0 block font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted text-center bg-c-bg pb-1 z-10"
+    >HISTORY</span
+  >
 
   @if (history().length === 0) {
     <span class="font-mono text-[0.6rem] text-c-muted tracking-[0.06em]">No hands played yet</span>
@@ -13,16 +16,20 @@
         >
           <div class="flex items-center gap-1.5">
             <span class="font-mono text-[0.58rem] text-c-muted w-5 shrink-0">R{{ row.round }}</span>
-            <span class="font-mono text-[0.5rem] text-c-muted tracking-[0.06em] flex-1">{{ row.bet.toUpperCase() }}</span>
+            <span class="font-mono text-[0.5rem] text-c-muted tracking-[0.06em] flex-1">{{
+              row.bet.toUpperCase()
+            }}</span>
             <span
               class="hh-result font-mono text-[0.5rem] font-bold tracking-[0.12em]"
               [class.hh-result--win]="row.result === 'win'"
               [class.hh-result--lose]="row.result === 'lose'"
-            >{{ row.result === 'win' ? 'WON' : 'LOST' }}</span>
+              >{{ row.result === 'win' ? 'WON' : 'LOST' }}</span
+            >
             <span
               class="font-mono text-[0.68rem] font-bold"
               [style.color]="row.scoreChange > 0 ? 'var(--c-green)' : 'var(--c-pink)'"
-            >{{ row.scoreChange > 0 ? '+' : '' }}{{ row.scoreChange }}</span>
+              >{{ row.scoreChange > 0 ? '+' : '' }}{{ row.scoreChange }}</span
+            >
           </div>
 
           @if (row.visibleHand || row.hiddenHand) {

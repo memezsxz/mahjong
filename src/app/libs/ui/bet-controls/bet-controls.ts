@@ -9,11 +9,11 @@ import { ButtonModule } from 'primeng/button';
   imports: [ButtonModule],
   templateUrl: './bet-controls.html',
   styleUrls: ['../game-ui.animation-tokens.css', './bet-controls.css'],
-  standalone: true
+  standalone: true,
 })
 export class BetControls {
   handTotal = input.required<number>();
   showTotal = input<boolean>(true);
-  disabled  = input<boolean>(false);
+  disabled = input<boolean>(false);
   betPlaced = output<'higher' | 'lower'>();
 }

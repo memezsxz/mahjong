@@ -34,10 +34,7 @@ export function resolveNextHandPlan(params: {
     // A debug-forced reshuffle may still show the reshuffle presentation, but
     // it must not fake final counter values that won't exist in store state.
     drawAfterReshuffle: actualReshuffle
-      ? Math.max(
-          0,
-          params.freshDeckSize + params.drawBefore + params.discardBefore,
-        )
+      ? Math.max(0, params.freshDeckSize + params.drawBefore + params.discardBefore)
       : params.drawBefore,
     discardAfterReshuffle: actualReshuffle ? 0 : params.discardBefore,
   };

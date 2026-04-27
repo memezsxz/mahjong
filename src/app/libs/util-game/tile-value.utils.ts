@@ -1,5 +1,5 @@
-import {HandModel, HandResult, TileInstance, TileType} from "@hbg/shared-models";
-import {calculateHandTotal} from "./hand-evaluator.utils.js";
+import { HandModel, HandResult, TileInstance, TileType } from '@hbg/shared-models';
+import { calculateHandTotal } from './hand-evaluator.utils.js';
 
 /**
  * Applies the round result to a hand and returns a new hand with updated tile
@@ -9,19 +9,19 @@ import {calculateHandTotal} from "./hand-evaluator.utils.js";
  * value.
  */
 export function scaleHandValues(hand: HandModel, result: HandResult): HandModel {
-    const newHand = hand.tiles.map((tile: TileInstance) => scaleTileValue(tile, result))
+  const newHand = hand.tiles.map((tile: TileInstance) => scaleTileValue(tile, result));
 
-    return {
-        tiles: newHand,
-        total: calculateHandTotal(newHand)
-    }
+  return {
+    tiles: newHand,
+    total: calculateHandTotal(newHand),
+  };
 }
 
 /**
  * Applies a single-round win/loss adjustment to a single tile.
  */
 function scaleTileValue(tile: TileInstance, result: HandResult): TileInstance {
-    if (tile.type === TileType.Number || result === null) return {...tile} as TileInstance;
+  if (tile.type === TileType.Number || result === null) return { ...tile } as TileInstance;
 
-    return {...tile, currentValue: tile.currentValue + (result === 'win' ? 1 : -1)} as TileInstance;
+  return { ...tile, currentValue: tile.currentValue + (result === 'win' ? 1 : -1) } as TileInstance;
 }

@@ -113,7 +113,7 @@ export function drawHand(
  * Rebuilt tiles receive a reshuffle suffix so runtime tile IDs remain unique
  * across the session.
  */
-export function reshuffleDeck(oldDeck: TileInstance[] , discardPile: TileInstance[]) {
+export function reshuffleDeck(oldDeck: TileInstance[], discardPile: TileInstance[]) {
   reshuffleDeckSequence += 1;
   const freshDeck = buildDeck().map((tile) => ({
     ...tile,

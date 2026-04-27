@@ -3,13 +3,13 @@
 ::ng-deep .gp-center lib-tile {
   --tile-w: 86px;
   --tile-h: 120px;
-  --tile-phase1-end: -38vh;  /* passes through center area then slides to hidden hand row */
+  --tile-phase1-end: -38vh; /* passes through center area then slides to hidden hand row */
 }
 
 ::ng-deep .gp-bottom lib-tile {
   --tile-w: 86px;
   --tile-h: 120px;
-  --tile-phase1-end: -5vh;   /* visible hand: arrives quickly, short settle at bottom */
+  --tile-phase1-end: -5vh; /* visible hand: arrives quickly, short settle at bottom */
 }
 
 @media (max-width: 1023px) {

@@ -274,11 +274,7 @@ export class GameAudioManager {
    * Plays an asset after an optional time offset, queuing it until media
    * playback is unlocked if needed.
    */
-  private playAssetAtOffset(
-    src: string,
-    volume: number,
-    offsetSeconds: number,
-  ): void {
+  private playAssetAtOffset(src: string, volume: number, offsetSeconds: number): void {
     if (!this.settingsService.settings().soundEnabled || !this.unlocked) {
       return;
     }
@@ -326,9 +322,7 @@ export class GameAudioManager {
     audio.volume = volume;
 
     const playTail = () => {
-      const durationMs = Number.isFinite(audio.duration)
-        ? audio.duration * 1000
-        : clipDurationMs;
+      const durationMs = Number.isFinite(audio.duration) ? audio.duration * 1000 : clipDurationMs;
       const startAtSeconds = Math.max(0, (durationMs - clipDurationMs) / 1000);
       audio.currentTime = startAtSeconds;
       audio.play().catch(() => undefined);
@@ -356,14 +350,7 @@ export class GameAudioManager {
     volume: number,
     frequencyEnd?: number,
   ): void {
-    this.playToneAtOffset(
-      frequency,
-      durationSeconds,
-      type,
-      volume,
-      0,
-      frequencyEnd,
-    );
+    this.playToneAtOffset(frequency, durationSeconds, type, volume, 0, frequencyEnd);
   }
 
   /**
@@ -391,18 +378,12 @@ export class GameAudioManager {
     oscillator.type = type;
     oscillator.frequency.setValueAtTime(frequency, now);
     if (frequencyEnd !== undefined) {
-      oscillator.frequency.linearRampToValueAtTime(
-        frequencyEnd,
-        now + durationSeconds,
-      );
+      oscillator.frequency.linearRampToValueAtTime(frequencyEnd, now + durationSeconds);
     }
 
     gain.gain.setValueAtTime(0.0001, now);
     gain.gain.exponentialRampToValueAtTime(volume, now + 0.01);
-    gain.gain.exponentialRampToValueAtTime(
-      0.0001,
-      now + durationSeconds,
-    );
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + durationSeconds);
 
     oscillator.connect(gain);
     gain.connect(context.destination);
@@ -424,8 +405,7 @@ export class GameAudioManager {
 
     const AudioContextCtor =
       window.AudioContext ||
-      (window as Window & { webkitAudioContext?: typeof AudioContext })
-        .webkitAudioContext;
+      (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!AudioContextCtor) {
       return null;
     }
@@ -486,7 +466,8 @@ export class GameAudioManager {
     audio.preload = 'auto';
     audio.muted = true;
     audio.volume = 0;
-    audio.play()
+    audio
+      .play()
       .then(() => {
         audio.pause();
         audio.currentTime = 0;

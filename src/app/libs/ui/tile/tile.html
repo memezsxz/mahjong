@@ -1,24 +1,26 @@
-<img [src]="displayPath()" [alt]="tile().id">
-  <span
-    class="tile-value-chip"
-    [class.tile-value-chip--hidden]="!showValue()"
-    [class.tv-roll-down]="showValue() && valueRolling() && valueRollDirection() === 'down'"
-    [class.tv-roll-up]="showValue() && valueRolling() && valueRollDirection() === 'up'"
-  >
-    @if (showValue()) {
-      @if (valueRolling() && previousDisplayValue() !== null) {
+<img [src]="displayPath()" [alt]="tile().id" />
+<span
+  class="tile-value-chip"
+  [class.tile-value-chip--hidden]="!showValue()"
+  [class.tv-roll-down]="showValue() && valueRolling() && valueRollDirection() === 'down'"
+  [class.tv-roll-up]="showValue() && valueRolling() && valueRollDirection() === 'up'"
+>
+  @if (showValue()) {
+    @if (valueRolling() && previousDisplayValue() !== null) {
       <span
         class="tile-value-roll"
         [class.tile-value-old]="valueRollDirection() === 'down'"
         [class.tile-value-old-up]="valueRollDirection() === 'up'"
-      >{{ previousDisplayValue() }}</span>
+        >{{ previousDisplayValue() }}</span
+      >
       <span
         class="tile-value-roll"
         [class.tile-value-new]="valueRollDirection() === 'down'"
         [class.tile-value-new-up]="valueRollDirection() === 'up'"
-      >{{ currentDisplayValue() }}</span>
+        >{{ currentDisplayValue() }}</span
+      >
     } @else {
-      <span>{{ currentDisplayValue() ?? (displayValue() ?? tile().currentValue) }}</span>
+      <span>{{ currentDisplayValue() ?? displayValue() ?? tile().currentValue }}</span>
     }
   } @else {
     <span>00</span>

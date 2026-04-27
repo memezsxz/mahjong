@@ -12,7 +12,7 @@ import { UI_DECK_COUNTER_ROLL_DURATION_MS } from '../game-ui.animations';
   imports: [],
   templateUrl: './deck-counter.html',
   styleUrls: ['../game-ui.animation-tokens.css', './deck-counter.css'],
-  standalone: true
+  standalone: true,
 })
 export class DeckCounter implements OnDestroy {
   drawCount = input.required<number>();

@@ -116,7 +116,9 @@
   .gp-sidebar-shell {
     height: var(--gp-mobile-sidebar-open-h);
     max-height: var(--gp-mobile-sidebar-open-h);
-    transform: translateY(calc(100% - var(--gp-mobile-sidebar-collapsed-h) + var(--gp-sidebar-drag-offset, 0px)));
+    transform: translateY(
+      calc(100% - var(--gp-mobile-sidebar-collapsed-h) + var(--gp-sidebar-drag-offset, 0px))
+    );
     transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: auto;
     border-top: 1px solid rgba(38, 40, 123, 0.1);

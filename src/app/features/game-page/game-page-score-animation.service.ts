@@ -73,14 +73,7 @@ export class GamePageScoreAnimationService {
     onIncrease: () => void;
     onDecrease: () => void;
   }): void {
-    const {
-      animationsEnabled,
-      scoreBefore,
-      scoreAfter,
-      onDone,
-      onIncrease,
-      onDecrease,
-    } = options;
+    const { animationsEnabled, scoreBefore, scoreAfter, onDone, onIncrease, onDecrease } = options;
 
     if (!animationsEnabled) {
       this.scoreDisplayOverride.set(null);
@@ -108,8 +101,8 @@ export class GamePageScoreAnimationService {
 
     globalThis.requestAnimationFrame(() =>
       globalThis.requestAnimationFrame(() => {
-      this.scoreGainTravelActive.set(true);
-    }),
+        this.scoreGainTravelActive.set(true);
+      }),
     );
 
     this.queueTimer(() => {

@@ -24,8 +24,8 @@
   .lp-score-row {
     grid-template-columns: 2rem minmax(0, 1fr) auto;
     grid-template-areas:
-      "rank name score"
-      "rank date score";
+      'rank name score'
+      'rank date score';
     column-gap: 0.875rem;
     row-gap: 0.25rem;
     align-items: center;

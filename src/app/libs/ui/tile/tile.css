@@ -2,24 +2,6 @@
   --tile-w: 52px;
   --tile-h: 72px;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   --tile-index: 0;
   display: inline-flex;
   flex-direction: column;
@@ -30,7 +12,9 @@
 
 :host.dealing {
   animation: tile-deal var(--gui-tile-deal-ms) linear both;
-  animation-delay: calc(var(--hand-base-delay, 0ms) + var(--tile-index) * var(--gui-tile-deal-stagger-ms));
+  animation-delay: calc(
+    var(--hand-base-delay, 0ms) + var(--tile-index) * var(--gui-tile-deal-stagger-ms)
+  );
 }
 
 @keyframes tile-deal {
