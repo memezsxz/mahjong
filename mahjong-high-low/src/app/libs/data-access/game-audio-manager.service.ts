@@ -49,8 +49,12 @@ export class GameAudioManager {
   private musicCache = new Map<string, HTMLAudioElement>();
   private lastTileFlipIndex = -1;
   private pendingAssetPlaybacks: PendingAssetPlayback[] = [];
+  private interactionListenersAttached = false;
+  private readonly boundInteractionUnlock = () => this.registerInteraction();
 
   constructor() {
+    this.attachInteractionUnlockListeners();
+
     effect(() => {
       if (!this.settingsService.settings().musicEnabled) {
         this.stopMusic();
@@ -345,6 +349,30 @@ export class GameAudioManager {
     context.resume().catch(() => undefined);
   }
 
+  private attachInteractionUnlockListeners(): void {
+    if (this.interactionListenersAttached || typeof window === 'undefined') {
+      return;
+    }
+
+    this.interactionListenersAttached = true;
+    const options: AddEventListenerOptions = { passive: true };
+
+    window.addEventListener('pointerdown', this.boundInteractionUnlock, options);
+    window.addEventListener('keydown', this.boundInteractionUnlock, options);
+    window.addEventListener('touchstart', this.boundInteractionUnlock, options);
+  }
+
+  private detachInteractionUnlockListeners(): void {
+    if (!this.interactionListenersAttached || typeof window === 'undefined') {
+      return;
+    }
+
+    window.removeEventListener('pointerdown', this.boundInteractionUnlock);
+    window.removeEventListener('keydown', this.boundInteractionUnlock);
+    window.removeEventListener('touchstart', this.boundInteractionUnlock);
+    this.interactionListenersAttached = false;
+  }
+
   private unlockMediaPlayback(): void {
     if (this.mediaPlaybackReady || this.mediaUnlockRequested || typeof Audio === 'undefined') {
       return;
@@ -361,6 +389,7 @@ export class GameAudioManager {
         audio.currentTime = 0;
         audio.muted = false;
         this.mediaPlaybackReady = true;
+        this.detachInteractionUnlockListeners();
         this.flushPendingAssetPlaybacks();
       })
       .catch(() => {

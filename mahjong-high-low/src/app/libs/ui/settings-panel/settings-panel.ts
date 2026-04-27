@@ -1,6 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { PlayerSettingsModel } from '@hbg/shared-models';
+import { VALID_HAND_SIZES } from '@hbg/shared-util-game';
 
 @Component({
   selector: 'lib-settings-panel',
@@ -14,5 +15,5 @@ export class SettingsPanel {
   settingsChanged = output<Partial<PlayerSettingsModel>>();
   closed = output<void>();
 
-  readonly handSizeOptions: Array<3 | 4 | 6> = [3, 4, 6];
+  readonly handSizeOptions = [...VALID_HAND_SIZES];
 }

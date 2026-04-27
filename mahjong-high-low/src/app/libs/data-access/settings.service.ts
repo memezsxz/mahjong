@@ -1,11 +1,11 @@
 import {Injectable, signal} from "@angular/core";
 import {PlayerSettingsModel} from "@hbg/shared-models";
-import {DEFAULT_HAND_SIZE} from "@hbg/shared-util-game";
+import {DEFAULT_HAND_SIZE, VALID_HAND_SIZES} from "@hbg/shared-util-game";
 
 @Injectable({providedIn: 'root'})
 export class SettingsService {
     private readonly STORAGE_KEY = 'player-settings';
-    private readonly VALID_HAND_SIZES = new Set([3, 4, 6]);
+    private readonly VALID_HAND_SIZES = new Set(VALID_HAND_SIZES);
 
     private _settings = signal<PlayerSettingsModel>({
         handSize: DEFAULT_HAND_SIZE, musicEnabled: true, soundEnabled: true, animationsEnabled: true, showTileValues: true, hasSeenTutorial: false

@@ -23,6 +23,7 @@ export const MAX_RESHUFFLES = 1
 export const MAX_TILE_VALUE = 10
 export const MIN_TILE_VALUE = 0
 export const MAX_WIN_STREAK = 3
+export const VALID_HAND_SIZES = [3, 4, 6] as const
 export const DEFAULT_HAND_SIZE = 6
 
 assertRange('HONOR_TILE_BASE_VALUE', HONOR_TILE_BASE_VALUE, 5, 10)
@@ -30,4 +31,4 @@ assertRange('MAX_RESHUFFLES', MAX_RESHUFFLES, 1, 10)
 assertRange('MAX_TILE_VALUE', MAX_TILE_VALUE, 5, 10)
 assertRange('MIN_TILE_VALUE', MIN_TILE_VALUE, 0, 9)
 assertRange('MAX_WIN_STREAK', MAX_WIN_STREAK, 2, 5)
-assertOneOf('DEFAULT_HAND_SIZE', DEFAULT_HAND_SIZE, [3, 4, 6] as const)
+assertOneOf('DEFAULT_HAND_SIZE', DEFAULT_HAND_SIZE, VALID_HAND_SIZES)
