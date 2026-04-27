@@ -15,6 +15,7 @@ jobs:
       - run: npm ci
       - run: npm run build -- --base-href "/mahjong/"
       - run: npm run docs
+      - run: cp ./dist/mahjong/browser/index.html ./dist/mahjong/browser/404.html
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
