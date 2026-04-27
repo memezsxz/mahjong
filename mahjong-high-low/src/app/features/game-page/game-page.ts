@@ -52,6 +52,19 @@ import { GamePageViewStateService } from './game-page-view-state.service';
     GamePageViewStateService,
   ],
 })
+/**
+ * Container component for the full in-run game experience.
+ *
+ * Sequence overview:
+ * 1. `startFreshGame()` seeds the first visible and hidden hands.
+ * 2. `betControlsReady` waits for the initial or next-round deal timing.
+ * 3. `onBetPlaced()` resolves the bet in store, then starts the staged hidden
+ *    hand reveal, score animation, and honor-tile value update flow.
+ * 4. `onNextHand()` either promotes the revealed hand into the visible slot or
+ *    runs the normal next-round transition, optionally pausing for reshuffle UI.
+ * 5. Game-over and settings overlays are handled through `GamePageUiShellService`
+ *    so the main component can stay focused on round orchestration.
+ */
 export class GamePage implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   readonly store = inject(GameStore);
@@ -169,6 +182,7 @@ export class GamePage implements OnInit, OnDestroy {
   // ── Last 5 rounds for the sidebar history ────────────────────────────
   handHistory = this.viewState.handHistory;
 
+  /** Wires the bet-controls timer and game-page audio bindings. */
   constructor() {
     effect(() => {
       const phase = this.store.gamePhase();
@@ -193,12 +207,14 @@ export class GamePage implements OnInit, OnDestroy {
       this.betControlsReady.set(false);
 
       if (!initialDeal) {
+        // Later rounds wait only for the incoming hidden-hand entry buffer.
         this.betControlsTimer = globalThis.setTimeout(() => {
           this.betControlsReady.set(true);
         }, getNextRoundBetControlsDelay());
         return;
       }
 
+      // The first round waits for both hands to finish their initial staged deal.
       this.betControlsTimer = globalThis.setTimeout(() => {
         this.betControlsReady.set(true);
       }, getBetControlsDelay(this.settingsService.settings().handSize));
@@ -214,21 +230,23 @@ export class GamePage implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  /** Starts a new run when the page is entered. */
+  ngOnInit(): void {
     this.startFreshGame();
   }
 
-  ngOnDestroy() {
+  /** Clears timers, transient UI state, and music when the page is destroyed. */
+  ngOnDestroy(): void {
     this.clearBetControlsTimer();
     this.clearTransientAnimationState();
     this.reshuffleSequence.resetSequenceState();
     this.audioState.stopMusic();
   }
 
+  /** Router guard hook used when leaving the page through navigation. */
   canLeaveGame(): boolean | Promise<boolean> {
     const hasActiveProgress = this.hasActiveProgress();
-    const leaveRequest = this.uiShell.requestLeave(
-      hasActiveProgress);
+    const leaveRequest = this.uiShell.requestLeave(hasActiveProgress);
 
     if (typeof leaveRequest === 'boolean') {
       if (leaveRequest && this.store.gamePhase() !== GamePhase.Idle) {
@@ -258,7 +276,11 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   // ── Handlers ──────────────────────────────────────────────────────────
-  onBetPlaced(bet: 'higher' | 'lower') {
+  /**
+   * Resolves the selected bet and starts the reveal flow using a snapshot of the
+   * hidden hand from before the store mutates it for honor-tile value changes.
+   */
+  onBetPlaced(bet: 'higher' | 'lower'): void {
     if (this.store.gamePhase() !== GamePhase.Betting) return;
     this.handleButtonInteraction();
     const hiddenHandBeforeBet = this.store.hiddenHand();
@@ -296,7 +318,11 @@ export class GamePage implements OnInit, OnDestroy {
     );
   }
 
-  onNextHand() {
+  /**
+   * Advances the run after the reveal has settled or from the regular betting
+   * state if the player is already ready for the next hand.
+   */
+  onNextHand(): void {
     if (this.roundTransitionActive() || this.revealSequenceLocked() || this.reshuffleSequenceActive()) {
       return;
     }
@@ -330,6 +356,8 @@ export class GamePage implements OnInit, OnDestroy {
     });
 
     if (nextHandPlan.kind === 'reshuffle') {
+      // Keep the outgoing/promotion motion running, but delay the incoming hand
+      // until the reshuffle sidebar presentation has completed.
       this.reshuffleSequence.startReshuffleSequence(
         drawBefore,
         discardBefore,
@@ -348,7 +376,8 @@ export class GamePage implements OnInit, OnDestroy {
     this.executeNextHandTransition(outgoingVisibleHand, promotedVisibleHand);
   }
 
-  onDebugForceReshuffle() {
+  /** Developer-only helper used to exercise the reshuffle presentation path. */
+  onDebugForceReshuffle(): void {
     // if (!this.debugMode()) return;
     this.handleButtonInteraction();
     this.debugForceReshuffleNextHand.set(true);
@@ -357,19 +386,22 @@ export class GamePage implements OnInit, OnDestroy {
     }
   }
 
-  onSettingsChanged(partial: Partial<PlayerSettingsModel>) {
+  /** Persists landing-page and in-game settings changes immediately. */
+  onSettingsChanged(partial: Partial<PlayerSettingsModel>): void {
     this.handleButtonInteraction();
     this.settingsService.update(partial);
   }
 
-  onPlayAgain() {
+  /** Resets transient UI state and starts a fresh run from the game-over screen. */
+  onPlayAgain(): void {
     this.handleButtonInteraction();
     this.resetPageForNewGame();
     this.startFreshGame();
     this.incrementDealCount();
   }
 
-  onExitGame() {
+  /** Leaves the current run and returns to the landing page. */
+  onExitGame(): void {
     this.handleButtonInteraction();
     this.uiShell.resetScoreSaved();
     this.store.exitGame();
@@ -380,6 +412,7 @@ export class GamePage implements OnInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
+  /** Clears the pending timer that reveals the bet controls. */
   private clearBetControlsTimer(): void {
     if (this.betControlsTimer !== null) {
       globalThis.clearTimeout(this.betControlsTimer);
@@ -387,11 +420,13 @@ export class GamePage implements OnInit, OnDestroy {
     }
   }
 
+  /** Starts a brand-new run and re-enables the initial two-hand deal treatment. */
   private startFreshGame(): void {
     this.steadyHandsShouldDeal.set(true);
     this.store.startGame();
   }
 
+  /** Resets page-only state before replaying the initial game entry flow. */
   private resetPageForNewGame(): void {
     this.uiShell.resetScoreSaved();
     this.finishRoundTransition();
@@ -399,10 +434,12 @@ export class GamePage implements OnInit, OnDestroy {
     this.clearBetControlsTimer();
   }
 
+  /** Bumps the deal key used to replay the initial hand-deal animation. */
   private incrementDealCount(): void {
     this.dealCount.update((count) => count + 1);
   }
 
+  /** Starts the standard next-round transition timing and audio cues. */
   private startRoundTransition(deferIncomingHidden = false): void {
     this.roundTransition.startRoundTransition({
       deferIncomingHidden,
@@ -413,6 +450,11 @@ export class GamePage implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Promotes the revealed hidden hand into the visible slot once the reveal has
+   * settled, then checks whether the run should end because of pending reshuffle
+   * exhaustion.
+   */
   private startRevealPromotionTransition(): void {
     const outgoingVisibleHand = this.store.visibleHand();
     const promotedVisibleHand = this.store.hiddenHand();
@@ -435,12 +477,14 @@ export class GamePage implements OnInit, OnDestroy {
     });
   }
 
+  /** Clears the active transition overlay and returns to steady layout state. */
   private finishRoundTransition(): void {
     this.clearAnimationTimers();
     this.roundTransition.reset();
     this.steadyHandsShouldDeal.set(false);
   }
 
+  /** Measures the center-to-bottom travel path for the promoted hand overlay. */
   private measureRoundTransition(): void {
     this.roundTransition.measureRoundTransition(
       this.mainStageRef()?.nativeElement,
@@ -449,10 +493,15 @@ export class GamePage implements OnInit, OnDestroy {
     );
   }
 
+  /** Clears timers owned by the round-transition service. */
   private clearAnimationTimers(): void {
     this.roundTransition.clearTimers();
   }
 
+  /**
+   * Runs the next-hand transition and, when possible, asks the store for the new
+   * hidden hand before the incoming phase begins.
+   */
   private executeNextHandTransition(
     outgoingVisibleHand: HandModel,
     promotedVisibleHand: HandModel,
@@ -473,6 +522,10 @@ export class GamePage implements OnInit, OnDestroy {
     this.startRoundTransition(false);
   }
 
+  /**
+   * Completes the hidden-hand entrance after a reshuffle sequence has finished
+   * and the store has advanced to the newly dealt next hand.
+   */
   private completeDeferredIncomingAfterReshuffle(): void {
     if (!this.reshuffleTransitionPendingIncoming()) {
       return;
@@ -502,12 +555,14 @@ export class GamePage implements OnInit, OnDestroy {
     });
   }
 
+  /** Clears reveal and score animation state before a new reveal starts. */
   private resetRevealAnimationState(): void {
     this.revealSequence.reset();
     this.scoreAnimation.reset();
     this.revealedHandPromoted.set(false);
   }
 
+  /** Delegates the reveal lifecycle to the reveal sequence service. */
   private startHiddenHandRevealSequence(
     preWinHand: HandModel,
     postWinHand: HandModel,
@@ -532,6 +587,10 @@ export class GamePage implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Deals only the next hidden hand after the revealed hand has already been
+   * promoted into the visible slot.
+   */
   private advanceToNextHiddenHand(): void {
     this.clearBetControlsTimer();
     this.debugForceReshuffleNextHand.set(false);
@@ -558,6 +617,7 @@ export class GamePage implements OnInit, OnDestroy {
     });
   }
 
+  /** Measures and starts the score-change travel animation. */
   private startScoreGainAnimation(
     scoreBefore: number,
     scoreAfter: number,
@@ -578,48 +638,55 @@ export class GamePage implements OnInit, OnDestroy {
     });
   }
 
+  /** Opens the exit confirmation flow or exits immediately if no run is active. */
   openExitDialog(): void {
     this.handleButtonInteraction();
-    const exitState = this.uiShell.openExitFlow(
-      this.hasActiveProgress(),
-    );
+    const exitState = this.uiShell.openExitFlow(this.hasActiveProgress());
     if (exitState === 'exit-now') {
       this.onExitGame();
     }
   }
 
+  /** Closes the exit confirmation dialog without leaving the page. */
   closeExitDialog(): void {
     this.handleButtonInteraction();
     this.uiShell.dismissExitDialog();
   }
 
+  /** Closes the leaderboard-save overlay shown from an exit flow. */
   onExitSavePanelClosed(): void {
     this.handleButtonInteraction();
     this.uiShell.dismissExitSavePanel();
   }
 
+  /** Plays the initial visible-hand slide cue when the deal animation starts. */
   onVisibleHandDealStarted(): void {
     this.audioManager.playTileIn(this.store.handSize());
   }
 
+  /** Plays the initial hidden-hand slide cue when the deal animation starts. */
   onHiddenHandDealStarted(): void {
     this.audioManager.playTileIn(this.store.handSize());
   }
 
+  /** Closes the in-game settings panel. */
   onSettingsPanelClosed(): void {
     this.handleButtonInteraction();
     this.settingsOpen.set(false);
   }
 
+  /** Opens the in-game settings panel. */
   onSettingsOpened(): void {
     this.handleButtonInteraction();
     this.settingsOpen.set(true);
   }
 
+  /** Mirrors game-over name input into the UI shell state. */
   onGameOverNameInput(value: string): void {
     this.uiShell.onGameOverNameInput(value);
   }
 
+  /** Saves a qualifying score and exits if the save originated from exit flow. */
   onSaveScoreWithName(): void {
     this.handleButtonInteraction();
     if (this.uiShell.saveScoreWithNameAndCheckExit()) {
@@ -627,16 +694,19 @@ export class GamePage implements OnInit, OnDestroy {
     }
   }
 
+  /** Unlocks audio on interaction and plays the shared button click sound. */
   private handleButtonInteraction(): void {
     this.audioManager.registerInteraction();
     this.audioManager.playButtonClick();
   }
 
+  /** Returns whether the user is currently in an active run that can be lost. */
   private hasActiveProgress(): boolean {
     const phase = this.store.gamePhase();
     return phase !== GamePhase.Idle && phase !== GamePhase.GameOver;
   }
 
+  /** Clears all transient animation state before a new round or fresh game. */
   private clearTransientAnimationState(): void {
     this.clearAnimationTimers();
     this.revealSequence.clearTimers();

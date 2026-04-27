@@ -34,6 +34,14 @@ interface StartHiddenHandRevealSequenceOptions {
   onRevealSettled: () => void;
 }
 
+/**
+ * Coordinates the hidden-hand reveal lifecycle during the `Revealing` phase.
+ *
+ * This covers three connected pieces of UI:
+ * 1. flipping and exposing the hidden hand,
+ * 2. animating score gain or loss,
+ * 3. applying any post-result tile value changes before the next-hand flow.
+ */
 @Injectable()
 export class GamePageRevealSequenceService implements OnDestroy {
   readonly tileFaceUpIds = signal<string[] | null>(null);
@@ -84,6 +92,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
     this.clearTimers();
   }
 
+  /** Clears every queued reveal timer. */
   clearTimers(): void {
     for (const timer of this.revealTimers) {
       globalThis.clearTimeout(timer);
@@ -91,6 +100,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
     this.revealTimers.clear();
   }
 
+  /** Resets reveal-only state before a new reveal or when leaving the page. */
   reset(): void {
     this.winBannerActive.set(false);
     this.historyReady.set(false);
@@ -104,6 +114,13 @@ export class GamePageRevealSequenceService implements OnDestroy {
     this.postWinHiddenHand.set(null);
   }
 
+  /**
+   * Starts the reveal sequence from face-down hidden hand to settled result.
+   *
+   * When animations are disabled, the same logical steps still happen, but the
+   * staged timing collapses into immediate state changes with only the minimum
+   * pause needed to preserve result readability.
+   */
   startHiddenHandRevealSequence(
     options: StartHiddenHandRevealSequenceOptions,
   ): void {
@@ -171,6 +188,8 @@ export class GamePageRevealSequenceService implements OnDestroy {
     let runningTotal = 0;
     let cursorMs = 0;
 
+    // Reveal tiles one by one, then roll the subtotal so the hidden hand reads
+    // like a staged deal rather than a single abrupt state swap.
     preWinHand.tiles.forEach((tile) => {
       const revealDelay = cursorMs;
       this.queueTimer(() => {
@@ -214,6 +233,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
     }, handRevealDoneMs);
   }
 
+  /** Queues a reveal timer and unregisters it once it has fired. */
   queueTimer(fn: () => void, delay: number): void {
     const timer = globalThis.setTimeout(() => {
       this.revealTimers.delete(timer);
@@ -222,6 +242,10 @@ export class GamePageRevealSequenceService implements OnDestroy {
     this.revealTimers.add(timer);
   }
 
+  /**
+   * Runs the post-result value-change animation for honor tiles after the
+   * revealed hand and score change have already been shown.
+   */
   private startWinRevealAnimation(options: {
     animationsEnabled: boolean;
     preWinHand: HandModel;

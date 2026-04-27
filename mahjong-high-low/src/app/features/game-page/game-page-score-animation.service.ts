@@ -1,6 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { SCORE_GAIN_FLY_MS, SCORE_GAIN_SETTLE_MS } from './game-page.animations';
 
+/**
+ * Manages the floating score-change indicator and temporary displayed score
+ * override used during reveal resolution.
+ */
 @Injectable()
 export class GamePageScoreAnimationService {
   readonly scoreDisplayOverride = signal<number | null>(null);
@@ -15,6 +19,7 @@ export class GamePageScoreAnimationService {
 
   private readonly timers = new Set<ReturnType<typeof globalThis.setTimeout>>();
 
+  /** Clears every queued score animation timer. */
   clearTimers(): void {
     for (const timer of this.timers) {
       globalThis.clearTimeout(timer);
@@ -22,6 +27,7 @@ export class GamePageScoreAnimationService {
     this.timers.clear();
   }
 
+  /** Resets score animation state so a new reveal starts from a clean baseline. */
   reset(): void {
     this.clearTimers();
     this.scoreDisplayOverride.set(null);
@@ -30,6 +36,10 @@ export class GamePageScoreAnimationService {
     this.scoreGainAmount.set(0);
   }
 
+  /**
+   * Measures the travel path from the center reveal area to the sidebar score
+   * slot so the floating value can animate into the real target.
+   */
   measureScoreGainTransition(
     page: globalThis.HTMLElement | undefined,
     center: globalThis.HTMLElement | undefined,
@@ -51,6 +61,10 @@ export class GamePageScoreAnimationService {
     this.scoreGainDeltaY.set(endY - startY);
   }
 
+  /**
+   * Starts the score gain or loss travel animation and swaps the displayed
+   * sidebar score once the floating indicator reaches the target.
+   */
   startScoreGainAnimation(options: {
     animationsEnabled: boolean;
     scoreBefore: number;
@@ -94,8 +108,8 @@ export class GamePageScoreAnimationService {
 
     globalThis.requestAnimationFrame(() =>
       globalThis.requestAnimationFrame(() => {
-        this.scoreGainTravelActive.set(true);
-      }),
+      this.scoreGainTravelActive.set(true);
+    }),
     );
 
     this.queueTimer(() => {
@@ -110,6 +124,7 @@ export class GamePageScoreAnimationService {
     }, SCORE_GAIN_FLY_MS + SCORE_GAIN_SETTLE_MS);
   }
 
+  /** Queues a score animation timer and unregisters it once it fires. */
   private queueTimer(fn: () => void, delay: number): void {
     const timer = globalThis.setTimeout(() => {
       this.timers.delete(timer);

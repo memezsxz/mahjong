@@ -8,6 +8,13 @@ export type GamePageNextHandPlan =
       discardAfterReshuffle: number;
     };
 
+/**
+ * Resolves whether advancing to the next hand can happen directly or must pass
+ * through the reshuffle presentation first.
+ *
+ * The returned counts are presentation targets for the reshuffle sidebar
+ * animation, not a replacement for the real store transition.
+ */
 export function resolveNextHandPlan(params: {
   drawBefore: number;
   discardBefore: number;

@@ -9,6 +9,12 @@ import {
   REVEAL_PROMOTION_FINISH_BUFFER_MS,
 } from './game-page.animations';
 
+/**
+ * Holds the transient state for the game page's between-round motion system.
+ *
+ * The store changes hands immediately; this service preserves the outgoing and
+ * incoming snapshots long enough for the UI to animate them across the board.
+ */
 @Injectable()
 export class GamePageRoundTransitionService {
   readonly roundTransitionActive = signal(false);
@@ -28,6 +34,7 @@ export class GamePageRoundTransitionService {
 
   private readonly animationTimers = new Set<ReturnType<typeof globalThis.setTimeout>>();
 
+  /** Clears all queued transition timers. */
   clearTimers(): void {
     for (const timer of this.animationTimers) {
       globalThis.clearTimeout(timer);
@@ -35,6 +42,7 @@ export class GamePageRoundTransitionService {
     this.animationTimers.clear();
   }
 
+  /** Resets every transition signal after the current motion sequence ends. */
   reset(): void {
     this.clearTimers();
     this.roundTransitionActive.set(false);
@@ -49,6 +57,10 @@ export class GamePageRoundTransitionService {
     this.transitionIncomingVisibleTotal.set(null);
   }
 
+  /**
+   * Measures the center and bottom hand slots so the promoted hand can travel
+   * along the real rendered path instead of using hardcoded coordinates.
+   */
   measureRoundTransition(
     main: globalThis.HTMLElement | undefined,
     center: globalThis.HTMLElement | undefined,
@@ -70,6 +82,7 @@ export class GamePageRoundTransitionService {
     this.transitionPromotedDeltaY.set(bottomY - centerY);
   }
 
+  /** Captures the hand snapshots used by the outgoing and promoted overlays. */
   prepareTransition(
     outgoingVisibleHand: HandModel,
     promotedVisibleHand: HandModel,
@@ -86,15 +99,22 @@ export class GamePageRoundTransitionService {
     this.incomingVisibleTotalActive.set(false);
   }
 
+  /** Stores the next hidden hand until its delayed incoming animation begins. */
   setIncomingHiddenHand(hand: HandModel | null): void {
     this.transitionIncomingHiddenHand.set(hand);
   }
 
+  /** Clears pending incoming-entry flags when a deferred reshuffle is waiting. */
   setIncomingPhaseIdle(): void {
     this.incomingHiddenEnterActive.set(false);
     this.incomingVisibleTotalActive.set(false);
   }
 
+  /**
+   * Runs the standard next-round transition:
+   * outgoing visible hand exits, revealed hand promotes, then the next hidden
+   * hand enters unless that incoming step is being deferred behind reshuffle UI.
+   */
   startRoundTransition(options: {
     deferIncomingHidden?: boolean;
     onVisibleExit?: () => void;
@@ -141,6 +161,10 @@ export class GamePageRoundTransitionService {
     );
   }
 
+  /**
+   * Runs the shorter promotion used after a reveal settles and the now-revealed
+   * hidden hand replaces the visible hand without dealing a new hidden hand yet.
+   */
   startPromotionOnlyTransition(options: {
     onVisibleExit?: () => void;
     onPromote?: () => void;
@@ -173,6 +197,7 @@ export class GamePageRoundTransitionService {
     );
   }
 
+  /** Prepares an incoming-only sequence used after reveal promotion. */
   prepareIncomingOnlyTransition(hand: HandModel): void {
     this.transitionOutgoingVisibleHand.set(null);
     this.transitionPromotedVisibleHand.set(null);
@@ -186,6 +211,7 @@ export class GamePageRoundTransitionService {
     this.incomingVisibleTotalActive.set(false);
   }
 
+  /** Starts the incoming-only hand entrance once the next hand already exists. */
   startIncomingOnlyTransition(options: {
     finishDelay: number;
     onIncoming?: () => void;
@@ -204,6 +230,10 @@ export class GamePageRoundTransitionService {
     );
   }
 
+  /**
+   * Resumes the hidden-hand entrance after the reshuffle counter animation has
+   * completed and the store has produced the new hidden hand.
+   */
   activateDeferredIncoming(options: {
     finishDelay: number;
     onIncoming?: () => void;
@@ -227,6 +257,7 @@ export class GamePageRoundTransitionService {
     );
   }
 
+  /** Queues a transition timer and removes it after execution. */
   queueTimer(fn: () => void, delay: number): void {
     const timer = globalThis.setTimeout(() => {
       this.animationTimers.delete(timer);

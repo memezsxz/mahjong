@@ -16,6 +16,12 @@ type AudioStateBindings = {
   musicEnabled: () => boolean;
 };
 
+/**
+ * Bridges reactive game-page UI state into audio side effects.
+ *
+ * This service keeps the component free of repetitive `effect()` setup for
+ * score-step sounds, reshuffle counter sounds, and background music sync.
+ */
 @Injectable()
 export class GamePageAudioStateService {
   private readonly audioManager = inject(GameAudioManager);
@@ -26,6 +32,12 @@ export class GamePageAudioStateService {
   };
   private effectsRegistered = false;
 
+  /**
+   * Registers one-time reactive bindings between game-page signals and audio.
+   *
+   * The tracked values are deliberately narrow: only the counters that should
+   * emit incremental step sounds and the phase/pause state that drives music.
+   */
   registerEffects(bindings: AudioStateBindings): void {
     if (this.effectsRegistered) {
       return;
@@ -68,10 +80,17 @@ export class GamePageAudioStateService {
     });
   }
 
+  /** Stops all managed background music when the page is torn down. */
   stopMusic(): void {
     this.audioManager.syncMusic('none');
   }
 
+  /**
+   * Plays the upward or downward counter step sound when a tracked value changes.
+   *
+   * Initial values are treated as baseline state so opening the page does not
+   * immediately emit step sounds before any animated change occurs.
+   */
   private playStepSoundForValueChange(
     nextValue: number | null,
     key: TrackedValueKey,

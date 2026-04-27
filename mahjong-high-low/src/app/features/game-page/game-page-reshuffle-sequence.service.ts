@@ -6,6 +6,13 @@ import {
   RESHUFFLE_STEP_MS,
 } from './game-page.animations';
 
+/**
+ * Owns the temporary UI state used while the discard pile is animated back into
+ * the draw pile.
+ *
+ * The store performs the actual reshuffle; this service only controls the
+ * sidebar counters and transition flags that make the reshuffle readable.
+ */
 @Injectable()
 export class GamePageReshuffleSequenceService {
   readonly reshuffleSequenceActive = signal(false);
@@ -17,6 +24,7 @@ export class GamePageReshuffleSequenceService {
 
   private readonly timers = new Set<ReturnType<typeof globalThis.setTimeout>>();
 
+  /** Clears every queued reshuffle animation timer. */
   clearTimers(): void {
     for (const timer of this.timers) {
       globalThis.clearTimeout(timer);
@@ -24,12 +32,17 @@ export class GamePageReshuffleSequenceService {
     this.timers.clear();
   }
 
+  /** Resets reshuffle flags so the next round starts from a clean UI state. */
   resetSequenceState(): void {
     this.clearTimers();
     this.reshuffleSequenceActive.set(false);
     this.reshuffleSequenceExitActive.set(false);
   }
 
+  /**
+   * Releases the temporary displayed counts once store values have caught up to
+   * the reshuffle presentation.
+   */
   clearDisplayCountsIfSynced(drawCount: number, discardCount: number): void {
     const displayDraw = this.reshuffleDisplayDrawCount();
     const displayDiscard = this.reshuffleDisplayDiscardCount();
@@ -46,6 +59,10 @@ export class GamePageReshuffleSequenceService {
     this.reshuffleDisplayDiscardCount.set(null);
   }
 
+  /**
+   * Animates discard depletion first, then draw-pile refill, before handing
+   * control back to the page for the delayed incoming-hand transition.
+   */
   startReshuffleSequence(
     drawFrom: number,
     discardFrom: number,
@@ -61,6 +78,8 @@ export class GamePageReshuffleSequenceService {
 
     let cursorMs = 0;
 
+    // Spread the total delta across a bounded number of visual steps so large
+    // reshuffles remain readable without taking excessively long.
     const scheduleSeries = (
       from: number,
       to: number,
@@ -85,6 +104,7 @@ export class GamePageReshuffleSequenceService {
       }
     };
 
+    // The discard pile drains into the deck before the deck count climbs.
     scheduleSeries(discardFrom, discardTo, (v) => this.reshuffleDisplayDiscardCount.set(v), 14);
     cursorMs += RESHUFFLE_MID_GAP_MS;
     scheduleSeries(drawFrom, drawTo, (v) => this.reshuffleDisplayDrawCount.set(v), 18);
@@ -100,6 +120,7 @@ export class GamePageReshuffleSequenceService {
     }, settleDelay + RESHUFFLE_EXIT_MS);
   }
 
+  /** Queues a reshuffle animation timer and removes it once it fires. */
   private queueTimer(fn: () => void, delay: number): void {
     const timer = globalThis.setTimeout(() => {
       this.timers.delete(timer);
