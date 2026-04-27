@@ -9,7 +9,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideAnimationsAsync(),
-    provideRouter(appRoutes, withHashLocation()),
+    provideRouter(appRoutes),
     providePrimeNG({
       theme: {
         preset: Aura,

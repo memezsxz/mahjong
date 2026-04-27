@@ -7,7 +7,7 @@ Mahjong High-Low is a single-page Angular game where the player sees one Mahjong
 ## Live
 
 - **Game:** https://memezsxz.github.io/mahjong/
-- **Docs:** https://memezsxz.github.io/mahjong/docs
+- **Docs:** https://memezsxz.github.io/mahjong/docs/index.html
 
 ## Gameplay Loop
 
