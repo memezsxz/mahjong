@@ -31,7 +31,11 @@
                 <div class="hh-mini-hand-row">
                   <div class="hh-mini-hand">
                     @for (tile of row.hiddenHand.tiles; track tile.id) {
-                      <img class="hh-mini-tile" [src]="tileAssetPath(tile)" alt="" />
+                      <span
+                        class="hh-mini-tile-frame"
+                        aria-hidden="true"
+                        [style.background-image]="tileBackgroundImage(tileAssetPath(tile))"
+                      ></span>
                     }
                   </div>
                   <span class="hh-mini-total">{{ row.hiddenHand.total }}</span>
@@ -41,7 +45,11 @@
                 <div class="hh-mini-hand-row">
                   <div class="hh-mini-hand">
                     @for (tile of row.visibleHand.tiles; track tile.id) {
-                      <img class="hh-mini-tile" [src]="tileAssetPath(tile)" alt="" />
+                      <span
+                        class="hh-mini-tile-frame"
+                        aria-hidden="true"
+                        [style.background-image]="tileBackgroundImage(tileAssetPath(tile))"
+                      ></span>
                     }
                   </div>
                   <span class="hh-mini-total">{{ row.visibleHand.total }}</span>

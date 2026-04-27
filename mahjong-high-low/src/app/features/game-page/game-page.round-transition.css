@@ -25,6 +25,28 @@
   max-height: 120px;
 }
 
+@media (max-width: 1023px) {
+  ::ng-deep .gp-round-transition-layer lib-tile {
+    --tile-w: 52px;
+    --tile-h: 72px;
+  }
+
+  ::ng-deep .gp-outgoing-visible-hand lib-tile {
+    --tile-w: 52px;
+    --tile-h: 72px;
+  }
+
+  ::ng-deep .gp-round-transition-layer lib-tile img,
+  ::ng-deep .gp-outgoing-visible-hand lib-tile img {
+    width: 52px !important;
+    height: 72px !important;
+    min-width: 52px;
+    min-height: 72px;
+    max-width: 52px;
+    max-height: 72px;
+  }
+}
+
 .gp-promoted-hand,
 .gp-incoming-hidden-hand {
   position: absolute;

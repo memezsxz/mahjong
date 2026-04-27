@@ -11,3 +11,15 @@
   --tile-h: 120px;
   --tile-phase1-end: -5vh;   /* visible hand: arrives quickly, short settle at bottom */
 }
+
+@media (max-width: 1023px) {
+  ::ng-deep .gp-center lib-tile {
+    --tile-w: 52px;
+    --tile-h: 72px;
+  }
+
+  ::ng-deep .gp-bottom lib-tile {
+    --tile-w: 52px;
+    --tile-h: 72px;
+  }
+}

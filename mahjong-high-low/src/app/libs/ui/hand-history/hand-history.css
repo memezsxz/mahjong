@@ -1,4 +1,6 @@
 :host {
+  --hh-mini-tile-w: 15px;
+  --hh-mini-tile-h: 21px;
   display: block;
   height: 100%;
   overflow-y: auto;
@@ -19,10 +21,21 @@
   }
   to {
     opacity: 1;
-    max-height: 5.5rem;
+    max-height: 9rem;
     padding-top: 0.375rem;
     padding-bottom: 0.375rem;
-    overflow: hidden;
+    overflow: visible;
+  }
+}
+
+@keyframes hh-slide-in-mobile {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -87,9 +100,53 @@
   flex-wrap: nowrap;
 }
 
-.hh-mini-tile {
-  width: 15px;
-  height: 21px;
-  object-fit: contain;
-  display: block;
+.hh-mini-tile-frame {
+  width: var(--hh-mini-tile-w);
+  height: var(--hh-mini-tile-h);
+  min-width: var(--hh-mini-tile-w);
+  max-width: var(--hh-mini-tile-w);
+  min-height: var(--hh-mini-tile-h);
+  max-height: var(--hh-mini-tile-h);
+  flex: 0 0 var(--hh-mini-tile-w);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: var(--c-bg);
+}
+
+@media (max-width: 1023px) {
+  :host {
+    --hh-mini-tile-w: 26px;
+    --hh-mini-tile-h: 36px;
+  }
+
+  .hh-row {
+    animation-name: hh-slide-in-mobile;
+    gap: 0.65rem;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+    padding-left: 0.5rem;
+  }
+
+  .hh-hands {
+    gap: 0.8rem;
+    padding-left: 1.85rem;
+  }
+
+  .hh-mini-hand-row {
+    gap: 0.55rem;
+  }
+
+  .hh-mini-hand {
+    gap: 0.28rem;
+  }
+
+  .hh-mini-total {
+    min-width: 2.15rem;
+    font-size: 0.8rem;
+  }
 }

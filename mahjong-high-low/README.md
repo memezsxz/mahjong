@@ -1,6 +1,8 @@
 # Mahjong High-Low
 
-Mahjong High-Low is a single-page Angular game where the player sees one Mahjong hand, guesses whether the hidden hand is higher or lower, and advances through animated deal, reveal, scoring, and reshuffle flows. The project is structured around reusable game logic, UI components, and feature services for audio, transitions, score handling, and player settings.
+> Note: AI was used as a development aid during this project, mainly for iteration support, small implementation help, and refinement. The one area that was heavily AI-assisted end-to-end was the game animation work. The rest of the application, including the overall structure, gameplay logic, styling direction, and feature development, was primarily implemented by me with occasional AI support where useful.
+
+Mahjong High-Low is a single-page Angular game where the player sees one Mahjong hand, guesses whether the hidden hand is higher or lower, and advances through animated deal, reveal, scoring, and reshuffle flows. The project is structured around reusable game logic, UI components, and feature services for audio, transitions, score handling, and player settings. The interface is responsive and adapts for mobile layouts as well as desktop play.
 
 ## Gameplay Loop
 

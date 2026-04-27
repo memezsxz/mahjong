@@ -1,9 +1,9 @@
-<div #pageFrame class="relative flex h-full overflow-hidden bg-c-bg text-c-text font-display">
+<div #pageFrame class="gp-page-frame relative flex h-full overflow-hidden bg-c-bg text-c-text font-display">
 
   @if (store.visibleHand() && store.hiddenHand()) {
 
     <!-- ── Main ──────────────────────────────────────────────────────────── -->
-    <main #mainStage class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-8 lg:px-12 relative">
+    <main #mainStage class="gp-main flex-1 min-w-0 overflow-hidden flex flex-col px-5 sm:px-8 lg:px-12 relative">
 
       <!-- Topbar -->
       <div class="shrink-0 flex items-center py-4 border-b border-c-indigo/10">
@@ -354,44 +354,61 @@
     </main>
 
     <!-- ── Sidebar ────────────────────────────────────────────────────────── -->
-    <aside class="w-52 lg:w-56 shrink-0 overflow-hidden flex flex-col border-l border-c-indigo/10">
+    <aside
+      class="gp-sidebar"
+      [class.gp-sidebar-mobile]="mobileSidebarEnabled()"
+      [class.gp-sidebar-mobile-open]="mobileSidebarOpen()"
+      [class.gp-sidebar-mobile-dragging]="mobileSidebarDragActive()"
+    >
+      <div
+        class="gp-sidebar-shell"
+        [style.--gp-sidebar-drag-offset.px]="mobileSidebarDragOffset()"
+      >
+        <div
+          class="gp-sidebar-summary"
+          [attr.aria-expanded]="mobileSidebarEnabled() ? mobileSidebarOpen() : null"
+          [attr.aria-label]="mobileSidebarEnabled() ? 'Drag up to open run details' : null"
+          (pointerdown)="onMobileSidebarPointerDown($event)"
+        >
+          <div #scoreDisplaySlot class="gp-sidebar-score">
+            <lib-score-display
+              [score]="scoreDisplayOverride() ?? store.currentScore()"
+              [winStreak]="visibleWinStreak()"
+              (scoreStepSoundRequested)="audioManager.playScoreStep()"
+            />
+          </div>
+        </div>
 
-      <div #scoreDisplaySlot class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
-        <lib-score-display
-          [score]="scoreDisplayOverride() ?? store.currentScore()"
-          [winStreak]="visibleWinStreak()"
-          (scoreStepSoundRequested)="audioManager.playScoreStep()"
-        />
+        <div class="gp-sidebar-details">
+          <div class="gp-sidebar-section">
+            <lib-deck-counter
+              [drawCount]="drawCount()"
+              [discardCount]="discardCount()"
+              [displayDrawCount]="reshuffleDisplayDrawCount()"
+              [displayDiscardCount]="reshuffleDisplayDiscardCount()"
+              [reshuffleCount]="store.reshuffleCount()"
+              [maxReshuffles]="maxReshuffles"
+            />
+          </div>
+
+          <div class="gp-sidebar-history">
+            <lib-hand-history [history]="handHistory()" />
+          </div>
+
+          <div class="gp-sidebar-actions">
+            <p-button
+              icon="pi pi-cog"
+              styleClass="gp-sidebar-btn"
+              (onClick)="onSettingsOpened()"
+            />
+            <p-button
+              icon="pi pi-sign-out"
+              styleClass="gp-sidebar-btn gp-sidebar-btn-danger"
+              (onClick)="openExitDialog()"
+            />
+          </div>
+        </div>
       </div>
-
-      <div class="shrink-0 flex justify-center px-5 py-4 border-b border-c-indigo/10">
-        <lib-deck-counter
-          [drawCount]="drawCount()"
-          [discardCount]="discardCount()"
-          [displayDrawCount]="reshuffleDisplayDrawCount()"
-          [displayDiscardCount]="reshuffleDisplayDiscardCount()"
-          [reshuffleCount]="store.reshuffleCount()"
-          [maxReshuffles]="maxReshuffles"
-        />
-      </div>
-
-      <div class="flex-1 min-h-0 overflow-hidden px-5 py-4">
-        <lib-hand-history [history]="handHistory()" />
-      </div>
-
-      <div class="shrink-0 flex justify-center gap-3 px-5 py-4 border-t border-c-indigo/10">
-        <p-button
-          icon="pi pi-cog"
-          styleClass="gp-sidebar-btn"
-          (onClick)="onSettingsOpened()"
-        />
-        <p-button
-          icon="pi pi-sign-out"
-          styleClass="gp-sidebar-btn gp-sidebar-btn-danger"
-          (onClick)="openExitDialog()"
-        />
-      </div>
-
     </aside>
 
     @if (scoreGainAnimationActive()) {

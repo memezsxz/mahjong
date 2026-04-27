@@ -14,4 +14,8 @@ export class HandHistory {
   history = input.required<HandHistoryItem[]>();
 
   tileAssetPath = getTileAssetPath;
+
+  tileBackgroundImage(tileIdPath: string): string {
+    return `url("${tileIdPath}")`;
+  }
 }

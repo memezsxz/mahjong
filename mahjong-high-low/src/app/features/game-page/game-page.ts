@@ -66,6 +66,9 @@ import { GamePageViewStateService } from './game-page-view-state.service';
  *    so the main component can stay focused on round orchestration.
  */
 export class GamePage implements OnInit, OnDestroy {
+  private static readonly MOBILE_SIDEBAR_BREAKPOINT_PX = 1024;
+  private static readonly MOBILE_SIDEBAR_TOGGLE_THRESHOLD_PX = 56;
+  private static readonly MOBILE_SIDEBAR_MAX_DRAG_PX = 640;
   private readonly router = inject(Router);
   readonly store = inject(GameStore);
   readonly settingsService = inject(SettingsService);
@@ -162,6 +165,13 @@ export class GamePage implements OnInit, OnDestroy {
   private readonly scoreDisplaySlotRef =
     viewChild<ElementRef<globalThis.HTMLElement>>('scoreDisplaySlot');
   private betControlsTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
+  readonly mobileSidebarEnabled = signal(false);
+  readonly mobileSidebarOpen = signal(false);
+  readonly mobileSidebarDragActive = signal(false);
+  readonly mobileSidebarDragOffset = signal(0);
+  private activeSidebarPointerId: number | null = null;
+  private sidebarDragStartY = 0;
+  private sidebarDragStartedOpen = false;
   // ── Deal animation timing ─────────────────────────────────────────────
   readonly singleHandDealDuration = computed(() => {
     return getSingleHandDealDuration(this.settingsService.settings().handSize);
@@ -232,6 +242,7 @@ export class GamePage implements OnInit, OnDestroy {
 
   /** Starts a new run when the page is entered. */
   ngOnInit(): void {
+    this.syncMobileSidebarMode();
     this.startFreshGame();
   }
 
@@ -241,6 +252,41 @@ export class GamePage implements OnInit, OnDestroy {
     this.clearTransientAnimationState();
     this.reshuffleSequence.resetSequenceState();
     this.audioState.stopMusic();
+    this.resetMobileSidebarDrag();
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.syncMobileSidebarMode();
+  }
+
+  @HostListener('window:pointermove', ['$event'])
+  onWindowPointerMove(event: globalThis.PointerEvent): void {
+    if (
+      !this.mobileSidebarEnabled() ||
+      !this.mobileSidebarDragActive() ||
+      event.pointerId !== this.activeSidebarPointerId
+    ) {
+      return;
+    }
+
+    const rawDelta = event.clientY - this.sidebarDragStartY;
+    const clampedDelta = this.sidebarDragStartedOpen
+      ? Math.min(GamePage.MOBILE_SIDEBAR_MAX_DRAG_PX, Math.max(0, rawDelta))
+      : Math.max(-GamePage.MOBILE_SIDEBAR_MAX_DRAG_PX, Math.min(0, rawDelta));
+
+    this.mobileSidebarDragOffset.set(clampedDelta);
+    event.preventDefault();
+  }
+
+  @HostListener('window:pointerup', ['$event'])
+  onWindowPointerUp(event: globalThis.PointerEvent): void {
+    this.finishMobileSidebarDrag(event);
+  }
+
+  @HostListener('window:pointercancel', ['$event'])
+  onWindowPointerCancel(event: globalThis.PointerEvent): void {
+    this.finishMobileSidebarDrag(event);
   }
 
   /** Router guard hook used when leaving the page through navigation. */
@@ -678,7 +724,21 @@ export class GamePage implements OnInit, OnDestroy {
   /** Opens the in-game settings panel. */
   onSettingsOpened(): void {
     this.handleButtonInteraction();
+    this.mobileSidebarOpen.set(false);
     this.settingsOpen.set(true);
+  }
+
+  onMobileSidebarPointerDown(event: globalThis.PointerEvent): void {
+    if (!this.mobileSidebarEnabled()) {
+      return;
+    }
+
+    this.activeSidebarPointerId = event.pointerId;
+    this.sidebarDragStartY = event.clientY;
+    this.sidebarDragStartedOpen = this.mobileSidebarOpen();
+    this.mobileSidebarDragActive.set(true);
+    this.mobileSidebarDragOffset.set(0);
+    event.preventDefault();
   }
 
   /** Mirrors game-over name input into the UI shell state. */
@@ -717,5 +777,41 @@ export class GamePage implements OnInit, OnDestroy {
       this.store.drawPile().length,
       this.store.discard().length,
     );
+  }
+
+  private syncMobileSidebarMode(): void {
+    const width = globalThis.window?.innerWidth ?? GamePage.MOBILE_SIDEBAR_BREAKPOINT_PX;
+    const mobileMode = width < GamePage.MOBILE_SIDEBAR_BREAKPOINT_PX;
+    this.mobileSidebarEnabled.set(mobileMode);
+
+    if (!mobileMode) {
+      this.mobileSidebarOpen.set(false);
+      this.resetMobileSidebarDrag();
+    }
+  }
+
+  private finishMobileSidebarDrag(event: globalThis.PointerEvent): void {
+    if (
+      !this.mobileSidebarDragActive() ||
+      event.pointerId !== this.activeSidebarPointerId
+    ) {
+      return;
+    }
+
+    const totalDelta = event.clientY - this.sidebarDragStartY;
+    const shouldOpen = this.sidebarDragStartedOpen
+      ? totalDelta < GamePage.MOBILE_SIDEBAR_TOGGLE_THRESHOLD_PX
+      : totalDelta < -GamePage.MOBILE_SIDEBAR_TOGGLE_THRESHOLD_PX;
+
+    this.mobileSidebarOpen.set(shouldOpen);
+    this.resetMobileSidebarDrag();
+  }
+
+  private resetMobileSidebarDrag(): void {
+    this.activeSidebarPointerId = null;
+    this.sidebarDragStartY = 0;
+    this.sidebarDragStartedOpen = false;
+    this.mobileSidebarDragActive.set(false);
+    this.mobileSidebarDragOffset.set(0);
   }
 }

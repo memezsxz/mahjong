@@ -72,9 +72,19 @@ export class GamePageRoundTransitionService {
     const centerRect = center.getBoundingClientRect();
     const bottomRect = bottom.getBoundingClientRect();
     const centerX = centerRect.left + centerRect.width / 2 - mainRect.left;
-    const centerY = centerRect.top + centerRect.height / 2 - mainRect.top;
+     let centerY = centerRect.top + centerRect.height / 2 - mainRect.top;
     const bottomX = bottomRect.left + bottomRect.width / 2 - mainRect.left;
     const bottomY = bottomRect.top + bottomRect.height / 2 - mainRect.top;
+
+    // When the center element contains a lib-hand with reserveTotalSlot, the
+    // bounding rect includes the invisible total-slot span below the tiles row.
+    // The transition hands have no total slot, so element center = tiles center.
+    // Subtract half of (slot height + gap) to align with the tiles-only center.
+    const totalDisplay = center.querySelector<HTMLElement>('.hand-total-display');
+    if (totalDisplay) {
+      const totalH = totalDisplay.getBoundingClientRect().height;
+      centerY -= (8 + totalH) / 2;
+    }
 
     this.transitionPromotedStartX.set(centerX);
     this.transitionPromotedStartY.set(centerY);

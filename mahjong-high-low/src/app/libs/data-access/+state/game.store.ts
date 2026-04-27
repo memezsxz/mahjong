@@ -112,8 +112,9 @@ export const GameStore = signalStore(
           result,
         );
         const scoreChange = calculatedScore - store.currentScore();
+        const scaledHiddenHand = scaleHandValues(hiddenHand, result);
         // A hand can end the run after scaling pushes an honor tile to the configured bounds.
-        const gameOverReason = checkGameOverHand(hiddenHand.tiles);
+        const gameOverReason = checkGameOverHand(scaledHiddenHand.tiles);
         const historyEntry: HandHistoryItem = {
           round: store.handHistory().length + 1,
           bet: playerBet,
@@ -124,7 +125,7 @@ export const GameStore = signalStore(
         };
 
         patchState(store, {
-          hiddenHand: scaleHandValues(hiddenHand, result),
+          hiddenHand: scaledHiddenHand,
           winStreak: newWinStreak,
           currentScore: calculatedScore,
           gamePhase: gameOverReason ? GamePhase.GameOver : GamePhase.Revealing,
