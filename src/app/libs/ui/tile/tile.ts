@@ -10,14 +10,15 @@ import { getTileAssetPath } from '../tile-asset-path';
  * Renders a single Mahjong tile and coordinates deal, flip, and value-roll UI state.
  */
 @Component({
-  selector: 'lib-tile',
-  imports: [],
-  templateUrl: './tile.html',
-  styleUrls: ['../game-ui.animation-tokens.css', './tile.css'],
-  host: {
-    '[style.--tile-index]': 'tileIndex()',
-    '[class.tile-flipping]': 'flipActive()',
-  },
+    selector: 'lib-tile',
+    imports: [],
+    templateUrl: './tile.html',
+    styleUrls: ['../game-ui.animation-tokens.css', './tile.css'],
+    host: {
+        '[style.--tile-index]': 'tileIndex()',
+        '[class.tile-flipping]': 'flipActive()',
+    },
+    standalone: true
 })
 export class Tile implements OnDestroy {
   private el = inject(ElementRef<HTMLElement>);

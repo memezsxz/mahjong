@@ -2,7 +2,7 @@ import { Component, computed, effect, ElementRef, HostListener, inject, OnDestro
 import { DecimalPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { BetControls, DeckCounter, Hand, HandHistory, ScoreDisplay, SettingsPanel } from '@hbg/game-ui';
+import { BetControls, DeckCounter, getTileAssetPath, Hand, HandHistory, ScoreDisplay, SettingsPanel } from '@hbg/game-ui';
 import { Bet, GamePhase, HandModel, PlayerSettingsModel } from '@hbg/shared-models';
 import { GameAudioManager, GameStore, SettingsService } from '@hbg/game-data-access';
 import { buildDeck, MAX_RESHUFFLES } from '@hbg/shared-util-game';
@@ -51,6 +51,7 @@ import { GamePageViewStateService } from './game-page-view-state.service';
     GamePageUiShellService,
     GamePageViewStateService,
   ],
+  standalone: true
 })
 /**
  * Container component for the full in-run game experience.
@@ -470,6 +471,10 @@ export class GamePage implements OnInit, OnDestroy {
   private startFreshGame(): void {
     this.steadyHandsShouldDeal.set(true);
     this.store.startGame();
+    const visibleHand = this.store.visibleHand();
+    const hiddenHand = this.store.hiddenHand();
+    if (visibleHand) this.preloadHandImages(visibleHand);
+    if (hiddenHand) this.preloadHandImages(hiddenHand);
   }
 
   /** Resets page-only state before replaying the initial game entry flow. */
@@ -564,7 +569,9 @@ export class GamePage implements OnInit, OnDestroy {
     }
 
     this.store.nextHand();
-    this.roundTransition.setIncomingHiddenHand(this.store.hiddenHand());
+    const incomingHand = this.store.hiddenHand();
+    if (incomingHand) this.preloadHandImages(incomingHand);
+    this.roundTransition.setIncomingHiddenHand(incomingHand);
     this.startRoundTransition(false);
   }
 
@@ -581,7 +588,9 @@ export class GamePage implements OnInit, OnDestroy {
     this.store.nextHand();
     this.reshuffleDisplayDrawCount.set(this.store.drawPile().length);
     this.reshuffleDisplayDiscardCount.set(this.store.discard().length);
-    this.roundTransition.setIncomingHiddenHand(this.store.hiddenHand());
+    const reshuffleIncomingHand = this.store.hiddenHand();
+    if (reshuffleIncomingHand) this.preloadHandImages(reshuffleIncomingHand);
+    this.roundTransition.setIncomingHiddenHand(reshuffleIncomingHand);
     this.roundTransition.setIncomingPhaseIdle();
 
     if (!this.roundTransitionActive()) {
@@ -650,6 +659,7 @@ export class GamePage implements OnInit, OnDestroy {
       return;
     }
 
+    this.preloadHandImages(incomingHiddenHand);
     this.measureRoundTransition();
     this.roundTransition.prepareIncomingOnlyTransition(incomingHiddenHand);
     this.roundTransition.startIncomingOnlyTransition({
@@ -801,6 +811,13 @@ export class GamePage implements OnInit, OnDestroy {
 
     this.mobileSidebarOpen.set(shouldOpen);
     this.resetMobileSidebarDrag();
+  }
+
+  private preloadHandImages(hand: HandModel): void {
+    hand.tiles.forEach(tile => {
+      const img = new Image();
+      img.src = getTileAssetPath(tile);
+    });
   }
 
   private resetMobileSidebarDrag(): void {

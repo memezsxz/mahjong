@@ -8,3 +8,4 @@ export * from './score-display/score-display';
 export * from './deck-counter/deck-counter';
 export * from './hand-history/hand-history';
 export * from './settings-panel/settings-panel';
+export { getTileAssetPath } from './tile-asset-path';

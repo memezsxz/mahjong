@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
   imports: [ButtonModule],
   templateUrl: './bet-controls.html',
   styleUrls: ['../game-ui.animation-tokens.css', './bet-controls.css'],
+  standalone: true
 })
 export class BetControls {
   handTotal = input.required<number>();

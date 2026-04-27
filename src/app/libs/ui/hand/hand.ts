@@ -11,6 +11,7 @@ import { UI_HAND_TOTAL_ROLL_DURATION_MS } from '../game-ui.animations';
   imports: [Tile],
   templateUrl: './hand.html',
   styleUrls: ['../game-ui.animation-tokens.css', './hand.css'],
+  standalone: true
 })
 export class Hand implements OnDestroy {
   hand              = input.required<HandModel>();

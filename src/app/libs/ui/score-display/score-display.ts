@@ -10,6 +10,7 @@ import { UI_SCORE_STEP_MS } from '../game-ui.animations';
   imports: [DecimalPipe],
   templateUrl: './score-display.html',
   styleUrl: './score-display.css',
+  standalone: true
 })
 export class ScoreDisplay implements OnDestroy {
   private readonly scoreStepMs = UI_SCORE_STEP_MS;

@@ -11,6 +11,7 @@ import { GameAudioManager, ScoresService, SettingsService } from '@hbg/game-data
   imports: [ButtonModule, DatePipe, DecimalPipe, SettingsPanel],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.css',
+  standalone: true
 })
 export class LandingPage {
   private readonly router      = inject(Router);
