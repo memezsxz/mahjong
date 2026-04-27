@@ -97,9 +97,10 @@
       >{{ settings().animationsEnabled ? 'ON' : 'OFF' }}</button>
     </div>
 
+    <!-- DO NOT DELETE: Music toggle — kept for when background music is re-enabled -->
+    <!--
     <div class="h-px bg-c-indigo/10 mx-6"></div>
 
-    <!-- Music -->
     <div class="flex items-center justify-between gap-4 px-6 py-4">
       <div class="flex flex-col gap-0.5">
         <span class="text-sm font-semibold text-c-text">Music</span>
@@ -113,6 +114,7 @@
         (click)="settingsChanged.emit({ musicEnabled: !settings().musicEnabled })"
       >{{ settings().musicEnabled ? 'ON' : 'OFF' }}</button>
     </div>
+    -->
 
   </div>
 </div>

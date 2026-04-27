@@ -644,11 +644,39 @@ export class GamePage implements OnInit, OnDestroy {
 
   /**
    * Deals only the next hidden hand after the revealed hand has already been
-   * promoted into the visible slot.
+   * promoted into the visible slot. Triggers reshuffle UI if the deck is too
+   * small before advancing.
    */
   private advanceToNextHiddenHand(): void {
     this.clearBetControlsTimer();
     this.debugForceReshuffleNextHand.set(false);
+
+    const drawBefore = this.store.drawPile().length;
+    const discardBefore = this.store.discard().length;
+    const nextHandPlan = resolveNextHandPlan({
+      drawBefore,
+      discardBefore,
+      handSize: this.store.handSize(),
+      freshDeckSize: this.freshDeckSize,
+      forceReshuffle: false,
+    });
+
+    if (nextHandPlan.kind === 'reshuffle') {
+      this.reshuffleSequence.startReshuffleSequence(
+        drawBefore,
+        discardBefore,
+        nextHandPlan.drawAfterReshuffle,
+        nextHandPlan.discardAfterReshuffle,
+        () => this.finishAdvanceToNextHiddenHand(),
+      );
+      return;
+    }
+
+    this.finishAdvanceToNextHiddenHand();
+  }
+
+  /** Completes the next-hidden-hand advance after any reshuffle sequence. */
+  private finishAdvanceToNextHiddenHand(): void {
     this.store.nextHand();
     this.resetRevealAnimationState();
     this.revealedHandPromoted.set(false);
