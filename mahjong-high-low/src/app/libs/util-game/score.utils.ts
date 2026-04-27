@@ -1,7 +1,13 @@
 import {HandModel, HandResult} from "@hbg/shared-models";
 import {MAX_WIN_STREAK} from "./game.config.js";
 
-// Wins grow score by hand total times the capped streak multiplier; losses reset streak and never drop below zero.
+/**
+ * Calculates the next score and streak after resolving a hand result.
+ *
+ * Wins increase the streak up to `MAX_WIN_STREAK` and add the hand total
+ * multiplied by the resulting streak. Losses reset the streak and subtract the
+ * hand total without allowing the score to drop below zero.
+ */
 export function calculateScore(hand: HandModel, totalScore: number, winStreak: number, handResult: HandResult): {
     newWinStreak: number,
     calculatedScore: number

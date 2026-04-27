@@ -4,6 +4,7 @@ import { GamePhase } from '@hbg/shared-models';
 
 @Injectable()
 export class GamePageUiShellService {
+  /** Maximum number of characters allowed when naming a leaderboard run. */
   private static readonly MAX_RUN_NAME_LENGTH = 10;
   readonly maxRunNameLength = GamePageUiShellService.MAX_RUN_NAME_LENGTH;
   readonly settingsOpen = signal(false);
@@ -37,17 +38,12 @@ export class GamePageUiShellService {
 
   requestLeave(
     hasActiveProgress: boolean,
-    allowScoreSaveOnExit: boolean,
   ): boolean | Promise<boolean> {
     if (!hasActiveProgress) {
       return true;
     }
 
-    if (allowScoreSaveOnExit && this.scoreQualifiesForLeaderboard()) {
-      this.openExitSavePanel();
-    } else {
-      this.exitDialogOpen.set(true);
-    }
+    this.exitDialogOpen.set(true);
 
     return new Promise<boolean>((resolve) => {
       this.pendingLeaveResolver = resolve;
@@ -56,15 +52,9 @@ export class GamePageUiShellService {
 
   openExitFlow(
     hasActiveProgress: boolean,
-    allowScoreSaveOnExit: boolean,
-  ): 'exit-now' | 'dialog-opened' | 'save-panel-opened' {
+  ): 'exit-now' | 'dialog-opened' {
     if (!hasActiveProgress) {
       return 'exit-now';
-    }
-
-    if (allowScoreSaveOnExit && this.scoreQualifiesForLeaderboard()) {
-      this.openExitSavePanel();
-      return 'save-panel-opened';
     }
 
     this.exitDialogOpen.set(true);

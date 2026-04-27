@@ -14,15 +14,15 @@
           Mahjong High · Low
         </button>
 
-        @if (debugMode()) {
-          <button
-            class="ml-auto h-8 px-3 border border-c-pink/50 bg-c-bg font-mono text-[0.62rem] font-bold tracking-[0.1em] text-c-pink cursor-pointer"
-            [disabled]="roundTransitionActive() || revealSequenceLocked() || reshuffleSequenceActive()"
-            (click)="onDebugForceReshuffle()"
-          >
-            DEBUG RESHUFFLE
-          </button>
-        }
+<!--        @if (debugMode()) {-->
+<!--          <button-->
+<!--            class="ml-auto h-8 px-3 border border-c-pink/50 bg-c-bg font-mono text-[0.62rem] font-bold tracking-[0.1em] text-c-pink cursor-pointer"-->
+<!--            [disabled]="roundTransitionActive() || revealSequenceLocked() || reshuffleSequenceActive()"-->
+<!--            (click)="onDebugForceReshuffle()"-->
+<!--          >-->
+<!--            DEBUG RESHUFFLE-->
+<!--          </button>-->
+<!--        }-->
       </div>
 
       <!-- Center: hidden hand (deals second) -->

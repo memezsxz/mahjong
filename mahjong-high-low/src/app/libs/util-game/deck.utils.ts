@@ -11,7 +11,9 @@ import { calculateHandTotal } from './hand-evaluator.utils.js';
 
 let reshuffleDeckSequence = 0;
 
-// The runtime deck contains one copy of each number tile and four copies of each honor tile.
+/**
+ * Builds a fresh runtime deck using the project's tile rules.
+ */
 export function buildDeck(): TileInstance[] {
   const cards: TileInstance[] = [
     ...buildNumberTiles(),
@@ -22,8 +24,11 @@ export function buildDeck(): TileInstance[] {
   return cards;
 }
 
+/**
+ * Builds the number-tile portion of the deck.
+ */
 function buildNumberTiles(): TileInstance[] {
-  const sizeArray = Array.from({ length: 1 }, (_, i) => i + 1);
+  const sizeArray = Array.from({ length: 9 }, (_, i) => i + 1);
   const copyArray = Array.from({ length: 1 }, (_, i) => i + 1);
 
   const items: TileInstance[] = Object.values(NumberSuit).flatMap((suit) =>
@@ -44,11 +49,14 @@ function buildNumberTiles(): TileInstance[] {
   return items;
 }
 
+/**
+ * Builds the honor-tile portion of the deck for dragons or winds.
+ */
 function buildHonorTiles(
   tileType: TileType.Dragon | TileType.Wind,
   defaultValue: number,
 ): TileInstance[] {
-  const copyArray = Array.from({ length: 4 }, (_, i) => i + 1);
+  const copyArray = Array.from({ length: 1 }, (_, i) => i + 1);
 
   const suit = tileType == TileType.Dragon ? DragonSuit : WindSuit;
 
@@ -68,6 +76,9 @@ function buildHonorTiles(
   return items;
 }
 
+/**
+ * Returns a shuffled copy of the provided deck using Fisher-Yates shuffle.
+ */
 function shuffleDeck(deck: TileInstance[]): TileInstance[] {
   const newDeck: TileInstance[] = deck.slice();
 
@@ -79,6 +90,10 @@ function shuffleDeck(deck: TileInstance[]): TileInstance[] {
   return newDeck;
 }
 
+/**
+ * Draws a hand from a shuffled copy of the provided deck and returns both the
+ * hand model and the remaining draw pile.
+ */
 export function drawHand(
   handSize: number,
   deck: TileInstance[],
@@ -92,9 +107,14 @@ export function drawHand(
   return { hand: handModel, drawPile };
 }
 
+/**
+ * Rebuilds and shuffles a deck after a reshuffle event.
+ *
+ * Rebuilt tiles receive a reshuffle suffix so runtime tile IDs remain unique
+ * across the session.
+ */
 export function reshuffleDeck(oldDeck: TileInstance[] , discardPile: TileInstance[]) {
   reshuffleDeckSequence += 1;
-  // Rebuilt tiles get a reshuffle suffix so runtime IDs stay unique across the session.
   const freshDeck = buildDeck().map((tile) => ({
     ...tile,
     id: `${tile.id}-r${reshuffleDeckSequence}`,

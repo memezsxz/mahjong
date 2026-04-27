@@ -15,5 +15,6 @@ export class SettingsPanel {
   settingsChanged = output<Partial<PlayerSettingsModel>>();
   closed = output<void>();
 
+  /** Hand-size options exposed in the settings UI. */
   readonly handSizeOptions = [...VALID_HAND_SIZES];
 }

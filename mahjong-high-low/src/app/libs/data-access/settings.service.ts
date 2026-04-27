@@ -4,7 +4,9 @@ import {DEFAULT_HAND_SIZE, VALID_HAND_SIZES} from "@hbg/shared-util-game";
 
 @Injectable({providedIn: 'root'})
 export class SettingsService {
+    /** Local storage key used to persist player settings. */
     private readonly STORAGE_KEY = 'player-settings';
+    /** Valid hand sizes accepted by the settings normalization path. */
     private readonly VALID_HAND_SIZES = new Set(VALID_HAND_SIZES);
 
     private _settings = signal<PlayerSettingsModel>({

@@ -22,7 +22,6 @@ import { GamePageAudioStateService } from './game-page-audio-state.service';
 import { resolveNextHandPlan } from './game-page-next-hand-plan';
 import { GamePageUiShellService } from './game-page-ui-shell.service';
 import { GamePageViewStateService } from './game-page-view-state.service';
-import { ALLOW_SCORE_SAVE_ON_EXIT } from '../game-feature.policy';
 
 @Component({
   selector: 'lib-game-page',
@@ -130,12 +129,12 @@ export class GamePage implements OnInit, OnDestroy {
   visibleWinStreak = this.viewState.visibleWinStreak;
   debugForceReshuffleNextHand = signal(false);
   // DEV toggle: set true to show debug controls for forcing reshuffle flow.
-  private readonly DEBUG_MODE = true;
+  // private readonly DEBUG_MODE = true;
   transitionPromotedStartX = this.roundTransition.transitionPromotedStartX;
   transitionPromotedStartY = this.roundTransition.transitionPromotedStartY;
   transitionPromotedDeltaX = this.roundTransition.transitionPromotedDeltaX;
   transitionPromotedDeltaY = this.roundTransition.transitionPromotedDeltaY;
-  debugMode = signal(this.DEBUG_MODE);
+  // debugMode = signal(this.DEBUG_MODE);
   private readonly freshDeckSize = buildDeck().length;
   private readonly mainStageRef =
     viewChild<ElementRef<globalThis.HTMLElement>>('mainStage');
@@ -150,18 +149,12 @@ export class GamePage implements OnInit, OnDestroy {
   private readonly scoreDisplaySlotRef =
     viewChild<ElementRef<globalThis.HTMLElement>>('scoreDisplaySlot');
   private betControlsTimer: ReturnType<typeof globalThis.setTimeout> | null = null;
-  private readonly betControlsDelayMs = signal(0);
   // ── Deal animation timing ─────────────────────────────────────────────
   readonly singleHandDealDuration = computed(() => {
     return getSingleHandDealDuration(this.settingsService.settings().handSize);
   });
   readonly hiddenHandBaseDelay = computed(() =>
     getHiddenHandBaseDelay(this.settingsService.settings().handSize),
-  );
-  readonly betControlsDelay = computed(
-    () =>
-      this.betControlsDelayMs() ||
-      getBetControlsDelay(this.settingsService.settings().handSize),
   );
 
   // ── Derived deck counts ───────────────────────────────────────────────
@@ -182,6 +175,7 @@ export class GamePage implements OnInit, OnDestroy {
       const visibleHand = this.store.visibleHand();
       const hiddenHand = this.store.hiddenHand();
       const transitionActive = this.roundTransitionActive();
+      const initialDeal = this.steadyHandsShouldDeal();
       this.dealCount();
 
       if (
@@ -197,9 +191,17 @@ export class GamePage implements OnInit, OnDestroy {
 
       this.clearBetControlsTimer();
       this.betControlsReady.set(false);
+
+      if (!initialDeal) {
+        this.betControlsTimer = globalThis.setTimeout(() => {
+          this.betControlsReady.set(true);
+        }, getNextRoundBetControlsDelay());
+        return;
+      }
+
       this.betControlsTimer = globalThis.setTimeout(() => {
         this.betControlsReady.set(true);
-      }, this.betControlsDelay());
+      }, getBetControlsDelay(this.settingsService.settings().handSize));
     });
 
     this.audioState.registerEffects({
@@ -226,9 +228,7 @@ export class GamePage implements OnInit, OnDestroy {
   canLeaveGame(): boolean | Promise<boolean> {
     const hasActiveProgress = this.hasActiveProgress();
     const leaveRequest = this.uiShell.requestLeave(
-      hasActiveProgress,
-      ALLOW_SCORE_SAVE_ON_EXIT,
-    );
+      hasActiveProgress);
 
     if (typeof leaveRequest === 'boolean') {
       if (leaveRequest && this.store.gamePhase() !== GamePhase.Idle) {
@@ -349,7 +349,7 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   onDebugForceReshuffle() {
-    if (!this.debugMode()) return;
+    // if (!this.debugMode()) return;
     this.handleButtonInteraction();
     this.debugForceReshuffleNextHand.set(true);
     if (this.store.gamePhase() === GamePhase.Revealing) {
@@ -388,7 +388,6 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   private startFreshGame(): void {
-    this.syncBetControlsDelayToCurrentHandSize();
     this.steadyHandsShouldDeal.set(true);
     this.store.startGame();
   }
@@ -402,12 +401,6 @@ export class GamePage implements OnInit, OnDestroy {
 
   private incrementDealCount(): void {
     this.dealCount.update((count) => count + 1);
-  }
-
-  private syncBetControlsDelayToCurrentHandSize(): void {
-    this.betControlsDelayMs.set(
-      getBetControlsDelay(this.settingsService.settings().handSize),
-    );
   }
 
   private startRoundTransition(deferIncomingHidden = false): void {
@@ -468,7 +461,6 @@ export class GamePage implements OnInit, OnDestroy {
     this.measureRoundTransition();
     this.roundTransition.prepareTransition(outgoingVisibleHand, promotedVisibleHand);
     this.steadyHandsShouldDeal.set(false);
-    this.betControlsDelayMs.set(getNextRoundBetControlsDelay());
 
     if (deferIncomingHidden) {
       this.reshuffleTransitionPendingIncoming.set(true);
@@ -547,7 +539,6 @@ export class GamePage implements OnInit, OnDestroy {
     this.resetRevealAnimationState();
     this.revealedHandPromoted.set(false);
     this.steadyHandsShouldDeal.set(false);
-    this.syncBetControlsDelayToCurrentHandSize();
 
     const incomingHiddenHand = this.store.hiddenHand();
     if (this.store.gamePhase() !== GamePhase.Betting || !incomingHiddenHand) {
@@ -591,7 +582,6 @@ export class GamePage implements OnInit, OnDestroy {
     this.handleButtonInteraction();
     const exitState = this.uiShell.openExitFlow(
       this.hasActiveProgress(),
-      ALLOW_SCORE_SAVE_ON_EXIT,
     );
     if (exitState === 'exit-now') {
       this.onExitGame();

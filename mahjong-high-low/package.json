@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "docs": "compodoc -p tsconfig.app.json --theme material"
   },
   "prettier": {
     "printWidth": 100,
@@ -46,6 +47,7 @@
     "@angular/build": "^21.2.8",
     "@angular/cli": "^21.2.8",
     "@angular/compiler-cli": "^21.2.10",
+    "@compodoc/compodoc": "^1.2.1",
     "@tailwindcss/postcss": "^4.2.4",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.9.0",

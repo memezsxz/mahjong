@@ -80,9 +80,11 @@ app-root {
   height: 3.25rem;
 }
 
-.p-button.lp-settings-btn:hover {
+.p-button.lp-settings-btn:enabled:hover {
   background: rgba(38, 40, 123, 0.06);
+  border-color: var(--c-indigo);
   color: var(--c-indigo);
+  box-shadow: none;
 }
 
 .p-button.gp-dialog-btn,

@@ -13,30 +13,42 @@ type PendingAssetPlayback = {
 
 @Injectable({ providedIn: 'root' })
 export class GameAudioManager {
+  /** Volume used for gameplay background music. */
   private readonly gameplayMusicVolume = 0.24;
+  /** Volume used for pause-state background music. */
   private readonly pauseMusicVolume = 0.34;
+  /** Volume used for the UI button click tone. */
   private readonly buttonVolume = 0.035;
+  /** Volume used for tile slide in/out sounds. */
   private readonly tileSlideVolume = 0.32;
   private readonly settingsService = inject(SettingsService);
+  /** Source map for looping music tracks. */
   private readonly musicSources: Record<MusicTrack, string> = {
     gameplay: 'assets/sounds/game_loop_music.mp3',
     pause: 'assets/sounds/pause_music.mp3',
   };
+  /** Source map for end-of-bet result sounds. */
   private readonly resultSources: Record<ResultSound, string> = {
     win: 'assets/sounds/win.mp3',
     lose: 'assets/sounds/lose.mp3',
   };
+  /** Sound file used when a tile value changes. */
   private readonly cardValueChangeSource = 'assets/sounds/card_value_change.mp3';
+  /** Sound file used for stepped numeric updates. */
   private readonly scoreStepSource = 'assets/sounds/number_change.mp3';
+  /** Volume used for stepped numeric update sounds. */
   private readonly scoreStepVolume = 0.12;
+  /** Tail length kept when playing the stepped score sound. */
   private readonly scoreStepTailPaddingMs = 40;
+  /** Sound file used for tile slide movement. */
   private readonly tileSlideSource = 'assets/sounds/piece_slide.mp3';
+  /** Pool of tile-flip sound variations. */
   private readonly tileFlipSources = [
-    'assets/sounds/peice_flip_1.mp3',
-    'assets/sounds/peice_flip_2.mp3',
-    'assets/sounds/peice_flip_3.mp3',
-    'assets/sounds/peice_flip_4.mp3',
-    'assets/sounds/peice_flip_5.mp3',
+    'assets/sounds/piece_flip_1.mp3',
+    'assets/sounds/piece_flip_2.mp3',
+    'assets/sounds/piece_flip_3.mp3',
+    'assets/sounds/piece_flip_4.mp3',
+    'assets/sounds/piece_flip_5.mp3',
   ];
 
   private activeMusicMode: MusicMode = 'none';

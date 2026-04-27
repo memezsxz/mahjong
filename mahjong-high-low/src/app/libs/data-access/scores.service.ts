@@ -3,7 +3,9 @@ import { LeaderboardEntryModel } from '@hbg/shared-models';
 
 @Injectable({ providedIn: 'root' })
 export class ScoresService {
+  /** Local storage key used to persist leaderboard entries. */
   private static readonly STORAGE_KEY = 'game-scores';
+  /** Maximum number of leaderboard entries kept in the top-scores list. */
   private static readonly MAX_SCORES = 5;
 
   private readonly _topScores = signal<LeaderboardEntryModel[]>([]);

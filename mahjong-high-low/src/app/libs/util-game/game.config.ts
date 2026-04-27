@@ -18,12 +18,39 @@ function assertOneOf<T extends number | string>(
   return value;
 }
 
+/**
+ * Starting base value assigned to honor tiles before win/loss adjustments.
+ */
 export const HONOR_TILE_BASE_VALUE = 5
+
+/**
+ * Maximum number of reshuffles allowed before the next reshuffle attempt ends the run.
+ */
 export const MAX_RESHUFFLES = 1
+
+/**
+ * Upper tile value limit. Reaching this value ends the run.
+ */
 export const MAX_TILE_VALUE = 10
+
+/**
+ * Lower tile value limit. Reaching this value ends the run.
+ */
 export const MIN_TILE_VALUE = 0
+
+/**
+ * Highest streak multiplier the player can build through consecutive wins.
+ */
 export const MAX_WIN_STREAK = 3
+
+/**
+ * Supported hand sizes that can be selected in player settings.
+ */
 export const VALID_HAND_SIZES = [3, 4, 6] as const
+
+/**
+ * Default hand size used when no saved setting is available or a saved value is invalid.
+ */
 export const DEFAULT_HAND_SIZE = 6
 
 assertRange('HONOR_TILE_BASE_VALUE', HONOR_TILE_BASE_VALUE, 5, 10)

@@ -1,3 +1,6 @@
+/**
+ * Barrel exports for shared game-rule utilities.
+ */
 export * from './deck.utils.js';
 export * from './game-over.utils.js';
 export {evaluateBet} from './hand-evaluator.utils.js';
