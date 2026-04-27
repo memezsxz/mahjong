@@ -2,6 +2,9 @@ import { Component, effect, input, OnDestroy, output, signal } from '@angular/co
 import { DecimalPipe } from '@angular/common';
 import { UI_SCORE_STEP_MS } from '../game-ui.animations';
 
+/**
+ * Displays the current score and animates stepped score changes.
+ */
 @Component({
   selector: 'lib-score-display',
   imports: [DecimalPipe],
@@ -38,6 +41,9 @@ export class ScoreDisplay implements OnDestroy {
     this.clearScoreStepTimer();
   }
 
+  /**
+   * Steps the displayed score toward its target value one point at a time.
+   */
   private startScoreStep(from: number, to: number): void {
     this.clearScoreStepTimer();
     const direction = to > from ? 1 : -1;
@@ -61,6 +67,9 @@ export class ScoreDisplay implements OnDestroy {
     tick(from);
   }
 
+  /**
+   * Clears any in-flight stepped score animation.
+   */
   private clearScoreStepTimer(): void {
     if (this.scoreStepTimer !== null) {
       clearTimeout(this.scoreStepTimer);

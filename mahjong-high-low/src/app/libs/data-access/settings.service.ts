@@ -2,6 +2,9 @@ import {Injectable, signal} from "@angular/core";
 import {PlayerSettingsModel} from "@hbg/shared-models";
 import {DEFAULT_HAND_SIZE, VALID_HAND_SIZES} from "@hbg/shared-util-game";
 
+/**
+ * Stores, normalizes, and persists player-facing settings.
+ */
 @Injectable({providedIn: 'root'})
 export class SettingsService {
     /** Local storage key used to persist player settings. */
@@ -19,15 +22,24 @@ export class SettingsService {
         this.load()
     }
 
+    /**
+     * Merges a partial settings update, normalizes it, and persists it.
+     */
     update(settings: Partial<PlayerSettingsModel>) {
         this._settings.update((current) => this.normalizeSettings({...current, ...settings}));
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._settings()))
     }
 
+    /**
+     * Returns whether the player has not yet completed the first-time flow.
+     */
     isFirstTime(): boolean {
         return !this._settings().hasSeenTutorial;
     }
 
+    /**
+     * Loads persisted settings from local storage if available.
+     */
     private load() {
         const stored = localStorage.getItem(this.STORAGE_KEY);
         if (stored) {
@@ -41,6 +53,9 @@ export class SettingsService {
         }
     }
 
+    /**
+     * Normalizes settings values against the supported configuration.
+     */
     private normalizeSettings(settings: PlayerSettingsModel): PlayerSettingsModel {
         return {
             ...settings,

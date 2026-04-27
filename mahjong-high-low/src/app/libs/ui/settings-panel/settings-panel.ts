@@ -3,6 +3,9 @@ import { ButtonModule } from 'primeng/button';
 import { PlayerSettingsModel } from '@hbg/shared-models';
 import { VALID_HAND_SIZES } from '@hbg/shared-util-game';
 
+/**
+ * Sliding settings panel used from the landing page and game page.
+ */
 @Component({
   selector: 'lib-settings-panel',
   imports: [ButtonModule],

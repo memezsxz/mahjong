@@ -1,6 +1,12 @@
 import { Component, computed, effect, input, OnDestroy, signal } from '@angular/core';
 import { UI_DECK_COUNTER_ROLL_DURATION_MS } from '../game-ui.animations';
 
+/**
+ * Displays draw/discard counts and reshuffle usage for the current run.
+ *
+ * The component supports both live counts and temporary display overrides used
+ * during reshuffle presentation sequences.
+ */
 @Component({
   selector: 'lib-deck-counter',
   imports: [],
@@ -90,6 +96,10 @@ export class DeckCounter implements OnDestroy {
     if (this.discardTimer !== null) clearTimeout(this.discardTimer);
   }
 
+  /**
+   * Returns hand-tuned pip layouts for common reshuffle limits and falls back to
+   * a generated grid for any other count.
+   */
   private getPipPositions(total: number): Array<{ left: number; top: number }> {
     const fixedLayouts: Partial<Record<number, Array<{ left: number; top: number }>>> = {
       0: [],
@@ -162,6 +172,9 @@ export class DeckCounter implements OnDestroy {
     return fixedLayouts[total] ?? this.getFallbackGrid(total);
   }
 
+  /**
+   * Generates a simple grid layout when no fixed pip layout is defined.
+   */
   private getFallbackGrid(total: number): Array<{ left: number; top: number }> {
     if (total <= 0) {
       return [];

@@ -6,6 +6,9 @@ import {
 } from '../game-ui.animations';
 import { getTileAssetPath } from '../tile-asset-path';
 
+/**
+ * Renders a single Mahjong tile and coordinates deal, flip, and value-roll UI state.
+ */
 @Component({
   selector: 'lib-tile',
   imports: [],
@@ -103,6 +106,9 @@ export class Tile implements OnDestroy {
     });
   }
 
+  /**
+   * Forces the CSS deal animation to restart for this tile instance.
+   */
   restartDealAnimation(): void {
     const el = this.el.nativeElement;
     el.classList.remove('dealing');
@@ -110,6 +116,9 @@ export class Tile implements OnDestroy {
     el.classList.add('dealing');
   }
 
+  /**
+   * Runs the hidden-to-face-up flip animation used during reveal.
+   */
   private startFlipAnimation(): void {
     this.clearFlipTimers();
     this.flipActive.set(false);
@@ -127,6 +136,9 @@ export class Tile implements OnDestroy {
     });
   }
 
+  /**
+   * Clears any in-flight flip timers.
+   */
   private clearFlipTimers(): void {
     if (this.flipMidTimer !== null) {
       clearTimeout(this.flipMidTimer);

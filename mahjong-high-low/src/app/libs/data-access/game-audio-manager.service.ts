@@ -11,6 +11,15 @@ type PendingAssetPlayback = {
   offsetMs: number;
 };
 
+/**
+ * Central audio controller for the game.
+ *
+ * This service coordinates:
+ * - music state based on gameplay/pause state,
+ * - one-shot sound effects for tile motion, reveals, scoring, and results,
+ * - browser audio unlock behavior after the first user interaction,
+ * - cached media playback for repeated assets.
+ */
 @Injectable({ providedIn: 'root' })
 export class GameAudioManager {
   /** Volume used for gameplay background music. */
@@ -77,6 +86,9 @@ export class GameAudioManager {
     });
   }
 
+  /**
+   * Unlocks browser audio after a user gesture and applies the current music state.
+   */
   registerInteraction(): void {
     this.unlocked = true;
     this.resumeAudioContext();
@@ -84,11 +96,17 @@ export class GameAudioManager {
     this.applyMusicState();
   }
 
+  /**
+   * Requests the target music mode for the current game state.
+   */
   syncMusic(mode: MusicMode): void {
     this.desiredMusicMode = mode;
     this.applyMusicState();
   }
 
+  /**
+   * Stops any currently active looping music track and resets playback position.
+   */
   stopMusic(): void {
     if (this.activeMusic) {
       this.activeMusic.pause();
@@ -98,47 +116,80 @@ export class GameAudioManager {
     this.activeMusicMode = 'none';
   }
 
+  /**
+   * Plays the UI click sound used for button interactions.
+   */
   playButtonClick(): void {
     this.playTone(700, 0.035, 'square', this.buttonVolume);
   }
 
+  /**
+   * Plays the tile slide-in sound used for deal/promotion/incoming motion.
+   */
   playTileIn(count = 1): void {
     void count;
     this.playAsset(this.tileSlideSource, this.tileSlideVolume);
   }
 
+  /**
+   * Plays the tile slide-out sound used when the visible hand exits.
+   */
   playTileOut(): void {
     this.playAsset(this.tileSlideSource, this.tileSlideVolume);
   }
 
+  /**
+   * Plays a randomized tile-flip sound variation.
+   */
   playTileFlip(): void {
     this.playAsset(this.getNextTileFlipSource(), 0.34);
   }
 
+  /**
+   * Plays the sound used when a tile's displayed value changes.
+   */
   playCardValueChange(): void {
     this.playAsset(this.cardValueChangeSource, 0.24);
   }
 
+  /**
+   * Plays the clipped tail of the stepped numeric sound effect.
+   */
   playScoreStep(): void {
     this.playAssetTail(this.scoreStepSource, this.scoreStepVolume, this.scoreStepTailPaddingMs);
   }
 
+  /**
+   * Plays the positive score-change tone.
+   */
   playScoreIncrease(): void {
     this.playTone(760, 0.12, 'sine', 0.055, 980);
   }
 
+  /**
+   * Plays the negative score-change tone.
+   */
   playScoreDecrease(): void {
     this.playTone(520, 0.12, 'sine', 0.055, 320);
   }
 
+  /**
+   * Plays the win result sound.
+   */
   playWin(): void {
     this.playAsset(this.resultSources.win, 0.8);
   }
 
+  /**
+   * Plays the lose result sound.
+   */
   playLose(): void {
     this.playAsset(this.resultSources.lose, 0.82);
   }
 
+  /**
+   * Applies the desired music state if audio is unlocked and music is enabled.
+   */
   private applyMusicState(): void {
     if (!this.unlocked || !this.settingsService.settings().musicEnabled) {
       this.stopMusic();
@@ -170,12 +221,18 @@ export class GameAudioManager {
     this.activeMusicMode = this.desiredMusicMode;
   }
 
+  /**
+   * Maps a requested music mode to a concrete music track.
+   */
   private getMusicTrack(mode: MusicMode): MusicTrack | null {
     // if (mode === 'gameplay') return 'gameplay';
     if (mode === 'pause') return 'pause';
     return null;
   }
 
+  /**
+   * Returns a cached HTMLAudioElement for a looping music track.
+   */
   private getCachedMusic(track: MusicTrack): HTMLAudioElement {
     const src = this.musicSources[track];
     const cached = this.musicCache.get(src);
@@ -189,6 +246,9 @@ export class GameAudioManager {
     return audio;
   }
 
+  /**
+   * Picks the next tile-flip sound source while avoiding immediate repeats when possible.
+   */
   private getNextTileFlipSource(): string {
     if (this.tileFlipSources.length === 1) {
       return this.tileFlipSources[0];
@@ -203,10 +263,17 @@ export class GameAudioManager {
     return this.tileFlipSources[nextIndex];
   }
 
+  /**
+   * Plays an asset immediately from the beginning.
+   */
   private playAsset(src: string, volume: number): void {
     this.playAssetAtOffset(src, volume, 0);
   }
 
+  /**
+   * Plays an asset after an optional time offset, queuing it until media
+   * playback is unlocked if needed.
+   */
   private playAssetAtOffset(
     src: string,
     volume: number,
@@ -235,6 +302,9 @@ export class GameAudioManager {
     }, offsetSeconds * 1000);
   }
 
+  /**
+   * Plays only the tail portion of an asset after metadata becomes available.
+   */
   private playAssetTail(src: string, volume: number, clipDurationMs: number): void {
     if (!this.settingsService.settings().soundEnabled || !this.unlocked) {
       return;
@@ -276,6 +346,9 @@ export class GameAudioManager {
     audio.load();
   }
 
+  /**
+   * Convenience wrapper for scheduling a synthesized tone immediately.
+   */
   private playTone(
     frequency: number,
     durationSeconds: number,
@@ -293,6 +366,9 @@ export class GameAudioManager {
     );
   }
 
+  /**
+   * Schedules a synthesized tone through the Web Audio API.
+   */
   private playToneAtOffset(
     frequency: number,
     durationSeconds: number,
@@ -334,6 +410,9 @@ export class GameAudioManager {
     oscillator.stop(now + durationSeconds);
   }
 
+  /**
+   * Returns a lazily created AudioContext when available in the browser.
+   */
   private getAudioContext(): AudioContext | null {
     if (typeof window === 'undefined') {
       return null;
@@ -355,12 +434,18 @@ export class GameAudioManager {
     return this.audioContext;
   }
 
+  /**
+   * Resumes a suspended AudioContext after user interaction.
+   */
   private resumeAudioContext(): void {
     const context = this.getAudioContext();
     if (!context || context.state !== 'suspended') return;
     context.resume().catch(() => undefined);
   }
 
+  /**
+   * Attaches one-time global interaction listeners used to unlock audio.
+   */
   private attachInteractionUnlockListeners(): void {
     if (this.interactionListenersAttached || typeof window === 'undefined') {
       return;
@@ -374,6 +459,9 @@ export class GameAudioManager {
     window.addEventListener('touchstart', this.boundInteractionUnlock, options);
   }
 
+  /**
+   * Removes the temporary global interaction listeners once audio is unlocked.
+   */
   private detachInteractionUnlockListeners(): void {
     if (!this.interactionListenersAttached || typeof window === 'undefined') {
       return;
@@ -385,6 +473,9 @@ export class GameAudioManager {
     this.interactionListenersAttached = false;
   }
 
+  /**
+   * Attempts a muted playback to unlock browser media playback for future assets.
+   */
   private unlockMediaPlayback(): void {
     if (this.mediaPlaybackReady || this.mediaUnlockRequested || typeof Audio === 'undefined') {
       return;
@@ -409,6 +500,9 @@ export class GameAudioManager {
       });
   }
 
+  /**
+   * Flushes any asset play requests that were queued before media playback was ready.
+   */
   private flushPendingAssetPlaybacks(): void {
     if (this.pendingAssetPlaybacks.length === 0) {
       return;
@@ -431,6 +525,9 @@ export class GameAudioManager {
     }
   }
 
+  /**
+   * Returns the current high-resolution timestamp in milliseconds.
+   */
   private nowMs(): number {
     if (typeof performance !== 'undefined') {
       return performance.now();

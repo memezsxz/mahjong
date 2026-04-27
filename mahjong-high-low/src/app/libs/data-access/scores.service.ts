@@ -1,6 +1,9 @@
 import { Injectable, signal } from '@angular/core';
 import { LeaderboardEntryModel } from '@hbg/shared-models';
 
+/**
+ * Handles leaderboard qualification, persistence, and top-score ordering.
+ */
 @Injectable({ providedIn: 'root' })
 export class ScoresService {
   /** Local storage key used to persist leaderboard entries. */
@@ -15,6 +18,9 @@ export class ScoresService {
     this.loadFromLocalCache();
   }
 
+  /**
+   * Returns whether a score is high enough to enter the leaderboard.
+   */
   qualifiesForLeaderboard(score: number): boolean {
     if (score <= 0) {
       return false;
@@ -33,6 +39,9 @@ export class ScoresService {
     return score >= cutoffScore;
   }
 
+  /**
+   * Attempts to submit a score entry to the leaderboard.
+   */
   submitScore(playerName: string, totalScore: number): boolean {
     const trimmedName = playerName.trim();
     if (!trimmedName || !this.qualifiesForLeaderboard(totalScore)) {
@@ -47,6 +56,9 @@ export class ScoresService {
     return true;
   }
 
+  /**
+   * Adds a score entry and persists the normalized leaderboard if it qualifies.
+   */
   private saveScoreEntry(entry: LeaderboardEntryModel): void {
     if (!this.qualifiesForLeaderboard(entry.totalScore)) {
       return;
@@ -56,6 +68,9 @@ export class ScoresService {
     this.persistLocalCache(nextScores);
   }
 
+  /**
+   * Loads leaderboard entries from local storage.
+   */
   private loadFromLocalCache(): void {
     const raw = localStorage.getItem(ScoresService.STORAGE_KEY);
     if (!raw) return;
@@ -68,6 +83,9 @@ export class ScoresService {
     }
   }
 
+  /**
+   * Persists the normalized leaderboard to local storage and updates the signal.
+   */
   private persistLocalCache(scores: LeaderboardEntryModel[]): void {
     const normalizedScores = this.normalizeScores(scores);
     this._topScores.set(normalizedScores);
@@ -77,6 +95,10 @@ export class ScoresService {
     );
   }
 
+  /**
+   * Sorts leaderboard entries by score, then by most recent date, and trims the
+   * list to the configured maximum size.
+   */
   private normalizeScores(
     scores: LeaderboardEntryModel[],
   ): LeaderboardEntryModel[] {

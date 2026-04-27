@@ -3,6 +3,9 @@ import { HandModel } from '@hbg/shared-models';
 import { Tile } from '../tile/tile';
 import { UI_HAND_TOTAL_ROLL_DURATION_MS } from '../game-ui.animations';
 
+/**
+ * Renders a hand of tiles and coordinates deal, reveal, and total-roll UI state.
+ */
 @Component({
   selector: 'lib-hand',
   imports: [Tile],
@@ -77,6 +80,9 @@ export class Hand implements OnDestroy {
     });
   }
 
+  /**
+   * Re-triggers deal animations on the child tile components.
+   */
   private deal(): void {
     this.dealStarted.emit();
     this.tileComponents().forEach(t => t.restartDealAnimation());

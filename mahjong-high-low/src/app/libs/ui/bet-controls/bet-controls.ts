@@ -1,6 +1,9 @@
 import { Component, input, output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 
+/**
+ * Renders the Higher/Lower action buttons used during betting.
+ */
 @Component({
   selector: 'lib-bet-controls',
   imports: [ButtonModule],
