@@ -26,7 +26,7 @@ export const HONOR_TILE_BASE_VALUE = 5
 /**
  * Maximum number of reshuffles allowed before the next reshuffle attempt ends the run.
  */
-export const MAX_RESHUFFLES = 1
+export const MAX_RESHUFFLES = 3
 
 /**
  * Upper tile value limit. Reaching this value ends the run.
