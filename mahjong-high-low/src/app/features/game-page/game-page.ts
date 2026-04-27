@@ -650,11 +650,7 @@ export class GamePage implements OnInit, OnDestroy {
       return;
     }
 
-    this.roundTransition.measureRoundTransition(
-      this.mainStageRef()?.nativeElement,
-      this.centerStageRef()?.nativeElement,
-      this.bottomHandSlotRef()?.nativeElement,
-    );
+    this.measureRoundTransition();
     this.roundTransition.prepareIncomingOnlyTransition(incomingHiddenHand);
     this.roundTransition.startIncomingOnlyTransition({
       finishDelay: NEXT_ROUND_INCOMING_HIDDEN_MS + TRANSITION_FINISH_BUFFER_MS,

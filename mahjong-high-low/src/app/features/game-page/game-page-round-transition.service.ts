@@ -84,6 +84,14 @@ export class GamePageRoundTransitionService {
     if (totalDisplay) {
       const totalH = totalDisplay.getBoundingClientRect().height;
       centerY -= (8 + totalH) / 2;
+    } else {
+      // When the center element is a flex container (e.g. the full center stage),
+      // asymmetric padding shifts where flex items-center actually places content.
+      // Adjust by half the net vertical padding so we target the content center.
+      const style = globalThis.getComputedStyle(center);
+      const paddingBottom = parseFloat(style.paddingBottom) || 0;
+      const paddingTop = parseFloat(style.paddingTop) || 0;
+      centerY -= (paddingBottom - paddingTop) / 2;
     }
 
     this.transitionPromotedStartX.set(centerX);
