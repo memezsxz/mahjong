@@ -17,6 +17,10 @@
   --font-mono: 'Space Mono', monospace;
 }
 
+* {
+  user-select: none;
+}
+
 :root {
   --c-bg: #f5f4f0;
   --c-surface: #ffffff;
