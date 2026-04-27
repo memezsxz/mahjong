@@ -4,6 +4,11 @@
 
 Mahjong High-Low is a single-page Angular game where the player sees one Mahjong hand, guesses whether the hidden hand is higher or lower, and advances through animated deal, reveal, scoring, and reshuffle flows. The project is structured around reusable game logic, UI components, and feature services for audio, transitions, score handling, and player settings. The interface is responsive and adapts for mobile layouts as well as desktop play.
 
+## Live
+
+- **Game:** https://memezsxz.github.io/mahjong/
+- **Docs:** https://memezsxz.github.io/mahjong/docs
+
 ## Gameplay Loop
 
 The player starts on the landing page, where they can begin a run immediately, review the basic rules, open the settings panel, and view the top-scores table. Once the game starts, the visible and hidden hands are dealt, the player chooses Higher or Lower, and the hidden hand is revealed through the animated round flow while the score, deck stats, and hand history update in the sidebar.
@@ -19,6 +24,7 @@ The run continues hand by hand until a tile reaches `0` or `10`, or the reshuffl
 - `@primeng/themes`, `@primeuix/themes`, and `tailwindcss-primeui` support PrimeNG theming and make PrimeNG components fit the project’s visual system.
 - Tailwind CSS 4 is used for utility-first styling and layout throughout templates and feature screens.
 - TypeScript powers the application code, shared models, utility layers, and typed state/configuration.
+- Angular Service Worker caches tile image assets and app resources, so repeat visits load instantly and the app remains functional offline.
 - Karma and Jasmine are used for unit testing.
 - Compodoc is used for documentation generation through the `docs` script: `npm run docs`.
 
