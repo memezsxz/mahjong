@@ -1,0 +1,1687 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>temp-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">temp-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  Tile</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/libs/ui/tile/tile.ts</code>
+</p>
+
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Renders a single Mahjong tile and coordinates deal, flip, and value-roll UI state.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">host</td>
+                <td class="col-md-9"><code>{<br>}</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>lib-tile</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>../game-ui.animation-tokens.css,<br>./tile.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./tile.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#assetPath" >assetPath</a>
+                            </li>
+                            <li>
+                                <a href="#currentDisplayValue" >currentDisplayValue</a>
+                            </li>
+                            <li>
+                                <a href="#displayPath" >displayPath</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#el" >el</a>
+                            </li>
+                            <li>
+                                <a href="#flipActive" >flipActive</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#flipEndTimer" >flipEndTimer</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#flipMidTimer" >flipMidTimer</a>
+                            </li>
+                            <li>
+                                <a href="#flipShowFront" >flipShowFront</a>
+                            </li>
+                            <li>
+                                <a href="#previousDisplayValue" >previousDisplayValue</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#previousFaceDown" >previousFaceDown</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#revealFlipDurationMs" >revealFlipDurationMs</a>
+                            </li>
+                            <li>
+                                <a href="#valueRollDirection" >valueRollDirection</a>
+                            </li>
+                            <li>
+                                <a href="#valueRolling" >valueRolling</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#valueRollTimer" >valueRollTimer</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#clearFlipTimers" >clearFlipTimers</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <a href="#restartDealAnimation" >restartDealAnimation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#startFlipAnimation" >startFlipAnimation</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Inputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#displayValue" >displayValue</a>
+                            </li>
+                            <li>
+                                <a href="#faceDown" >faceDown</a>
+                            </li>
+                            <li>
+                                <a href="#playValueChangeSound" >playValueChangeSound</a>
+                            </li>
+                            <li>
+                                <a href="#showValue" >showValue</a>
+                            </li>
+                            <li>
+                                <a href="#tile" >tile</a>
+                            </li>
+                            <li>
+                                <a href="#tileIndex" >tileIndex</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Outputs</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#valueChangeSoundRequested" >valueChangeSoundRequested</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/libs/ui/tile/tile.ts:50</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    <section data-compodoc="block-inputs">
+    <h3 id="inputs">Inputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="displayValue"></a>
+                        <b>displayValue</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/libs/ui/tile/tile.ts:32</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="faceDown"></a>
+                        <b>faceDown</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/libs/ui/tile/tile.ts:35</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="playValueChangeSound"></a>
+                        <b>playValueChangeSound</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/libs/ui/tile/tile.ts:33</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="showValue"></a>
+                        <b>showValue</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>true</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/libs/ui/tile/tile.ts:31</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tile"></a>
+                        <b>tile</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#TileInstance" target="_self" >TileInstance</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Required : </i>&nbsp;<b>true</b>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/libs/ui/tile/tile.ts:30</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="tileIndex"></a>
+                        <b>tileIndex</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/libs/ui/tile/tile.ts:36</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+    <section data-compodoc="block-outputs">
+    <h3 id="outputs">Outputs</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="valueChangeSoundRequested"></a>
+                        <b>valueChangeSoundRequested</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-2" colspan="2">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/libs/ui/tile/tile.ts:34</a></div>
+                            </td>
+                        </tr>
+            </tbody>
+        </table>
+</section>
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearFlipTimers"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>clearFlipTimers</b></span>
+                        <a href="#clearFlipTimers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>clearFlipTimers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="142"
+                                    class="link-to-prism">src/app/libs/ui/tile/tile.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Clears any in-flight flip timers.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="153"
+                                    class="link-to-prism">src/app/libs/ui/tile/tile.ts:153</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="restartDealAnimation"></a>
+                    <span class="name">
+                        <span ><b>restartDealAnimation</b></span>
+                        <a href="#restartDealAnimation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>restartDealAnimation()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="112"
+                                    class="link-to-prism">src/app/libs/ui/tile/tile.ts:112</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Forces the CSS deal animation to restart for this tile instance.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="startFlipAnimation"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>startFlipAnimation</b></span>
+                        <a href="#startFlipAnimation"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>startFlipAnimation()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="122"
+                                    class="link-to-prism">src/app/libs/ui/tile/tile.ts:122</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Runs the hidden-to-face-up flip animation used during reveal.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="assetPath"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>assetPath</b></span>
+                        <a href="#assetPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; getTileAssetPath(this.tile()))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/libs/ui/tile/tile.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentDisplayValue"></a>
+                    <span class="name">
+                        <span ><b>currentDisplayValue</b></span>
+                        <a href="#currentDisplayValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;number | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/libs/ui/tile/tile.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="displayPath"></a>
+                    <span class="name">
+                        <span ><b>displayPath</b></span>
+                        <a href="#displayPath"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>computed(() &#x3D;&gt; {
+    if (this.flipActive()) {
+      return this.flipShowFront() ? this.assetPath() : &#x27;assets/tiles/tile.png&#x27;;
+    }
+    return this.faceDown() ? &#x27;assets/tiles/tile.png&#x27; : this.assetPath();
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/libs/ui/tile/tile.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="el"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>el</b></span>
+                        <a href="#el"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(ElementRef&lt;HTMLElement&gt;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/libs/ui/tile/tile.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="flipActive"></a>
+                    <span class="name">
+                        <span ><b>flipActive</b></span>
+                        <a href="#flipActive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/libs/ui/tile/tile.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="flipEndTimer"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>flipEndTimer</b></span>
+                        <a href="#flipEndTimer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ReturnType&lt;unknown&gt; | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/libs/ui/tile/tile.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="flipMidTimer"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>flipMidTimer</b></span>
+                        <a href="#flipMidTimer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ReturnType&lt;unknown&gt; | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/libs/ui/tile/tile.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="flipShowFront"></a>
+                    <span class="name">
+                        <span ><b>flipShowFront</b></span>
+                        <a href="#flipShowFront"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/libs/ui/tile/tile.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previousDisplayValue"></a>
+                    <span class="name">
+                        <span ><b>previousDisplayValue</b></span>
+                        <a href="#previousDisplayValue"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;number | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/libs/ui/tile/tile.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="previousFaceDown"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>previousFaceDown</b></span>
+                        <a href="#previousFaceDown"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>boolean | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/libs/ui/tile/tile.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="revealFlipDurationMs"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>revealFlipDurationMs</b></span>
+                        <a href="#revealFlipDurationMs"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>UI_TILE_REVEAL_FLIP_DURATION_MS</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/libs/ui/tile/tile.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="valueRollDirection"></a>
+                    <span class="name">
+                        <span ><b>valueRollDirection</b></span>
+                        <a href="#valueRollDirection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal&lt;&#x27;up&#x27; | &#x27;down&#x27;&gt;(&#x27;down&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/app/libs/ui/tile/tile.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="valueRolling"></a>
+                    <span class="name">
+                        <span ><b>valueRolling</b></span>
+                        <a href="#valueRolling"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/libs/ui/tile/tile.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="valueRollTimer"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>valueRollTimer</b></span>
+                        <a href="#valueRollTimer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>ReturnType&lt;unknown&gt; | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/libs/ui/tile/tile.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, computed, effect, ElementRef, inject, input, OnDestroy, output, signal } from &#x27;@angular/core&#x27;;
+import { TileInstance } from &#x27;@hbg/shared-models&#x27;;
+import {
+  UI_TILE_REVEAL_FLIP_DURATION_MS,
+  UI_TILE_VALUE_ROLL_DURATION_MS,
+} from &#x27;../game-ui.animations&#x27;;
+import { getTileAssetPath } from &#x27;../tile-asset-path&#x27;;
+
+/**
+ * Renders a single Mahjong tile and coordinates deal, flip, and value-roll UI state.
+ */
+@Component({
+  selector: &#x27;lib-tile&#x27;,
+  imports: [],
+  templateUrl: &#x27;./tile.html&#x27;,
+  styleUrls: [&#x27;../game-ui.animation-tokens.css&#x27;, &#x27;./tile.css&#x27;],
+  host: {
+    &#x27;[style.--tile-index]&#x27;: &#x27;tileIndex()&#x27;,
+    &#x27;[class.tile-flipping]&#x27;: &#x27;flipActive()&#x27;,
+  },
+})
+export class Tile implements OnDestroy {
+  private el &#x3D; inject(ElementRef&lt;HTMLElement&gt;);
+  private valueRollTimer: ReturnType&lt;typeof setTimeout&gt; | null &#x3D; null;
+  private flipMidTimer: ReturnType&lt;typeof setTimeout&gt; | null &#x3D; null;
+  private flipEndTimer: ReturnType&lt;typeof setTimeout&gt; | null &#x3D; null;
+  private previousFaceDown: boolean | null &#x3D; null;
+  private readonly revealFlipDurationMs &#x3D; UI_TILE_REVEAL_FLIP_DURATION_MS;
+
+  tile      &#x3D; input.required&lt;TileInstance&gt;();
+  showValue &#x3D; input&lt;boolean&gt;(true);
+  displayValue &#x3D; input&lt;number | null&gt;(null);
+  playValueChangeSound &#x3D; input&lt;boolean&gt;(false);
+  valueChangeSoundRequested &#x3D; output&lt;void&gt;();
+  faceDown  &#x3D; input&lt;boolean&gt;(false);
+  tileIndex &#x3D; input&lt;number&gt;(0);
+  flipActive &#x3D; signal(false);
+  flipShowFront &#x3D; signal(false);
+  valueRolling &#x3D; signal(false);
+  valueRollDirection &#x3D; signal&lt;&#x27;up&#x27; | &#x27;down&#x27;&gt;(&#x27;down&#x27;);
+  previousDisplayValue &#x3D; signal&lt;number | null&gt;(null);
+  currentDisplayValue &#x3D; signal&lt;number | null&gt;(null);
+
+  private assetPath &#x3D; computed(() &#x3D;&gt; getTileAssetPath(this.tile()));
+  displayPath &#x3D; computed(() &#x3D;&gt; {
+    if (this.flipActive()) {
+      return this.flipShowFront() ? this.assetPath() : &#x27;assets/tiles/tile.png&#x27;;
+    }
+    return this.faceDown() ? &#x27;assets/tiles/tile.png&#x27; : this.assetPath();
+  });
+
+  constructor() {
+    effect(() &#x3D;&gt; {
+      const faceDown &#x3D; this.faceDown();
+      if (this.previousFaceDown &#x3D;&#x3D;&#x3D; null) {
+        this.previousFaceDown &#x3D; faceDown;
+        this.flipShowFront.set(!faceDown);
+        return;
+      }
+
+      if (this.previousFaceDown &amp;&amp; !faceDown) {
+        this.startFlipAnimation();
+      } else if (faceDown) {
+        this.clearFlipTimers();
+        this.flipActive.set(false);
+        this.flipShowFront.set(false);
+      } else {
+        this.flipShowFront.set(true);
+      }
+
+      this.previousFaceDown &#x3D; faceDown;
+    });
+
+    effect(() &#x3D;&gt; {
+      const shown &#x3D; this.showValue();
+      const value &#x3D; this.displayValue() ?? this.tile().currentValue;
+      if (!shown) return;
+
+      const current &#x3D; this.currentDisplayValue();
+      if (current &#x3D;&#x3D;&#x3D; null) {
+        this.currentDisplayValue.set(value);
+        return;
+      }
+      if (current &#x3D;&#x3D;&#x3D; value) {
+        return;
+      }
+
+      this.previousDisplayValue.set(current);
+      this.currentDisplayValue.set(value);
+      this.valueRollDirection.set(value &gt; current ? &#x27;down&#x27; : &#x27;up&#x27;);
+      if (this.playValueChangeSound()) {
+        this.valueChangeSoundRequested.emit();
+      }
+      this.valueRolling.set(false);
+      if (this.valueRollTimer !&#x3D;&#x3D; null) {
+        clearTimeout(this.valueRollTimer);
+      }
+      requestAnimationFrame(() &#x3D;&gt; {
+        this.valueRolling.set(true);
+        this.valueRollTimer &#x3D; setTimeout(() &#x3D;&gt; {
+          this.valueRolling.set(false);
+          this.previousDisplayValue.set(null);
+          this.valueRollTimer &#x3D; null;
+        }, UI_TILE_VALUE_ROLL_DURATION_MS);
+      });
+    });
+  }
+
+  /**
+   * Forces the CSS deal animation to restart for this tile instance.
+   */
+  restartDealAnimation(): void {
+    const el &#x3D; this.el.nativeElement;
+    el.classList.remove(&#x27;dealing&#x27;);
+    void el.offsetWidth; // force reflow → restart animation
+    el.classList.add(&#x27;dealing&#x27;);
+  }
+
+  /**
+   * Runs the hidden-to-face-up flip animation used during reveal.
+   */
+  private startFlipAnimation(): void {
+    this.clearFlipTimers();
+    this.flipActive.set(false);
+    this.flipShowFront.set(false);
+    requestAnimationFrame(() &#x3D;&gt; {
+      this.flipActive.set(true);
+      this.flipMidTimer &#x3D; setTimeout(() &#x3D;&gt; {
+        this.flipShowFront.set(true);
+        this.flipMidTimer &#x3D; null;
+      }, this.revealFlipDurationMs / 2);
+      this.flipEndTimer &#x3D; setTimeout(() &#x3D;&gt; {
+        this.flipActive.set(false);
+        this.flipEndTimer &#x3D; null;
+      }, this.revealFlipDurationMs);
+    });
+  }
+
+  /**
+   * Clears any in-flight flip timers.
+   */
+  private clearFlipTimers(): void {
+    if (this.flipMidTimer !&#x3D;&#x3D; null) {
+      clearTimeout(this.flipMidTimer);
+      this.flipMidTimer &#x3D; null;
+    }
+    if (this.flipEndTimer !&#x3D;&#x3D; null) {
+      clearTimeout(this.flipEndTimer);
+      this.flipEndTimer &#x3D; null;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.valueRollTimer !&#x3D;&#x3D; null) {
+      clearTimeout(this.valueRollTimer);
+      this.valueRollTimer &#x3D; null;
+    }
+    this.clearFlipTimers();
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;img [src]&#x3D;&quot;displayPath()&quot; [alt]&#x3D;&quot;tile().id&quot;&gt;
+  &lt;span
+    class&#x3D;&quot;tile-value-chip&quot;
+    [class.tile-value-chip--hidden]&#x3D;&quot;!showValue()&quot;
+    [class.tv-roll-down]&#x3D;&quot;showValue() &amp;&amp; valueRolling() &amp;&amp; valueRollDirection() &#x3D;&#x3D;&#x3D; &#x27;down&#x27;&quot;
+    [class.tv-roll-up]&#x3D;&quot;showValue() &amp;&amp; valueRolling() &amp;&amp; valueRollDirection() &#x3D;&#x3D;&#x3D; &#x27;up&#x27;&quot;
+  &gt;
+    @if (showValue()) {
+      @if (valueRolling() &amp;&amp; previousDisplayValue() !&#x3D;&#x3D; null) {
+      &lt;span
+        class&#x3D;&quot;tile-value-roll&quot;
+        [class.tile-value-old]&#x3D;&quot;valueRollDirection() &#x3D;&#x3D;&#x3D; &#x27;down&#x27;&quot;
+        [class.tile-value-old-up]&#x3D;&quot;valueRollDirection() &#x3D;&#x3D;&#x3D; &#x27;up&#x27;&quot;
+      &gt;{{ previousDisplayValue() }}&lt;/span&gt;
+      &lt;span
+        class&#x3D;&quot;tile-value-roll&quot;
+        [class.tile-value-new]&#x3D;&quot;valueRollDirection() &#x3D;&#x3D;&#x3D; &#x27;down&#x27;&quot;
+        [class.tile-value-new-up]&#x3D;&quot;valueRollDirection() &#x3D;&#x3D;&#x3D; &#x27;up&#x27;&quot;
+      &gt;{{ currentDisplayValue() }}&lt;/span&gt;
+    } @else {
+      &lt;span&gt;{{ currentDisplayValue() ?? (displayValue() ?? tile().currentValue) }}&lt;/span&gt;
+    }
+  } @else {
+    &lt;span&gt;00&lt;/span&gt;
+  }
+&lt;/span&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>../game-ui.animation-tokens.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">:host {
+  /* Edit shared UI animation visuals here. */
+  --gui-tile-deal-ms: 520ms;
+  --gui-tile-deal-stagger-ms: 65ms;
+  --gui-tile-flip-ms: 520ms;
+  --gui-tile-value-roll-ms: 700ms;
+  --gui-hand-total-roll-ms: 700ms;
+  --gui-deck-counter-roll-ms: 420ms;
+  --gui-history-row-enter-ms: 220ms;
+  --gui-bet-controls-enter-ms: 250ms;
+}
+</code></pre>
+                <p class="comment">
+                    <code>./tile.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">:host {
+  --tile-w: 52px;
+  --tile-h: 72px;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  --tile-index: 0;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  perspective: 700px;
+}
+
+:host.dealing {
+  animation: tile-deal var(--gui-tile-deal-ms) linear both;
+  animation-delay: calc(var(--hand-base-delay, 0ms) + var(--tile-index) * var(--gui-tile-deal-stagger-ms));
+}
+
+@keyframes tile-deal {
+  0% {
+    transform: translateY(-110vh) scale(0.1);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+img {
+  width: var(--tile-w);
+  height: var(--tile-h);
+  object-fit: contain;
+  display: block;
+  /* fallback background when image is missing */
+  background: var(--c-bg);
+  transform-origin: center;
+  backface-visibility: hidden;
+}
+
+:host.tile-flipping img {
+  animation: tile-reveal-flip var(--gui-tile-flip-ms) ease-in-out both;
+}
+
+@keyframes tile-reveal-flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  49% {
+    transform: rotateY(90deg);
+  }
+  51% {
+    transform: rotateY(90deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+.tile-value-chip {
+  font-family: &#x27;Space Mono&#x27;, monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #26287b;
+  padding: 2px 9px;
+  min-width: 34px;
+  text-align: center;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 1.45em;
+  line-height: 1;
+  overflow: hidden;
+}
+
+.tile-value-chip--hidden {
+  visibility: hidden;
+}
+
+.tile-value-chip.tv-roll-down {
+  background: var(--c-pink);
+}
+
+.tile-value-chip.tv-roll-up {
+  background: #ef4444;
+}
+
+.tile-value-roll {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tile-value-old {
+  animation: tile-value-old-down var(--gui-tile-value-roll-ms) ease forwards;
+}
+
+.tile-value-new {
+  animation: tile-value-new-down var(--gui-tile-value-roll-ms) ease forwards;
+}
+
+.tile-value-old-up {
+  animation: tile-value-old-up var(--gui-tile-value-roll-ms) ease forwards;
+}
+
+.tile-value-new-up {
+  animation: tile-value-new-up var(--gui-tile-value-roll-ms) ease forwards;
+}
+
+@keyframes tile-value-old-down {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 125%);
+    opacity: 1;
+  }
+}
+
+@keyframes tile-value-new-down {
+  0% {
+    transform: translate(-50%, -125%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes tile-value-old-up {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -125%);
+    opacity: 1;
+  }
+}
+
+@keyframes tile-value-new-up {
+  0% {
+    transform: translate(-50%, 125%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><img [src]="displayPath()" [alt]="tile().id">  <span    class="tile-value-chip"    [class.tile-value-chip--hidden]="!showValue()"    [class.tv-roll-down]="showValue() && valueRolling() && valueRollDirection() === \'down\'"    [class.tv-roll-up]="showValue() && valueRolling() && valueRollDirection() === \'up\'"  >    @if (showValue()) {      @if (valueRolling() && previousDisplayValue() !== null) {      <span        class="tile-value-roll"        [class.tile-value-old]="valueRollDirection() === \'down\'"        [class.tile-value-old-up]="valueRollDirection() === \'up\'"      >{{ previousDisplayValue() }}</span>      <span        class="tile-value-roll"        [class.tile-value-new]="valueRollDirection() === \'down\'"        [class.tile-value-new-up]="valueRollDirection() === \'up\'"      >{{ currentDisplayValue() }}</span>    } @else {      <span>{{ currentDisplayValue() ?? (displayValue() ?? tile().currentValue) }}</span>    }  } @else {    <span>00</span>  }</span></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'BetControls', 'selector': 'lib-bet-controls'},{'name': 'DeckCounter', 'selector': 'lib-deck-counter'},{'name': 'GamePage', 'selector': 'lib-game-page'},{'name': 'Hand', 'selector': 'lib-hand'},{'name': 'HandHistory', 'selector': 'lib-hand-history'},{'name': 'LandingPage', 'selector': 'lib-landing-page'},{'name': 'ScoreDisplay', 'selector': 'lib-score-display'},{'name': 'SettingsPanel', 'selector': 'lib-settings-panel'},{'name': 'Tile', 'selector': 'lib-tile'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'Tile'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'Tile.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,2411 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>temp-angular documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">temp-angular documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-variables">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Variables</li>
+</ol>
+
+<section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#appConfig" title="src/app/app.config.ts" ><b>appConfig</b>&nbsp;&nbsp;&nbsp;(src/.../app.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#appRoutes" title="src/app/app.routes.ts" ><b>appRoutes</b>&nbsp;&nbsp;&nbsp;(src/.../app.routes.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#BET_CONTROLS_BUFFER_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>BET_CONTROLS_BUFFER_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#canDeactivateGamePage" title="src/app/app.routes.ts" ><b>canDeactivateGamePage</b>&nbsp;&nbsp;&nbsp;(src/.../app.routes.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#DEFAULT_HAND_SIZE" title="src/app/libs/util-game/game.config.ts" ><b>DEFAULT_HAND_SIZE</b>&nbsp;&nbsp;&nbsp;(src/.../game.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/environments/environment.prod.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.prod.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#environment" title="src/environments/environment.ts" ><b>environment</b>&nbsp;&nbsp;&nbsp;(src/.../environment.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#GameStore" title="src/app/libs/data-access/+state/game.store.ts" ><b>GameStore</b>&nbsp;&nbsp;&nbsp;(src/.../game.store.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HIDDEN_HAND_GAP_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>HIDDEN_HAND_GAP_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HIDDEN_REVEAL_POST_TILE_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>HIDDEN_REVEAL_POST_TILE_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HIDDEN_REVEAL_SETTLE_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>HIDDEN_REVEAL_SETTLE_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HIDDEN_REVEAL_TILE_STEP_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>HIDDEN_REVEAL_TILE_STEP_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HIDDEN_REVEAL_TOTAL_STEP_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>HIDDEN_REVEAL_TOTAL_STEP_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HIDDEN_REVEAL_VALUE_DELAY_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>HIDDEN_REVEAL_VALUE_DELAY_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#HONOR_TILE_BASE_VALUE" title="src/app/libs/util-game/game.config.ts" ><b>HONOR_TILE_BASE_VALUE</b>&nbsp;&nbsp;&nbsp;(src/.../game.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MAX_RESHUFFLES" title="src/app/libs/util-game/game.config.ts" ><b>MAX_RESHUFFLES</b>&nbsp;&nbsp;&nbsp;(src/.../game.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MAX_TILE_VALUE" title="src/app/libs/util-game/game.config.ts" ><b>MAX_TILE_VALUE</b>&nbsp;&nbsp;&nbsp;(src/.../game.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MAX_WIN_STREAK" title="src/app/libs/util-game/game.config.ts" ><b>MAX_WIN_STREAK</b>&nbsp;&nbsp;&nbsp;(src/.../game.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#MIN_TILE_VALUE" title="src/app/libs/util-game/game.config.ts" ><b>MIN_TILE_VALUE</b>&nbsp;&nbsp;&nbsp;(src/.../game.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NEXT_ROUND_INCOMING_HIDDEN_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>NEXT_ROUND_INCOMING_HIDDEN_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NEXT_ROUND_PROMOTE_DELAY_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>NEXT_ROUND_PROMOTE_DELAY_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NEXT_ROUND_PROMOTE_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>NEXT_ROUND_PROMOTE_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NEXT_ROUND_TRANSITION_TOTAL_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>NEXT_ROUND_TRANSITION_TOTAL_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NEXT_ROUND_VISIBLE_EXIT_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>NEXT_ROUND_VISIBLE_EXIT_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RESHUFFLE_EXIT_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>RESHUFFLE_EXIT_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RESHUFFLE_MID_GAP_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>RESHUFFLE_MID_GAP_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RESHUFFLE_SETTLE_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>RESHUFFLE_SETTLE_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#RESHUFFLE_STEP_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>RESHUFFLE_STEP_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#reshuffleDeckSequence" title="src/app/libs/util-game/deck.utils.ts" ><b>reshuffleDeckSequence</b>&nbsp;&nbsp;&nbsp;(src/.../deck.utils.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#REVEAL_PROMOTION_FINISH_BUFFER_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>REVEAL_PROMOTION_FINISH_BUFFER_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SCORE_GAIN_FLY_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>SCORE_GAIN_FLY_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#SCORE_GAIN_SETTLE_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>SCORE_GAIN_SETTLE_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TILE_ASSET_DIRECTORY" title="src/app/libs/ui/tile-asset-path.ts" ><b>TILE_ASSET_DIRECTORY</b>&nbsp;&nbsp;&nbsp;(src/.../tile-asset-path.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TILE_ASSET_EXTENSION" title="src/app/libs/ui/tile-asset-path.ts" ><b>TILE_ASSET_EXTENSION</b>&nbsp;&nbsp;&nbsp;(src/.../tile-asset-path.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TILE_DEAL_DURATION_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>TILE_DEAL_DURATION_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TILE_DEAL_STAGGER_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>TILE_DEAL_STAGGER_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#TRANSITION_FINISH_BUFFER_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>TRANSITION_FINISH_BUFFER_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UI_DECK_COUNTER_ROLL_DURATION_MS" title="src/app/libs/ui/game-ui.animations.ts" ><b>UI_DECK_COUNTER_ROLL_DURATION_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-ui.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UI_HAND_TOTAL_ROLL_DURATION_MS" title="src/app/libs/ui/game-ui.animations.ts" ><b>UI_HAND_TOTAL_ROLL_DURATION_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-ui.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UI_SCORE_STEP_MS" title="src/app/libs/ui/game-ui.animations.ts" ><b>UI_SCORE_STEP_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-ui.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UI_SCORE_STEP_SOUND_TAIL_PADDING_MS" title="src/app/libs/ui/game-ui.animations.ts" ><b>UI_SCORE_STEP_SOUND_TAIL_PADDING_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-ui.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UI_TILE_DEAL_DURATION_MS" title="src/app/libs/ui/game-ui.animations.ts" ><b>UI_TILE_DEAL_DURATION_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-ui.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UI_TILE_DEAL_STAGGER_MS" title="src/app/libs/ui/game-ui.animations.ts" ><b>UI_TILE_DEAL_STAGGER_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-ui.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UI_TILE_REVEAL_FLIP_DURATION_MS" title="src/app/libs/ui/game-ui.animations.ts" ><b>UI_TILE_REVEAL_FLIP_DURATION_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-ui.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#UI_TILE_VALUE_ROLL_DURATION_MS" title="src/app/libs/ui/game-ui.animations.ts" ><b>UI_TILE_VALUE_ROLL_DURATION_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-ui.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#VALID_HAND_SIZES" title="src/app/libs/util-game/game.config.ts" ><b>VALID_HAND_SIZES</b>&nbsp;&nbsp;&nbsp;(src/.../game.config.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#WIN_BANNER_SHOW_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>WIN_BANNER_SHOW_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#WIN_NO_ANIMATION_RESULT_PAUSE_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>WIN_NO_ANIMATION_RESULT_PAUSE_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#WIN_POST_VALUE_SETTLE_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>WIN_POST_VALUE_SETTLE_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#WIN_PRE_VALUE_DELAY_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>WIN_PRE_VALUE_DELAY_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#WIN_VALUE_STEP_MS" title="src/app/features/game-page/game-page.animations.ts" ><b>WIN_VALUE_STEP_MS</b>&nbsp;&nbsp;&nbsp;(src/.../game-page.animations.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/app/app.config.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appConfig"></a>
+                    <span class="name">
+                        <span ><b>appConfig</b></span>
+                        <a href="#appConfig"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/App.html" target="_self" >ApplicationConfig</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideAnimationsAsync(),
+    provideRouter(appRoutes),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        // options: {
+        //   darkModeSelector: &#x27;.p-dark&#x27;,
+        // },
+      },
+    }),
+  ],
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/app.routes.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="appRoutes"></a>
+                    <span class="name">
+                        <span ><b>appRoutes</b></span>
+                        <a href="#appRoutes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>Route[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+  { path: &#x27;&#x27;,     component: LandingPage },
+  { path: &#x27;game&#x27;, component: GamePage, canDeactivate: [canDeactivateGamePage] },
+]</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canDeactivateGamePage"></a>
+                    <span class="name">
+                        <span ><b>canDeactivateGamePage</b></span>
+                        <a href="#canDeactivateGamePage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/GamePage.html" target="_self" >CanDeactivateFn&lt;GamePage&gt;</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(component) &#x3D;&gt;
+  component.canLeaveGame()</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/features/game-page/game-page.animations.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="BET_CONTROLS_BUFFER_MS"></a>
+                    <span class="name">
+                        <span ><b>BET_CONTROLS_BUFFER_MS</b></span>
+                        <a href="#BET_CONTROLS_BUFFER_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>100</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Small buffer before bet controls appear after deal timing completes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HIDDEN_HAND_GAP_MS"></a>
+                    <span class="name">
+                        <span ><b>HIDDEN_HAND_GAP_MS</b></span>
+                        <a href="#HIDDEN_HAND_GAP_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>-200</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Offset between visible-hand and hidden-hand deal timing.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HIDDEN_REVEAL_POST_TILE_MS"></a>
+                    <span class="name">
+                        <span ><b>HIDDEN_REVEAL_POST_TILE_MS</b></span>
+                        <a href="#HIDDEN_REVEAL_POST_TILE_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>180</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Post-tile padding after a hidden tile reveal completes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HIDDEN_REVEAL_SETTLE_MS"></a>
+                    <span class="name">
+                        <span ><b>HIDDEN_REVEAL_SETTLE_MS</b></span>
+                        <a href="#HIDDEN_REVEAL_SETTLE_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>260</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Settle time after the hidden hand is fully revealed.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HIDDEN_REVEAL_TILE_STEP_MS"></a>
+                    <span class="name">
+                        <span ><b>HIDDEN_REVEAL_TILE_STEP_MS</b></span>
+                        <a href="#HIDDEN_REVEAL_TILE_STEP_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>420</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Step interval between hidden-hand tile reveals.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HIDDEN_REVEAL_TOTAL_STEP_MS"></a>
+                    <span class="name">
+                        <span ><b>HIDDEN_REVEAL_TOTAL_STEP_MS</b></span>
+                        <a href="#HIDDEN_REVEAL_TOTAL_STEP_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>220</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delay between each hidden-hand running-total update.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HIDDEN_REVEAL_VALUE_DELAY_MS"></a>
+                    <span class="name">
+                        <span ><b>HIDDEN_REVEAL_VALUE_DELAY_MS</b></span>
+                        <a href="#HIDDEN_REVEAL_VALUE_DELAY_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>230</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delay between flipping a hidden tile and showing its value.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS"></a>
+                    <span class="name">
+                        <span ><b>NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS</b></span>
+                        <a href="#NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>NEXT_ROUND_PROMOTE_DELAY_MS + NEXT_ROUND_PROMOTE_MS</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delay before the incoming hidden hand begins entering.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NEXT_ROUND_INCOMING_HIDDEN_MS"></a>
+                    <span class="name">
+                        <span ><b>NEXT_ROUND_INCOMING_HIDDEN_MS</b></span>
+                        <a href="#NEXT_ROUND_INCOMING_HIDDEN_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>430</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the incoming hidden-hand entrance motion.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NEXT_ROUND_PROMOTE_DELAY_MS"></a>
+                    <span class="name">
+                        <span ><b>NEXT_ROUND_PROMOTE_DELAY_MS</b></span>
+                        <a href="#NEXT_ROUND_PROMOTE_DELAY_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>220</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delay before the promoted hand starts moving into the visible slot.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NEXT_ROUND_PROMOTE_MS"></a>
+                    <span class="name">
+                        <span ><b>NEXT_ROUND_PROMOTE_MS</b></span>
+                        <a href="#NEXT_ROUND_PROMOTE_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>430</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the promoted-hand move into the visible slot.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NEXT_ROUND_TRANSITION_TOTAL_MS"></a>
+                    <span class="name">
+                        <span ><b>NEXT_ROUND_TRANSITION_TOTAL_MS</b></span>
+                        <a href="#NEXT_ROUND_TRANSITION_TOTAL_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS + NEXT_ROUND_INCOMING_HIDDEN_MS + 50</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Total duration of the standard next-round transition sequence.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NEXT_ROUND_VISIBLE_EXIT_MS"></a>
+                    <span class="name">
+                        <span ><b>NEXT_ROUND_VISIBLE_EXIT_MS</b></span>
+                        <a href="#NEXT_ROUND_VISIBLE_EXIT_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>260</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the outgoing visible-hand exit motion.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS"></a>
+                    <span class="name">
+                        <span ><b>NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS</b></span>
+                        <a href="#NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>520</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delay before the incoming visible total animates in.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RESHUFFLE_EXIT_MS"></a>
+                    <span class="name">
+                        <span ><b>RESHUFFLE_EXIT_MS</b></span>
+                        <a href="#RESHUFFLE_EXIT_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>320</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the reshuffle overlay exit motion.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RESHUFFLE_MID_GAP_MS"></a>
+                    <span class="name">
+                        <span ><b>RESHUFFLE_MID_GAP_MS</b></span>
+                        <a href="#RESHUFFLE_MID_GAP_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>240</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Gap between the reshuffle count-transfer phases.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RESHUFFLE_SETTLE_MS"></a>
+                    <span class="name">
+                        <span ><b>RESHUFFLE_SETTLE_MS</b></span>
+                        <a href="#RESHUFFLE_SETTLE_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>420</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Settle time after reshuffle counts finish animating.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="RESHUFFLE_STEP_MS"></a>
+                    <span class="name">
+                        <span ><b>RESHUFFLE_STEP_MS</b></span>
+                        <a href="#RESHUFFLE_STEP_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>220</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tick interval used by the reshuffle presentation sequence.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="REVEAL_PROMOTION_FINISH_BUFFER_MS"></a>
+                    <span class="name">
+                        <span ><b>REVEAL_PROMOTION_FINISH_BUFFER_MS</b></span>
+                        <a href="#REVEAL_PROMOTION_FINISH_BUFFER_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>30</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Buffer added after reveal-promotion movement before cleanup.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SCORE_GAIN_FLY_MS"></a>
+                    <span class="name">
+                        <span ><b>SCORE_GAIN_FLY_MS</b></span>
+                        <a href="#SCORE_GAIN_FLY_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>650</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the score-gain travel animation.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="SCORE_GAIN_SETTLE_MS"></a>
+                    <span class="name">
+                        <span ><b>SCORE_GAIN_SETTLE_MS</b></span>
+                        <a href="#SCORE_GAIN_SETTLE_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>260</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Settle time after the score-gain travel animation ends.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TILE_DEAL_DURATION_MS"></a>
+                    <span class="name">
+                        <span ><b>TILE_DEAL_DURATION_MS</b></span>
+                        <a href="#TILE_DEAL_DURATION_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>520</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of a single tile deal animation.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TILE_DEAL_STAGGER_MS"></a>
+                    <span class="name">
+                        <span ><b>TILE_DEAL_STAGGER_MS</b></span>
+                        <a href="#TILE_DEAL_STAGGER_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>65</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Game page timing configuration.</p>
+<p>Sequence overview:</p>
+<ol>
+<li><p>Initial deal:</p>
+<ul>
+<li>The visible hand deals first using <code>TILE_DEAL_STAGGER_MS</code> and <code>TILE_DEAL_DURATION_MS</code>.</li>
+<li>The hidden hand starts after <code>HIDDEN_HAND_GAP_MS</code> through <code>getHiddenHandBaseDelay()</code>.</li>
+<li>The first betting controls appear after <code>getBetControlsDelay()</code>, which includes
+<code>BET_CONTROLS_BUFFER_MS</code>.</li>
+</ul>
+</li>
+<li><p>Next-hand transition:</p>
+<ul>
+<li>The outgoing visible hand exits over <code>NEXT_ROUND_VISIBLE_EXIT_MS</code>.</li>
+<li>The promoted hand starts moving after <code>NEXT_ROUND_PROMOTE_DELAY_MS</code> and moves for
+<code>NEXT_ROUND_PROMOTE_MS</code>.</li>
+<li>The next hidden hand enters after <code>NEXT_ROUND_INCOMING_HIDDEN_DELAY_MS</code> and animates for
+<code>NEXT_ROUND_INCOMING_HIDDEN_MS</code>.</li>
+<li>The incoming visible total begins at <code>NEXT_ROUND_VISIBLE_TOTAL_ENTER_DELAY_MS</code>.</li>
+<li>Transition cleanup completes at <code>NEXT_ROUND_TRANSITION_TOTAL_MS</code>, with
+<code>TRANSITION_FINISH_BUFFER_MS</code> used as the final safety buffer.</li>
+<li>Later-round betting controls are re-enabled immediately after transition completion plus
+<code>BET_CONTROLS_BUFFER_MS</code>.</li>
+</ul>
+</li>
+<li><p>Hidden-hand reveal:</p>
+<ul>
+<li>Each tile reveal steps by <code>HIDDEN_REVEAL_TILE_STEP_MS</code>.</li>
+<li>Tile values appear after <code>HIDDEN_REVEAL_VALUE_DELAY_MS</code>.</li>
+<li>Running total updates step by <code>HIDDEN_REVEAL_TOTAL_STEP_MS</code>.</li>
+<li>Per-tile padding uses <code>HIDDEN_REVEAL_POST_TILE_MS</code>.</li>
+<li>The reveal sequence settles after <code>HIDDEN_REVEAL_SETTLE_MS</code>.</li>
+</ul>
+</li>
+<li><p>Win/lose result flow:</p>
+<ul>
+<li>The result banner shows for <code>WIN_BANNER_SHOW_MS</code>.</li>
+<li>Win value changes use <code>WIN_PRE_VALUE_DELAY_MS</code>, <code>WIN_VALUE_STEP_MS</code>, and
+<code>WIN_POST_VALUE_SETTLE_MS</code>.</li>
+<li>Non-animated result fallback uses <code>WIN_NO_ANIMATION_RESULT_PAUSE_MS</code>.</li>
+</ul>
+</li>
+<li><p>Score gain:</p>
+<ul>
+<li>Score travel uses <code>SCORE_GAIN_FLY_MS</code>.</li>
+<li>Score settle uses <code>SCORE_GAIN_SETTLE_MS</code>.</li>
+</ul>
+</li>
+<li><p>Reshuffle presentation:</p>
+<ul>
+<li>Count transfer steps use <code>RESHUFFLE_STEP_MS</code>.</li>
+<li>Mid-sequence spacing uses <code>RESHUFFLE_MID_GAP_MS</code>.</li>
+<li>Reshuffle settle uses <code>RESHUFFLE_SETTLE_MS</code>.</li>
+<li>Overlay exit uses <code>RESHUFFLE_EXIT_MS</code>.</li>
+</ul>
+</li>
+</ol>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TRANSITION_FINISH_BUFFER_MS"></a>
+                    <span class="name">
+                        <span ><b>TRANSITION_FINISH_BUFFER_MS</b></span>
+                        <a href="#TRANSITION_FINISH_BUFFER_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>30</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Small buffer added before transition cleanup.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="WIN_BANNER_SHOW_MS"></a>
+                    <span class="name">
+                        <span ><b>WIN_BANNER_SHOW_MS</b></span>
+                        <a href="#WIN_BANNER_SHOW_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1150</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Time the win/lose banner remains visible before the next reveal step.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="WIN_NO_ANIMATION_RESULT_PAUSE_MS"></a>
+                    <span class="name">
+                        <span ><b>WIN_NO_ANIMATION_RESULT_PAUSE_MS</b></span>
+                        <a href="#WIN_NO_ANIMATION_RESULT_PAUSE_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1000</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Pause used when the result flow completes without the full animation path.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="WIN_POST_VALUE_SETTLE_MS"></a>
+                    <span class="name">
+                        <span ><b>WIN_POST_VALUE_SETTLE_MS</b></span>
+                        <a href="#WIN_POST_VALUE_SETTLE_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>260</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Settle time after win-related value updates finish.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="WIN_PRE_VALUE_DELAY_MS"></a>
+                    <span class="name">
+                        <span ><b>WIN_PRE_VALUE_DELAY_MS</b></span>
+                        <a href="#WIN_PRE_VALUE_DELAY_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1000</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delay before post-reveal value updates begin on a win.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="WIN_VALUE_STEP_MS"></a>
+                    <span class="name">
+                        <span ><b>WIN_VALUE_STEP_MS</b></span>
+                        <a href="#WIN_VALUE_STEP_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1000</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Step interval for win-related value updates.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/libs/util-game/game.config.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DEFAULT_HAND_SIZE"></a>
+                    <span class="name">
+                        <span ><b>DEFAULT_HAND_SIZE</b></span>
+                        <a href="#DEFAULT_HAND_SIZE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>6</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Default hand size used when no saved setting is available or a saved value is invalid.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="HONOR_TILE_BASE_VALUE"></a>
+                    <span class="name">
+                        <span ><b>HONOR_TILE_BASE_VALUE</b></span>
+                        <a href="#HONOR_TILE_BASE_VALUE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>5</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Starting base value assigned to honor tiles before win/loss adjustments.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MAX_RESHUFFLES"></a>
+                    <span class="name">
+                        <span ><b>MAX_RESHUFFLES</b></span>
+                        <a href="#MAX_RESHUFFLES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Maximum number of reshuffles allowed before the next reshuffle attempt ends the run.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MAX_TILE_VALUE"></a>
+                    <span class="name">
+                        <span ><b>MAX_TILE_VALUE</b></span>
+                        <a href="#MAX_TILE_VALUE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>10</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Upper tile value limit. Reaching this value ends the run.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MAX_WIN_STREAK"></a>
+                    <span class="name">
+                        <span ><b>MAX_WIN_STREAK</b></span>
+                        <a href="#MAX_WIN_STREAK"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>3</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Highest streak multiplier the player can build through consecutive wins.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="MIN_TILE_VALUE"></a>
+                    <span class="name">
+                        <span ><b>MIN_TILE_VALUE</b></span>
+                        <a href="#MIN_TILE_VALUE"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Lower tile value limit. Reaching this value ends the run.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="VALID_HAND_SIZES"></a>
+                    <span class="name">
+                        <span ><b>VALID_HAND_SIZES</b></span>
+                        <a href="#VALID_HAND_SIZES"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[3, 4, 6] as const</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Supported hand sizes that can be selected in player settings.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/environments/environment.prod.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  production: true,
+  apiUrl: &#x27;http://localhost:3330/api&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/environments/environment.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="environment"></a>
+                    <span class="name">
+                        <span ><b>environment</b></span>
+                        <a href="#environment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>{
+  production: false,
+  apiUrl: &#x27;http://localhost:3330/api&#x27;,
+}</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/libs/data-access/+state/game.store.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="GameStore"></a>
+                    <span class="name">
+                        <span ><b>GameStore</b></span>
+                        <a href="#GameStore"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>signalStore(
+  { providedIn: &#x27;root&#x27; },
+  withState&lt;GameStateModel&gt;({
+    drawPile: [],
+    discard: [],
+    hiddenHand: null,
+    visibleHand: null,
+    winStreak: 0,
+    currentScore: 0,
+    reshuffleCount: 0,
+    handSize: DEFAULT_HAND_SIZE,
+    gamePhase: GamePhase.Idle,
+    isPaused: false,
+    gameOverReason: null,
+    lastResult: null,
+    lastScoreChange: null,
+    handHistory: [],
+  }),
+
+  withComputed((state) &#x3D;&gt; ({
+    isDrawPileEmpty: computed(() &#x3D;&gt; state.drawPile().length &#x3D;&#x3D;&#x3D; 0), // TODO: we should handle the draw pile not having enough to draw the hand
+    isGameActive: computed(() &#x3D;&gt; state.gamePhase() !&#x3D;&#x3D; GamePhase.Idle &amp;&amp; state.gamePhase() !&#x3D;&#x3D; GamePhase.GameOver),
+    isGameOver: computed(() &#x3D;&gt; state.gamePhase() &#x3D;&#x3D;&#x3D; GamePhase.GameOver),
+    totalTileCount: computed(() &#x3D;&gt; state.drawPile().length + state.discard().length),
+  })),
+
+  withMethods((store) &#x3D;&gt; {
+    const playerSettings &#x3D; inject(SettingsService);
+
+    return {
+      /**
+       * Starts a fresh game using the current player-selected hand size.
+       */
+      startGame() {
+        const selectedHandSize &#x3D; playerSettings.settings().handSize;
+        let nextDeck &#x3D; buildDeck();
+        // The first drawn hand is the player&#x27;s visible hand.
+        const { hand: firstHand, drawPile: firstRemainingDeck } &#x3D; drawHand(selectedHandSize, nextDeck);
+        nextDeck &#x3D; firstRemainingDeck;
+        // The second drawn hand becomes the opening hidden hand.
+        const { hand: secondHand, drawPile: secondRemainingDeck } &#x3D; drawHand(selectedHandSize, nextDeck);
+
+        patchState(store, {
+          drawPile: secondRemainingDeck,
+          discard: [],
+          hiddenHand: secondHand,
+          visibleHand: firstHand,
+          winStreak: 0,
+          currentScore: 0,
+          reshuffleCount: 0,
+          handSize: selectedHandSize,
+          gamePhase: GamePhase.Betting,
+          isPaused: false,
+          gameOverReason: null,
+          lastResult: null,
+          lastScoreChange: null,
+          handHistory: [],
+        });
+      },
+
+      /**
+       * Toggles the paused state of the current run.
+       */
+      togglePause() {
+        patchState(store, {
+          isPaused: !store.isPaused(),
+        });
+      },
+
+      /**
+       * Resolves a Higher/Lower bet against the hidden hand and updates score,
+       * streak, history, and terminal state.
+       */
+      placeBet(playerBet: Bet) {
+        const visibleHand &#x3D; store.visibleHand();
+        const hiddenHand &#x3D; store.hiddenHand();
+        if (!visibleHand || !hiddenHand) {
+          return;
+        }
+
+        // Resolve the bet before any tile scaling is applied to the hidden hand.
+        const result &#x3D; evaluateBet(visibleHand, hiddenHand, playerBet);
+        const { newWinStreak, calculatedScore } &#x3D; calculateScore(
+          hiddenHand,
+          store.currentScore(),
+          store.winStreak(),
+          result,
+        );
+        const scoreChange &#x3D; calculatedScore - store.currentScore();
+        const scaledHiddenHand &#x3D; scaleHandValues(hiddenHand, result);
+        // A hand can end the run after scaling pushes an honor tile to the configured bounds.
+        const gameOverReason &#x3D; checkGameOverHand(scaledHiddenHand.tiles);
+        const historyEntry: HandHistoryItem &#x3D; {
+          round: store.handHistory().length + 1,
+          bet: playerBet,
+          result,
+          scoreChange,
+          visibleHand: cloneHand(visibleHand),
+          hiddenHand: cloneHand(hiddenHand),
+        };
+
+        patchState(store, {
+          hiddenHand: scaledHiddenHand,
+          winStreak: newWinStreak,
+          currentScore: calculatedScore,
+          gamePhase: gameOverReason ? GamePhase.GameOver : GamePhase.Revealing,
+          handHistory: [...store.handHistory(), historyEntry],
+          lastResult: result,
+          lastScoreChange: scoreChange,
+          gameOverReason,
+        });
+      },
+
+      /**
+       * Advances to the next hand, performing a reshuffle when required.
+       */
+      nextHand() {
+        const currentHiddenHand &#x3D; store.hiddenHand();
+        if (!currentHiddenHand) {
+          return;
+        }
+
+        // The current hidden hand is promoted into the next visible hand, so its
+        // tiles move into discard tracking before the next hidden hand is drawn.
+        let nextDeck &#x3D; store.drawPile();
+        let nextDiscard &#x3D; [...store.discard(), ...currentHiddenHand.tiles];
+        let nextReshuffleCount &#x3D; store.reshuffleCount();
+
+        // If there are not enough tiles left to draw the next hand, determine
+        // whether the attempted reshuffle would end the run before rebuilding.
+        if (store.drawPile().length &lt; store.handSize()) {
+          const reshuffleGameOver &#x3D; checkGameOverShuffle(nextReshuffleCount + 1);
+          if (reshuffleGameOver) {
+            patchState(store, {
+              visibleHand: currentHiddenHand,
+              discard: nextDiscard,
+              gamePhase: GamePhase.GameOver,
+              lastResult: null,
+              lastScoreChange: null,
+              gameOverReason: reshuffleGameOver,
+            });
+            return;
+          }
+
+          // Rebuild from a fresh deck plus remaining draw/discard tiles, then
+          // reset discard because those tiles have been folded into the new deck.
+          nextDeck &#x3D; reshuffleDeck(nextDeck, nextDiscard);
+          nextDiscard &#x3D; [];
+          nextReshuffleCount +&#x3D; 1;
+        }
+
+        // Draw the next hidden hand from the prepared deck state and return the
+        // game to betting unless the reshuffle limit has already been crossed.
+        const gameOverReason &#x3D; checkGameOverShuffle(nextReshuffleCount);
+        const { hand: nextHiddenHand, drawPile: nextDrawPile } &#x3D; drawHand(
+          store.handSize(),
+          nextDeck,
+        );
+
+        patchState(store, {
+          drawPile: nextDrawPile,
+          discard: nextDiscard,
+          hiddenHand: nextHiddenHand,
+          visibleHand: currentHiddenHand,
+          reshuffleCount: nextReshuffleCount,
+          gamePhase: gameOverReason ? GamePhase.GameOver : GamePhase.Betting,
+          lastResult: null,
+          lastScoreChange: null,
+          gameOverReason,
+        });
+      },
+
+      /**
+       * Evaluates whether the next required reshuffle would immediately end the run.
+       */
+      checkForPendingReshuffleGameOver() {
+        const currentHiddenHand &#x3D; store.hiddenHand();
+        if (!currentHiddenHand) {
+          return false;
+        }
+
+        if (store.drawPile().length &gt;&#x3D; store.handSize()) {
+          return false;
+        }
+
+        // This is called after promotion/reveal flows to catch a reshuffle loss
+        // before the user is allowed to continue into another betting round.
+        const reshuffleGameOver &#x3D; checkGameOverShuffle(store.reshuffleCount() + 1);
+        if (!reshuffleGameOver) {
+          return false;
+        }
+
+        patchState(
+          store,
+          {
+            visibleHand: currentHiddenHand,
+            discard: [...store.discard(), ...currentHiddenHand.tiles],
+            gamePhase: GamePhase.GameOver,
+            lastResult: null,
+            lastScoreChange: null,
+            gameOverReason: reshuffleGameOver,
+          },
+        );
+
+        return true;
+      },
+
+      /**
+       * Resets the game store back to the idle state.
+       */
+      exitGame() {
+        // Preserve the player&#x27;s selected hand size, but clear all run state.
+        patchState(store, {
+          drawPile: [],
+          discard: [],
+          hiddenHand: null,
+          visibleHand: null,
+          winStreak: 0,
+          currentScore: 0,
+          reshuffleCount: 0,
+          handSize: playerSettings.settings().handSize,
+          gamePhase: GamePhase.Idle,
+          isPaused: false,
+          gameOverReason: null,
+          lastResult: null,
+          lastScoreChange: null,
+          handHistory: [],
+        });
+      },
+    };
+  }),
+)</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Signal-store state for the active Mahjong High-Low run.</p>
+<p>Responsibilities:</p>
+<ul>
+<li>bootstrapping a new game,</li>
+<li>resolving bets and score/streak changes,</li>
+<li>advancing hands and reshuffles,</li>
+<li>exposing derived flags for gameplay and UI.</li>
+</ul>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/libs/util-game/deck.utils.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reshuffleDeckSequence"></a>
+                    <span class="name">
+                        <span ><b>reshuffleDeckSequence</b></span>
+                        <a href="#reshuffleDeckSequence"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/libs/ui/tile-asset-path.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TILE_ASSET_DIRECTORY"></a>
+                    <span class="name">
+                        <span ><b>TILE_ASSET_DIRECTORY</b></span>
+                        <a href="#TILE_ASSET_DIRECTORY"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;assets/tiles/&#x27;</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Base directory for Mahjong tile image assets.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="TILE_ASSET_EXTENSION"></a>
+                    <span class="name">
+                        <span ><b>TILE_ASSET_EXTENSION</b></span>
+                        <a href="#TILE_ASSET_EXTENSION"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;.png&#x27;</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>File extension used by tile image assets.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/app/libs/ui/game-ui.animations.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UI_DECK_COUNTER_ROLL_DURATION_MS"></a>
+                    <span class="name">
+                        <span ><b>UI_DECK_COUNTER_ROLL_DURATION_MS</b></span>
+                        <a href="#UI_DECK_COUNTER_ROLL_DURATION_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>420</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the deck/discard counter roll animation.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UI_HAND_TOTAL_ROLL_DURATION_MS"></a>
+                    <span class="name">
+                        <span ><b>UI_HAND_TOTAL_ROLL_DURATION_MS</b></span>
+                        <a href="#UI_HAND_TOTAL_ROLL_DURATION_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>700</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the hand-total rolling animation.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UI_SCORE_STEP_MS"></a>
+                    <span class="name">
+                        <span ><b>UI_SCORE_STEP_MS</b></span>
+                        <a href="#UI_SCORE_STEP_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>70</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Step interval used by incremental score display changes.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UI_SCORE_STEP_SOUND_TAIL_PADDING_MS"></a>
+                    <span class="name">
+                        <span ><b>UI_SCORE_STEP_SOUND_TAIL_PADDING_MS</b></span>
+                        <a href="#UI_SCORE_STEP_SOUND_TAIL_PADDING_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>35</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Tail padding used when trimming the score-step sound effect.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UI_TILE_DEAL_DURATION_MS"></a>
+                    <span class="name">
+                        <span ><b>UI_TILE_DEAL_DURATION_MS</b></span>
+                        <a href="#UI_TILE_DEAL_DURATION_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>520</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Shared UI animation timing configuration.</p>
+<p>Sequence overview in the game page:</p>
+<ol>
+<li><p>Hand deal presentation:</p>
+<ul>
+<li>Each tile uses <code>UI_TILE_DEAL_DURATION_MS</code> for its deal motion.</li>
+<li>Consecutive tiles are offset by <code>UI_TILE_DEAL_STAGGER_MS</code>.</li>
+</ul>
+</li>
+<li><p>Hidden-hand reveal:</p>
+<ul>
+<li>Each tile flip uses <code>UI_TILE_REVEAL_FLIP_DURATION_MS</code>.</li>
+<li>When a tile&#39;s numeric value changes, the value roll uses
+<code>UI_TILE_VALUE_ROLL_DURATION_MS</code>.</li>
+</ul>
+</li>
+<li><p>Hand total updates:</p>
+<ul>
+<li>Rolling total changes in a hand use <code>UI_HAND_TOTAL_ROLL_DURATION_MS</code>.</li>
+</ul>
+</li>
+<li><p>Sidebar counters:</p>
+<ul>
+<li>Deck and discard count roll updates use <code>UI_DECK_COUNTER_ROLL_DURATION_MS</code>.</li>
+<li>Incremental score stepping uses <code>UI_SCORE_STEP_MS</code>.</li>
+<li>The stepped score sound uses <code>UI_SCORE_STEP_SOUND_TAIL_PADDING_MS</code> when
+trimming the playback tail.</li>
+</ul>
+</li>
+</ol>
+<p>These values are shared by the reusable UI components under <code>libs/ui</code> rather
+than by the game-page orchestration services directly.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UI_TILE_DEAL_STAGGER_MS"></a>
+                    <span class="name">
+                        <span ><b>UI_TILE_DEAL_STAGGER_MS</b></span>
+                        <a href="#UI_TILE_DEAL_STAGGER_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>65</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Stagger between tile deal animations in shared UI components.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UI_TILE_REVEAL_FLIP_DURATION_MS"></a>
+                    <span class="name">
+                        <span ><b>UI_TILE_REVEAL_FLIP_DURATION_MS</b></span>
+                        <a href="#UI_TILE_REVEAL_FLIP_DURATION_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>520</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the tile flip animation used during reveal.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="UI_TILE_VALUE_ROLL_DURATION_MS"></a>
+                    <span class="name">
+                        <span ><b>UI_TILE_VALUE_ROLL_DURATION_MS</b></span>
+                        <a href="#UI_TILE_VALUE_ROLL_DURATION_MS"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>700</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Duration of the tile-value rolling animation.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-variables';
+            var COMPODOC_CURRENT_PAGE_URL = 'variables.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
