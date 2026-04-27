@@ -86,3 +86,20 @@ src/app
 - [src/app/features/game-page/game-page-ui-shell.service.ts](./src/app/features/game-page/game-page-ui-shell.service.ts) holds UI-flow constants such as `MAX_RUN_NAME_LENGTH = 10`.
 - [src/app/libs/ui/tile-asset-path.ts](./src/app/libs/ui/tile-asset-path.ts) holds tile asset path constants such as `TILE_ASSET_DIRECTORY` and `TILE_ASSET_EXTENSION`.
 - [src/app/libs/ui/settings-panel/settings-panel.ts](./src/app/libs/ui/settings-panel/settings-panel.ts) exposes the centralized hand-size options for the settings UI.
+
+## Code Quality
+
+**Lint:**
+```bash
+ng lint
+```
+
+**Format:**
+```bash
+npx prettier --write .
+```
+
+**Check formatting without writing:**
+```bash
+npx prettier --check .
+```
