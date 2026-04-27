@@ -103,6 +103,11 @@
 <p>Note: AI was used as a development aid during this project, mainly for iteration support, small implementation help, and refinement. The one area that was heavily AI-assisted end-to-end was the game animation work. The rest of the application, including the overall structure, gameplay logic, styling direction, and feature development, was primarily implemented by me with occasional AI support where useful.</p>
 </blockquote>
 <p>Mahjong High-Low is a single-page Angular game where the player sees one Mahjong hand, guesses whether the hidden hand is higher or lower, and advances through animated deal, reveal, scoring, and reshuffle flows. The project is structured around reusable game logic, UI components, and feature services for audio, transitions, score handling, and player settings. The interface is responsive and adapts for mobile layouts as well as desktop play.</p>
+<h2>Live</h2>
+<ul>
+<li><strong>Game:</strong> <a href="https://memezsxz.github.io/mahjong/">https://memezsxz.github.io/mahjong/</a></li>
+<li><strong>Docs:</strong> <a href="https://memezsxz.github.io/mahjong/docs">https://memezsxz.github.io/mahjong/docs</a></li>
+</ul>
 <h2>Gameplay Loop</h2>
 <p>The player starts on the landing page, where they can begin a run immediately, review the basic rules, open the settings panel, and view the top-scores table. Once the game starts, the visible and hidden hands are dealt, the player chooses Higher or Lower, and the hidden hand is revealed through the animated round flow while the score, deck stats, and hand history update in the sidebar.</p>
 <p>The run continues hand by hand until a tile reaches <code>0</code> or <code>10</code>, or the reshuffle limit is exceeded. The current configuration allows <code>1</code> reshuffle. When the run ends, the player sees the final score and can name the run if it qualifies for the leaderboard. Exiting an active run does not offer score saving.</p>
@@ -115,6 +120,7 @@
 <li><code>@primeng/themes</code>, <code>@primeuix/themes</code>, and <code>tailwindcss-primeui</code> support PrimeNG theming and make PrimeNG components fit the project’s visual system.</li>
 <li>Tailwind CSS 4 is used for utility-first styling and layout throughout templates and feature screens.</li>
 <li>TypeScript powers the application code, shared models, utility layers, and typed state/configuration.</li>
+<li>Angular Service Worker caches tile image assets and app resources, so repeat visits load instantly and the app remains functional offline.</li>
 <li>Karma and Jasmine are used for unit testing.</li>
 <li>Compodoc is used for documentation generation through the <code>docs</code> script: <code>npm run docs</code>.</li>
 </ul>
