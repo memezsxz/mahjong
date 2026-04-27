@@ -304,8 +304,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="96"
-                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:96</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:84</a></div>
                         </td>
                     </tr>
 
@@ -343,8 +343,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="91"
-                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:91</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="79"
+                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:79</a></div>
                         </td>
                     </tr>
 
@@ -380,8 +380,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="237"
-                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:237</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="220"
+                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:220</a></div>
                         </td>
                     </tr>
 
@@ -461,8 +461,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="104"
-                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:104</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="92"
+                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:92</a></div>
                         </td>
                     </tr>
 
@@ -500,8 +500,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="124"
-                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:124</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="112"
+                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:112</a></div>
                         </td>
                     </tr>
 
@@ -574,8 +574,8 @@ pause needed to preserve result readability.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="249"
-                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:249</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="232"
+                                    class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:232</a></div>
                         </td>
                     </tr>
 
@@ -660,7 +660,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:58</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:54</a></div>
                         </td>
                     </tr>
 
@@ -692,7 +692,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:87</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:75</a></div>
                         </td>
                     </tr>
 
@@ -724,7 +724,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:54</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:50</a></div>
                         </td>
                     </tr>
 
@@ -756,7 +756,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:50</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:46</a></div>
                         </td>
                     </tr>
 
@@ -786,15 +786,13 @@ revealed hand and score change have already been shown.</p>
                         <i>Default value : </i><code>computed&lt;Record&lt;string, number&gt; | null&gt;(() &#x3D;&gt; {
     const hand &#x3D; this.postWinHiddenHand();
     if (!hand) return null;
-    return Object.fromEntries(
-      hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
-    );
+    return Object.fromEntries(hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]));
   })</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:73</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:67</a></div>
                         </td>
                     </tr>
 
@@ -821,14 +819,12 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>computed&lt;number | null&gt;(
-    () &#x3D;&gt; this.postWinHiddenHand()?.total ?? null,
-  )</code>
+                        <i>Default value : </i><code>computed&lt;number | null&gt;(() &#x3D;&gt; this.postWinHiddenHand()?.total ?? null)</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:84</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:74</a></div>
                         </td>
                     </tr>
 
@@ -858,15 +854,13 @@ revealed hand and score change have already been shown.</p>
                         <i>Default value : </i><code>computed&lt;Record&lt;string, number&gt; | null&gt;(() &#x3D;&gt; {
     const hand &#x3D; this.preWinHiddenHand();
     if (!hand) return null;
-    return Object.fromEntries(
-      hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
-    );
+    return Object.fromEntries(hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]));
   })</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:65</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:61</a></div>
                         </td>
                     </tr>
 
@@ -893,14 +887,12 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>computed&lt;number | null&gt;(
-    () &#x3D;&gt; this.preWinHiddenHand()?.total ?? null,
-  )</code>
+                        <i>Default value : </i><code>computed&lt;number | null&gt;(() &#x3D;&gt; this.preWinHiddenHand()?.total ?? null)</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:81</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:73</a></div>
                         </td>
                     </tr>
 
@@ -932,7 +924,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:56</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:52</a></div>
                         </td>
                     </tr>
 
@@ -964,7 +956,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:55</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:51</a></div>
                         </td>
                     </tr>
 
@@ -997,7 +989,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:89</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:77</a></div>
                         </td>
                     </tr>
 
@@ -1029,7 +1021,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:52</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -1061,7 +1053,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:47</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:43</a></div>
                         </td>
                     </tr>
 
@@ -1093,7 +1085,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:53</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -1125,7 +1117,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:48</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:44</a></div>
                         </td>
                     </tr>
 
@@ -1157,7 +1149,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:51</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -1189,7 +1181,7 @@ revealed hand and score change have already been shown.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:49</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/features/game-page/game-page-reveal-sequence.service.ts:45</a></div>
                         </td>
                     </tr>
 
@@ -1226,11 +1218,7 @@ interface StartHiddenHandRevealSequenceOptions {
   preWinHand: HandModel;
   postWinHand: HandModel;
   setScoreDisplayOverride: (value: number | null) &#x3D;&gt; void;
-  startScoreGainAnimation: (
-    scoreBefore: number,
-    scoreAfter: number,
-    onDone: () &#x3D;&gt; void,
-  ) &#x3D;&gt; void;
+  startScoreGainAnimation: (scoreBefore: number, scoreAfter: number, onDone: () &#x3D;&gt; void) &#x3D;&gt; void;
   playTileFlip: () &#x3D;&gt; void;
   playWin: () &#x3D;&gt; void;
   playLose: () &#x3D;&gt; void;
@@ -1269,25 +1257,17 @@ export class GamePageRevealSequenceService implements OnDestroy {
   readonly oldTileValues &#x3D; computed&lt;Record&lt;string, number&gt; | null&gt;(() &#x3D;&gt; {
     const hand &#x3D; this.preWinHiddenHand();
     if (!hand) return null;
-    return Object.fromEntries(
-      hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
-    );
+    return Object.fromEntries(hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]));
   });
 
   readonly newTileValues &#x3D; computed&lt;Record&lt;string, number&gt; | null&gt;(() &#x3D;&gt; {
     const hand &#x3D; this.postWinHiddenHand();
     if (!hand) return null;
-    return Object.fromEntries(
-      hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
-    );
+    return Object.fromEntries(hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]));
   });
 
-  readonly oldTotal &#x3D; computed&lt;number | null&gt;(
-    () &#x3D;&gt; this.preWinHiddenHand()?.total ?? null,
-  );
-  readonly newTotal &#x3D; computed&lt;number | null&gt;(
-    () &#x3D;&gt; this.postWinHiddenHand()?.total ?? null,
-  );
+  readonly oldTotal &#x3D; computed&lt;number | null&gt;(() &#x3D;&gt; this.preWinHiddenHand()?.total ?? null);
+  readonly newTotal &#x3D; computed&lt;number | null&gt;(() &#x3D;&gt; this.postWinHiddenHand()?.total ?? null);
   readonly animationRunning &#x3D; computed&lt;boolean&gt;(() &#x3D;&gt; this.sequenceLocked());
 
   private readonly revealTimers &#x3D; new Set&lt;ReturnType&lt;typeof globalThis.setTimeout&gt;&gt;();
@@ -1325,9 +1305,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
    * staged timing collapses into immediate state changes with only the minimum
    * pause needed to preserve result readability.
    */
-  startHiddenHandRevealSequence(
-    options: StartHiddenHandRevealSequenceOptions,
-  ): void {
+  startHiddenHandRevealSequence(options: StartHiddenHandRevealSequenceOptions): void {
     const {
       animationsEnabled,
       scoreBefore,
@@ -1414,10 +1392,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
       }, showValueDelay + HIDDEN_REVEAL_TOTAL_STEP_MS);
 
       runningTotal &#x3D; nextTotal;
-      cursorMs &#x3D;
-        showValueDelay +
-        HIDDEN_REVEAL_TOTAL_STEP_MS +
-        HIDDEN_REVEAL_POST_TILE_MS;
+      cursorMs &#x3D; showValueDelay + HIDDEN_REVEAL_TOTAL_STEP_MS + HIDDEN_REVEAL_POST_TILE_MS;
     });
 
     const handRevealDoneMs &#x3D; cursorMs + HIDDEN_REVEAL_SETTLE_MS;
@@ -1487,9 +1462,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
       this.queueTimer(() &#x3D;&gt; {
         this.historyReady.set(true);
         this.tileValueOverrides.set(
-          Object.fromEntries(
-            postWinHand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
-          ),
+          Object.fromEntries(postWinHand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue])),
         );
         this.hiddenTotalOverride.set(postWinHand.total);
         if (hasValueChange) {
@@ -1514,7 +1487,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
     const finalValues &#x3D; Object.fromEntries(
       postWinHand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
     );
-    const valueSteps: Array&lt;{ id: string; value: number; total: number }&gt; &#x3D; [];
+    const valueSteps: { id: string; value: number; total: number }[] &#x3D; [];
     let runningTotal &#x3D; preWinHand.total;
 
     for (const tile of postWinHand.tiles) {

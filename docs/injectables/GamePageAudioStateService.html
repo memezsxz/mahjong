@@ -237,8 +237,8 @@ score-step sounds, reshuffle counter sounds, and background music sync.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="94"
-                                    class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:94</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="82"
+                                    class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:82</a></div>
                         </td>
                     </tr>
 
@@ -313,15 +313,15 @@ immediately emit step sounds before any animated change occurs.</p>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>registerEffects(bindings: <a href="../miscellaneous/typealiases.html#AudioStateBindings" target="_self">AudioStateBindings</a>)</code>
+<code>registerEffects(bindings: <a href="../interfaces/AudioStateBindings.html" target="_self">AudioStateBindings</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="41"
-                                    class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:41</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="38"
+                                    class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:38</a></div>
                         </td>
                     </tr>
 
@@ -348,7 +348,7 @@ emit incremental step sounds and the phase/pause state that drives music.</p>
                                         <tr>
                                                 <td>bindings</td>
                                             <td>
-                                                            <code><a href="../miscellaneous/typealiases.html#AudioStateBindings" target="_self" >AudioStateBindings</a></code>
+                                                            <code><a href="../interfaces/AudioStateBindings.html" target="_self" >AudioStateBindings</a></code>
                                             </td>
 
                                             <td>
@@ -391,8 +391,8 @@ emit incremental step sounds and the phase/pause state that drives music.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="84"
-                                    class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:84</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="72"
+                                    class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:72</a></div>
                         </td>
                     </tr>
 
@@ -442,7 +442,7 @@ emit incremental step sounds and the phase/pause state that drives music.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:24</a></div>
                         </td>
                     </tr>
 
@@ -474,7 +474,7 @@ emit incremental step sounds and the phase/pause state that drives music.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:33</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:30</a></div>
                         </td>
                     </tr>
 
@@ -510,7 +510,7 @@ emit incremental step sounds and the phase/pause state that drives music.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/features/game-page/game-page-audio-state.service.ts:25</a></div>
                         </td>
                     </tr>
 
@@ -527,19 +527,16 @@ emit incremental step sounds and the phase/pause state that drives music.</p>
 import { GameAudioManager } from &#x27;@hbg/game-data-access&#x27;;
 import { GamePhase } from &#x27;@hbg/shared-models&#x27;;
 
-type TrackedValueKey &#x3D;
-  | &#x27;scoreDisplay&#x27;
-  | &#x27;reshuffleDraw&#x27;
-  | &#x27;reshuffleDiscard&#x27;;
+type TrackedValueKey &#x3D; &#x27;scoreDisplay&#x27; | &#x27;reshuffleDraw&#x27; | &#x27;reshuffleDiscard&#x27;;
 
-type AudioStateBindings &#x3D; {
+interface AudioStateBindings {
   scoreDisplayValue: () &#x3D;&gt; number | null;
   reshuffleDrawValue: () &#x3D;&gt; number | null;
   reshuffleDiscardValue: () &#x3D;&gt; number | null;
   gamePhase: () &#x3D;&gt; GamePhase;
   isPaused: () &#x3D;&gt; boolean;
   musicEnabled: () &#x3D;&gt; boolean;
-};
+}
 
 /**
  * Bridges reactive game-page UI state into audio side effects.
@@ -571,24 +568,15 @@ export class GamePageAudioStateService {
     this.effectsRegistered &#x3D; true;
 
     effect(() &#x3D;&gt; {
-      this.playStepSoundForValueChange(
-        bindings.scoreDisplayValue(),
-        &#x27;scoreDisplay&#x27;,
-      );
+      this.playStepSoundForValueChange(bindings.scoreDisplayValue(), &#x27;scoreDisplay&#x27;);
     });
 
     effect(() &#x3D;&gt; {
-      this.playStepSoundForValueChange(
-        bindings.reshuffleDrawValue(),
-        &#x27;reshuffleDraw&#x27;,
-      );
+      this.playStepSoundForValueChange(bindings.reshuffleDrawValue(), &#x27;reshuffleDraw&#x27;);
     });
 
     effect(() &#x3D;&gt; {
-      this.playStepSoundForValueChange(
-        bindings.reshuffleDiscardValue(),
-        &#x27;reshuffleDiscard&#x27;,
-      );
+      this.playStepSoundForValueChange(bindings.reshuffleDiscardValue(), &#x27;reshuffleDiscard&#x27;);
     });
 
     effect(() &#x3D;&gt; {
@@ -616,10 +604,7 @@ export class GamePageAudioStateService {
    * Initial values are treated as baseline state so opening the page does not
    * immediately emit step sounds before any animated change occurs.
    */
-  private playStepSoundForValueChange(
-    nextValue: number | null,
-    key: TrackedValueKey,
-  ): void {
+  private playStepSoundForValueChange(nextValue: number | null, key: TrackedValueKey): void {
     const previousValue &#x3D; this.previousValues[key];
 
     if (nextValue &#x3D;&#x3D;&#x3D; null) {

@@ -403,8 +403,8 @@ slot so the floating value can animate into the real target.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="128"
-                                    class="link-to-prism">src/app/features/game-page/game-page-score-animation.service.ts:128</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/features/game-page/game-page-score-animation.service.ts:121</a></div>
                         </td>
                     </tr>
 
@@ -981,14 +981,7 @@ export class GamePageScoreAnimationService {
     onIncrease: () &#x3D;&gt; void;
     onDecrease: () &#x3D;&gt; void;
   }): void {
-    const {
-      animationsEnabled,
-      scoreBefore,
-      scoreAfter,
-      onDone,
-      onIncrease,
-      onDecrease,
-    } &#x3D; options;
+    const { animationsEnabled, scoreBefore, scoreAfter, onDone, onIncrease, onDecrease } &#x3D; options;
 
     if (!animationsEnabled) {
       this.scoreDisplayOverride.set(null);
@@ -1016,8 +1009,8 @@ export class GamePageScoreAnimationService {
 
     globalThis.requestAnimationFrame(() &#x3D;&gt;
       globalThis.requestAnimationFrame(() &#x3D;&gt; {
-      this.scoreGainTravelActive.set(true);
-    }),
+        this.scoreGainTravelActive.set(true);
+      }),
     );
 
     this.queueTimer(() &#x3D;&gt; {

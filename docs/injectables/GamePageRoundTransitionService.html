@@ -309,8 +309,8 @@ incoming snapshots long enough for the UI to animate them across the board.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="255"
-                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:255</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="250"
+                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:250</a></div>
                         </td>
                     </tr>
 
@@ -512,8 +512,8 @@ along the real rendered path instead of using hardcoded coordinates.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="219"
-                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:219</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="214"
+                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:214</a></div>
                         </td>
                     </tr>
 
@@ -662,8 +662,8 @@ along the real rendered path instead of using hardcoded coordinates.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="279"
-                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:279</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="274"
+                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:274</a></div>
                         </td>
                     </tr>
 
@@ -782,8 +782,8 @@ along the real rendered path instead of using hardcoded coordinates.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="121"
-                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:121</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="118"
+                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:118</a></div>
                         </td>
                     </tr>
 
@@ -851,8 +851,8 @@ along the real rendered path instead of using hardcoded coordinates.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="126"
-                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:126</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="123"
+                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:123</a></div>
                         </td>
                     </tr>
 
@@ -890,8 +890,8 @@ along the real rendered path instead of using hardcoded coordinates.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="233"
-                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:233</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="228"
+                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:228</a></div>
                         </td>
                     </tr>
 
@@ -959,8 +959,8 @@ along the real rendered path instead of using hardcoded coordinates.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="186"
-                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:186</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="183"
+                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:183</a></div>
                         </td>
                     </tr>
 
@@ -1029,8 +1029,8 @@ hidden hand replaces the visible hand without dealing a new hidden hand yet.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="136"
-                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:136</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="133"
+                                    class="link-to-prism">src/app/features/game-page/game-page-round-transition.service.ts:133</a></div>
                         </td>
                     </tr>
 
@@ -1647,7 +1647,7 @@ export class GamePageRoundTransitionService {
     const centerRect &#x3D; center.getBoundingClientRect();
     const bottomRect &#x3D; bottom.getBoundingClientRect();
     const centerX &#x3D; centerRect.left + centerRect.width / 2 - mainRect.left;
-     let centerY &#x3D; centerRect.top + centerRect.height / 2 - mainRect.top;
+    let centerY &#x3D; centerRect.top + centerRect.height / 2 - mainRect.top;
     const bottomX &#x3D; bottomRect.left + bottomRect.width / 2 - mainRect.left;
     const bottomY &#x3D; bottomRect.top + bottomRect.height / 2 - mainRect.top;
 
@@ -1676,10 +1676,7 @@ export class GamePageRoundTransitionService {
   }
 
   /** Captures the hand snapshots used by the outgoing and promoted overlays. */
-  prepareTransition(
-    outgoingVisibleHand: HandModel,
-    promotedVisibleHand: HandModel,
-  ): void {
+  prepareTransition(outgoingVisibleHand: HandModel, promotedVisibleHand: HandModel): void {
     this.transitionOutgoingVisibleHand.set(outgoingVisibleHand);
     this.transitionPromotedVisibleHand.set(promotedVisibleHand);
     this.transitionOutgoingVisibleTotal.set(outgoingVisibleHand.total);
@@ -1764,12 +1761,7 @@ export class GamePageRoundTransitionService {
     onIncomingVisibleTotal?: () &#x3D;&gt; void;
     onFinish?: () &#x3D;&gt; void;
   }): void {
-    const {
-      onVisibleExit,
-      onPromote,
-      onIncomingVisibleTotal,
-      onFinish,
-    } &#x3D; options;
+    const { onVisibleExit, onPromote, onIncomingVisibleTotal, onFinish } &#x3D; options;
 
     globalThis.requestAnimationFrame(() &#x3D;&gt;
       globalThis.requestAnimationFrame(() &#x3D;&gt; {
@@ -1783,9 +1775,12 @@ export class GamePageRoundTransitionService {
           onPromote?.();
         }, NEXT_ROUND_PROMOTE_DELAY_MS);
 
-        this.queueTimer(() &#x3D;&gt; {
-          onFinish?.();
-        }, NEXT_ROUND_PROMOTE_DELAY_MS + NEXT_ROUND_PROMOTE_MS + REVEAL_PROMOTION_FINISH_BUFFER_MS);
+        this.queueTimer(
+          () &#x3D;&gt; {
+            onFinish?.();
+          },
+          NEXT_ROUND_PROMOTE_DELAY_MS + NEXT_ROUND_PROMOTE_MS + REVEAL_PROMOTION_FINISH_BUFFER_MS,
+        );
       }),
     );
   }

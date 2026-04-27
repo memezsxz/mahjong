@@ -756,7 +756,7 @@ import { UI_SCORE_STEP_MS } from &#x27;../game-ui.animations&#x27;;
   imports: [DecimalPipe],
   templateUrl: &#x27;./score-display.html&#x27;,
   styleUrl: &#x27;./score-display.css&#x27;,
-  standalone: true
+  standalone: true,
 })
 export class ScoreDisplay implements OnDestroy {
   private readonly scoreStepMs &#x3D; UI_SCORE_STEP_MS;
@@ -837,7 +837,7 @@ export class ScoreDisplay implements OnDestroy {
       [class.score-display-value--down]&#x3D;&quot;scoreStepping() &amp;&amp; scoreStepDirection() &#x3D;&#x3D;&#x3D; &#x27;down&#x27;&quot;
       [class.score-display-value--idle]&#x3D;&quot;!scoreStepping()&quot;
     &gt;
-      {{ (currentScore() ?? score()) | number }}
+      {{ currentScore() ?? score() | number }}
     &lt;/span&gt;
     @if (winStreak() &gt; 1) {
       &lt;span class&#x3D;&quot;font-mono text-sm font-bold leading-none text-c-pink&quot;&gt;×{{ winStreak() }}&lt;/span&gt;
@@ -873,7 +873,7 @@ export class ScoreDisplay implements OnDestroy {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col items-center gap-1">  <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">SCORE</span>  <div class="flex items-baseline gap-1.5">    <span      class="score-display-value font-mono text-3xl font-bold leading-none"      [class.score-display-value--up]="scoreStepping() && scoreStepDirection() === \'up\'"      [class.score-display-value--down]="scoreStepping() && scoreStepDirection() === \'down\'"      [class.score-display-value--idle]="!scoreStepping()"    >      {{ (currentScore() ?? score()) | number }}    </span>    @if (winStreak() > 1) {      <span class="font-mono text-sm font-bold leading-none text-c-pink">×{{ winStreak() }}</span>    }  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col items-center gap-1">  <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">SCORE</span>  <div class="flex items-baseline gap-1.5">    <span      class="score-display-value font-mono text-3xl font-bold leading-none"      [class.score-display-value--up]="scoreStepping() && scoreStepDirection() === \'up\'"      [class.score-display-value--down]="scoreStepping() && scoreStepDirection() === \'down\'"      [class.score-display-value--idle]="!scoreStepping()"    >      {{ currentScore() ?? score() | number }}    </span>    @if (winStreak() > 1) {      <span class="font-mono text-sm font-bold leading-none text-c-pink">×{{ winStreak() }}</span>    }  </div></div></div>'
     var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'BetControls', 'selector': 'lib-bet-controls'},{'name': 'DeckCounter', 'selector': 'lib-deck-counter'},{'name': 'GamePage', 'selector': 'lib-game-page'},{'name': 'Hand', 'selector': 'lib-hand'},{'name': 'HandHistory', 'selector': 'lib-hand-history'},{'name': 'LandingPage', 'selector': 'lib-landing-page'},{'name': 'ScoreDisplay', 'selector': 'lib-score-display'},{'name': 'SettingsPanel', 'selector': 'lib-settings-panel'},{'name': 'Tile', 'selector': 'lib-tile'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ScoreDisplay'};

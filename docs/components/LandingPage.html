@@ -563,13 +563,13 @@ import { GameAudioManager, ScoresService, SettingsService } from &#x27;@hbg/game
   imports: [ButtonModule, DatePipe, DecimalPipe, SettingsPanel],
   templateUrl: &#x27;./landing-page.html&#x27;,
   styleUrl: &#x27;./landing-page.css&#x27;,
-  standalone: true
+  standalone: true,
 })
 export class LandingPage {
-  private readonly router      &#x3D; inject(Router);
-  readonly settingsService     &#x3D; inject(SettingsService);
-  readonly scoresService       &#x3D; inject(ScoresService);
-  readonly audioManager        &#x3D; inject(GameAudioManager);
+  private readonly router &#x3D; inject(Router);
+  readonly settingsService &#x3D; inject(SettingsService);
+  readonly scoresService &#x3D; inject(ScoresService);
+  readonly audioManager &#x3D; inject(GameAudioManager);
 
   settingsOpen &#x3D; signal(false);
 
@@ -587,23 +587,26 @@ export class LandingPage {
 
     <div class="tab-pane fade " id="templateData">
         <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;relative flex flex-col min-h-dvh bg-c-bg text-c-text font-display&quot;&gt;
-
   &lt;div class&#x3D;&quot;flex flex-1 flex-col lg:flex-row&quot;&gt;
-
     &lt;!-- Left: branding + actions + rules --&gt;
-    &lt;div class&#x3D;&quot;flex-1 min-w-0 flex flex-col px-5 sm:px-8 md:px-14 lg:px-20 py-8 sm:py-10 border-b lg:border-b-0 lg:border-r border-c-indigo/10&quot;&gt;
-
+    &lt;div
+      class&#x3D;&quot;flex-1 min-w-0 flex flex-col px-5 sm:px-8 md:px-14 lg:px-20 py-8 sm:py-10 border-b lg:border-b-0 lg:border-r border-c-indigo/10&quot;
+    &gt;
       &lt;div class&#x3D;&quot;flex flex-1 flex-col justify-center gap-7 sm:gap-8 lg:gap-10&quot;&gt;
         &lt;div class&#x3D;&quot;flex flex-col gap-3&quot;&gt;
-          &lt;span class&#x3D;&quot;font-mono text-[0.58rem] sm:text-[0.62rem] tracking-[0.16em] sm:tracking-[0.18em] uppercase text-c-muted&quot;&gt;
+          &lt;span
+            class&#x3D;&quot;font-mono text-[0.58rem] sm:text-[0.62rem] tracking-[0.16em] sm:tracking-[0.18em] uppercase text-c-muted&quot;
+          &gt;
             Penny Software · Assessment
           &lt;/span&gt;
-          &lt;h1 class&#x3D;&quot;text-[2.8rem] sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[0.98] sm:leading-[1.05] text-c-indigo m-0&quot;&gt;
+          &lt;h1
+            class&#x3D;&quot;text-[2.8rem] sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[0.98] sm:leading-[1.05] text-c-indigo m-0&quot;
+          &gt;
             Mahjong&lt;br /&gt;High · Low
           &lt;/h1&gt;
           &lt;p class&#x3D;&quot;text-sm sm:text-[0.95rem] text-c-muted leading-relaxed max-w-md m-0&quot;&gt;
-            Bet whether the hidden hand is higher or lower than yours.
-            Dynamic tile values, win streaks, and a live leaderboard.
+            Bet whether the hidden hand is higher or lower than yours. Dynamic tile values, win
+            streaks, and a live leaderboard.
           &lt;/p&gt;
         &lt;/div&gt;
 
@@ -626,36 +629,61 @@ export class LandingPage {
 
         &lt;div class&#x3D;&quot;flex flex-col gap-3 max-w-md&quot;&gt;
           &lt;div class&#x3D;&quot;flex items-start gap-4&quot;&gt;
-            &lt;span class&#x3D;&quot;font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px&quot;&gt;01&lt;/span&gt;
-            &lt;span class&#x3D;&quot;text-sm text-c-text leading-[1.5]&quot;&gt;You&#x27;re dealt a visible hand. Bet Higher or Lower.&lt;/span&gt;
+            &lt;span
+              class&#x3D;&quot;font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px&quot;
+              &gt;01&lt;/span
+            &gt;
+            &lt;span class&#x3D;&quot;text-sm text-c-text leading-[1.5]&quot;
+              &gt;You&#x27;re dealt a visible hand. Bet Higher or Lower.&lt;/span
+            &gt;
           &lt;/div&gt;
           &lt;div class&#x3D;&quot;flex items-start gap-4&quot;&gt;
-            &lt;span class&#x3D;&quot;font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px&quot;&gt;02&lt;/span&gt;
-            &lt;span class&#x3D;&quot;text-sm text-c-text leading-[1.5]&quot;&gt;Win streaks multiply your score — up to ×3.&lt;/span&gt;
+            &lt;span
+              class&#x3D;&quot;font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px&quot;
+              &gt;02&lt;/span
+            &gt;
+            &lt;span class&#x3D;&quot;text-sm text-c-text leading-[1.5]&quot;
+              &gt;Win streaks multiply your score — up to ×3.&lt;/span
+            &gt;
           &lt;/div&gt;
           &lt;div class&#x3D;&quot;flex items-start gap-4&quot;&gt;
-            &lt;span class&#x3D;&quot;font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px&quot;&gt;03&lt;/span&gt;
-            &lt;span class&#x3D;&quot;text-sm text-c-text leading-[1.5]&quot;&gt;Honor tile values shift with each win or loss.&lt;/span&gt;
+            &lt;span
+              class&#x3D;&quot;font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px&quot;
+              &gt;03&lt;/span
+            &gt;
+            &lt;span class&#x3D;&quot;text-sm text-c-text leading-[1.5]&quot;
+              &gt;Honor tile values shift with each win or loss.&lt;/span
+            &gt;
           &lt;/div&gt;
           &lt;div class&#x3D;&quot;flex items-start gap-4&quot;&gt;
-            &lt;span class&#x3D;&quot;font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px&quot;&gt;04&lt;/span&gt;
-            &lt;span class&#x3D;&quot;text-sm text-c-text leading-[1.5]&quot;&gt;Game ends when a tile hits 0 or 10, or after 1 reshuffle.&lt;/span&gt;
+            &lt;span
+              class&#x3D;&quot;font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px&quot;
+              &gt;04&lt;/span
+            &gt;
+            &lt;span class&#x3D;&quot;text-sm text-c-text leading-[1.5]&quot;
+              &gt;Game ends when a tile hits 0 or 10, or after 1 reshuffle.&lt;/span
+            &gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 
     &lt;!-- Right: leaderboard --&gt;
-    &lt;div class&#x3D;&quot;w-full lg:w-[24rem] xl:w-[26rem] shrink-0 flex flex-col px-5 sm:px-8 py-8 sm:py-10 lg:py-16&quot;&gt;
-
+    &lt;div
+      class&#x3D;&quot;w-full lg:w-[24rem] xl:w-[26rem] shrink-0 flex flex-col px-5 sm:px-8 py-8 sm:py-10 lg:py-16&quot;
+    &gt;
       &lt;div class&#x3D;&quot;flex flex-1 flex-col justify-center gap-5&quot;&gt;
         &lt;div class&#x3D;&quot;flex flex-col gap-5&quot;&gt;
-          &lt;span class&#x3D;&quot;font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-muted&quot;&gt;TOP SCORES&lt;/span&gt;
+          &lt;span class&#x3D;&quot;font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-muted&quot;
+            &gt;TOP SCORES&lt;/span
+          &gt;
 
           @if (scoresService.topScores().length &#x3D;&#x3D;&#x3D; 0) {
             &lt;div class&#x3D;&quot;flex flex-col justify-center gap-1 py-8&quot;&gt;
               &lt;span class&#x3D;&quot;font-mono text-xs text-c-muted leading-relaxed&quot;&gt;No scores yet.&lt;/span&gt;
-              &lt;span class&#x3D;&quot;font-mono text-xs text-c-muted leading-relaxed&quot;&gt;Be the first to play.&lt;/span&gt;
+              &lt;span class&#x3D;&quot;font-mono text-xs text-c-muted leading-relaxed&quot;
+                &gt;Be the first to play.&lt;/span
+              &gt;
             &lt;/div&gt;
           } @else {
             &lt;div class&#x3D;&quot;flex items-center&quot;&gt;
@@ -666,14 +694,26 @@ export class LandingPage {
                       class&#x3D;&quot;lp-score-rank font-mono text-xs font-bold px-1.5 py-0.5 text-center&quot;
                       [attr.aria-label]&#x3D;&quot;&#x27;Rank &#x27; + (i + 1)&quot;
                       [title]&#x3D;&quot;&#x27;Rank &#x27; + (i + 1)&quot;
-                      [class]&#x3D;&quot;i &#x3D;&#x3D;&#x3D; 0 ? &#x27;bg-[#c9a227] text-black&#x27;
-                              : i &#x3D;&#x3D;&#x3D; 1 ? &#x27;bg-[#9da3a8] text-black&#x27;
-                              : i &#x3D;&#x3D;&#x3D; 2 ? &#x27;bg-[#8b5e3c] text-white&#x27;
-                              : &#x27;bg-transparent text-c-muted border border-c-indigo/10&#x27;&quot;
-                    &gt;{{ i + 1 }}&lt;/span&gt;
-                    &lt;span class&#x3D;&quot;lp-score-name min-w-0 text-sm font-medium text-c-text truncate&quot;&gt;{{ entry.playerName }}&lt;/span&gt;
-                    &lt;span class&#x3D;&quot;lp-score-value font-mono text-sm font-bold text-c-indigo&quot;&gt;{{ entry.totalScore | number }}&lt;/span&gt;
-                    &lt;span class&#x3D;&quot;lp-score-date font-mono text-[0.58rem] text-c-muted&quot;&gt;{{ entry.date | date:&#x27;mediumDate&#x27; }}&lt;/span&gt;
+                      [class]&#x3D;&quot;
+                        i &#x3D;&#x3D;&#x3D; 0
+                          ? &#x27;bg-[#c9a227] text-black&#x27;
+                          : i &#x3D;&#x3D;&#x3D; 1
+                            ? &#x27;bg-[#9da3a8] text-black&#x27;
+                            : i &#x3D;&#x3D;&#x3D; 2
+                              ? &#x27;bg-[#8b5e3c] text-white&#x27;
+                              : &#x27;bg-transparent text-c-muted border border-c-indigo/10&#x27;
+                      &quot;
+                      &gt;{{ i + 1 }}&lt;/span
+                    &gt;
+                    &lt;span class&#x3D;&quot;lp-score-name min-w-0 text-sm font-medium text-c-text truncate&quot;&gt;{{
+                      entry.playerName
+                    }}&lt;/span&gt;
+                    &lt;span class&#x3D;&quot;lp-score-value font-mono text-sm font-bold text-c-indigo&quot;&gt;{{
+                      entry.totalScore | number
+                    }}&lt;/span&gt;
+                    &lt;span class&#x3D;&quot;lp-score-date font-mono text-[0.58rem] text-c-muted&quot;&gt;{{
+                      entry.date | date: &#x27;mediumDate&#x27;
+                    }}&lt;/span&gt;
                   &lt;/div&gt;
                 }
               &lt;/div&gt;
@@ -682,7 +722,6 @@ export class LandingPage {
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
-
   &lt;/div&gt;
 
   @if (settingsOpen()) {
@@ -692,7 +731,6 @@ export class LandingPage {
       (closed)&#x3D;&quot;settingsOpen.set(false)&quot;
     /&gt;
   }
-
 &lt;/div&gt;
 </code></pre>
     </div>
@@ -723,7 +761,7 @@ export class LandingPage {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="relative flex flex-col min-h-dvh bg-c-bg text-c-text font-display">  <div class="flex flex-1 flex-col lg:flex-row">    <!-- Left: branding + actions + rules -->    <div class="flex-1 min-w-0 flex flex-col px-5 sm:px-8 md:px-14 lg:px-20 py-8 sm:py-10 border-b lg:border-b-0 lg:border-r border-c-indigo/10">      <div class="flex flex-1 flex-col justify-center gap-7 sm:gap-8 lg:gap-10">        <div class="flex flex-col gap-3">          <span class="font-mono text-[0.58rem] sm:text-[0.62rem] tracking-[0.16em] sm:tracking-[0.18em] uppercase text-c-muted">            Penny Software · Assessment          </span>          <h1 class="text-[2.8rem] sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[0.98] sm:leading-[1.05] text-c-indigo m-0">            Mahjong<br />High · Low          </h1>          <p class="text-sm sm:text-[0.95rem] text-c-muted leading-relaxed max-w-md m-0">            Bet whether the hidden hand is higher or lower than yours.            Dynamic tile values, win streaks, and a live leaderboard.          </p>        </div>        <div class="flex flex-row items-center gap-3 max-w-sm">          <p-button            label="Start Game"            icon="pi pi-play"            styleClass="lp-start-btn"            size="large"            (onClick)="startGame()"          />          <p-button            icon="pi pi-cog"            [outlined]="true"            styleClass="lp-settings-btn"            size="large"            (onClick)="settingsOpen.set(true)"          />        </div>        <div class="flex flex-col gap-3 max-w-md">          <div class="flex items-start gap-4">            <span class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px">01</span>            <span class="text-sm text-c-text leading-[1.5]">You\'re dealt a visible hand. Bet Higher or Lower.</span>          </div>          <div class="flex items-start gap-4">            <span class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px">02</span>            <span class="text-sm text-c-text leading-[1.5]">Win streaks multiply your score — up to ×3.</span>          </div>          <div class="flex items-start gap-4">            <span class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px">03</span>            <span class="text-sm text-c-text leading-[1.5]">Honor tile values shift with each win or loss.</span>          </div>          <div class="flex items-start gap-4">            <span class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px">04</span>            <span class="text-sm text-c-text leading-[1.5]">Game ends when a tile hits 0 or 10, or after 1 reshuffle.</span>          </div>        </div>      </div>    </div>    <!-- Right: leaderboard -->    <div class="w-full lg:w-[24rem] xl:w-[26rem] shrink-0 flex flex-col px-5 sm:px-8 py-8 sm:py-10 lg:py-16">      <div class="flex flex-1 flex-col justify-center gap-5">        <div class="flex flex-col gap-5">          <span class="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-muted">TOP SCORES</span>          @if (scoresService.topScores().length === 0) {            <div class="flex flex-col justify-center gap-1 py-8">              <span class="font-mono text-xs text-c-muted leading-relaxed">No scores yet.</span>              <span class="font-mono text-xs text-c-muted leading-relaxed">Be the first to play.</span>            </div>          } @else {            <div class="flex items-center">              <div class="flex w-full flex-col gap-px bg-c-indigo/10">                @for (entry of scoresService.topScores(); track entry.date; let i = $index) {                  <div class="lp-score-row grid items-center gap-3 px-4 py-3.5 bg-c-surface">                    <span                      class="lp-score-rank font-mono text-xs font-bold px-1.5 py-0.5 text-center"                      [attr.aria-label]="\'Rank \' + (i + 1)"                      [title]="\'Rank \' + (i + 1)"                      [class]="i === 0 ? \'bg-[#c9a227] text-black\'                              : i === 1 ? \'bg-[#9da3a8] text-black\'                              : i === 2 ? \'bg-[#8b5e3c] text-white\'                              : \'bg-transparent text-c-muted border border-c-indigo/10\'"                    >{{ i + 1 }}</span>                    <span class="lp-score-name min-w-0 text-sm font-medium text-c-text truncate">{{ entry.playerName }}</span>                    <span class="lp-score-value font-mono text-sm font-bold text-c-indigo">{{ entry.totalScore | number }}</span>                    <span class="lp-score-date font-mono text-[0.58rem] text-c-muted">{{ entry.date | date:\'mediumDate\' }}</span>                  </div>                }              </div>            </div>          }        </div>      </div>    </div>  </div>  @if (settingsOpen()) {    <lib-settings-panel      [settings]="settingsService.settings()"      (settingsChanged)="onSettingsChanged($event)"      (closed)="settingsOpen.set(false)"    />  }</div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="relative flex flex-col min-h-dvh bg-c-bg text-c-text font-display">  <div class="flex flex-1 flex-col lg:flex-row">    <!-- Left: branding + actions + rules -->    <div      class="flex-1 min-w-0 flex flex-col px-5 sm:px-8 md:px-14 lg:px-20 py-8 sm:py-10 border-b lg:border-b-0 lg:border-r border-c-indigo/10"    >      <div class="flex flex-1 flex-col justify-center gap-7 sm:gap-8 lg:gap-10">        <div class="flex flex-col gap-3">          <span            class="font-mono text-[0.58rem] sm:text-[0.62rem] tracking-[0.16em] sm:tracking-[0.18em] uppercase text-c-muted"          >            Penny Software · Assessment          </span>          <h1            class="text-[2.8rem] sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[0.98] sm:leading-[1.05] text-c-indigo m-0"          >            Mahjong<br />High · Low          </h1>          <p class="text-sm sm:text-[0.95rem] text-c-muted leading-relaxed max-w-md m-0">            Bet whether the hidden hand is higher or lower than yours. Dynamic tile values, win            streaks, and a live leaderboard.          </p>        </div>        <div class="flex flex-row items-center gap-3 max-w-sm">          <p-button            label="Start Game"            icon="pi pi-play"            styleClass="lp-start-btn"            size="large"            (onClick)="startGame()"          />          <p-button            icon="pi pi-cog"            [outlined]="true"            styleClass="lp-settings-btn"            size="large"            (onClick)="settingsOpen.set(true)"          />        </div>        <div class="flex flex-col gap-3 max-w-md">          <div class="flex items-start gap-4">            <span              class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px"              >01</span            >            <span class="text-sm text-c-text leading-[1.5]"              >You\'re dealt a visible hand. Bet Higher or Lower.</span            >          </div>          <div class="flex items-start gap-4">            <span              class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px"              >02</span            >            <span class="text-sm text-c-text leading-[1.5]"              >Win streaks multiply your score — up to ×3.</span            >          </div>          <div class="flex items-start gap-4">            <span              class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px"              >03</span            >            <span class="text-sm text-c-text leading-[1.5]"              >Honor tile values shift with each win or loss.</span            >          </div>          <div class="flex items-start gap-4">            <span              class="font-mono text-[0.6rem] font-bold text-c-pink tracking-[0.1em] w-5 shrink-0 pt-px"              >04</span            >            <span class="text-sm text-c-text leading-[1.5]"              >Game ends when a tile hits 0 or 10, or after 1 reshuffle.</span            >          </div>        </div>      </div>    </div>    <!-- Right: leaderboard -->    <div      class="w-full lg:w-[24rem] xl:w-[26rem] shrink-0 flex flex-col px-5 sm:px-8 py-8 sm:py-10 lg:py-16"    >      <div class="flex flex-1 flex-col justify-center gap-5">        <div class="flex flex-col gap-5">          <span class="font-mono text-[0.6rem] tracking-[0.22em] uppercase text-c-muted"            >TOP SCORES</span          >          @if (scoresService.topScores().length === 0) {            <div class="flex flex-col justify-center gap-1 py-8">              <span class="font-mono text-xs text-c-muted leading-relaxed">No scores yet.</span>              <span class="font-mono text-xs text-c-muted leading-relaxed"                >Be the first to play.</span              >            </div>          } @else {            <div class="flex items-center">              <div class="flex w-full flex-col gap-px bg-c-indigo/10">                @for (entry of scoresService.topScores(); track entry.date; let i = $index) {                  <div class="lp-score-row grid items-center gap-3 px-4 py-3.5 bg-c-surface">                    <span                      class="lp-score-rank font-mono text-xs font-bold px-1.5 py-0.5 text-center"                      [attr.aria-label]="\'Rank \' + (i + 1)"                      [title]="\'Rank \' + (i + 1)"                      [class]="                        i === 0                          ? \'bg-[#c9a227] text-black\'                          : i === 1                            ? \'bg-[#9da3a8] text-black\'                            : i === 2                              ? \'bg-[#8b5e3c] text-white\'                              : \'bg-transparent text-c-muted border border-c-indigo/10\'                      "                      >{{ i + 1 }}</span                    >                    <span class="lp-score-name min-w-0 text-sm font-medium text-c-text truncate">{{                      entry.playerName                    }}</span>                    <span class="lp-score-value font-mono text-sm font-bold text-c-indigo">{{                      entry.totalScore | number                    }}</span>                    <span class="lp-score-date font-mono text-[0.58rem] text-c-muted">{{                      entry.date | date: \'mediumDate\'                    }}</span>                  </div>                }              </div>            </div>          }        </div>      </div>    </div>  </div>  @if (settingsOpen()) {    <lib-settings-panel      [settings]="settingsService.settings()"      (settingsChanged)="onSettingsChanged($event)"      (closed)="settingsOpen.set(false)"    />  }</div></div>'
     var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'BetControls', 'selector': 'lib-bet-controls'},{'name': 'DeckCounter', 'selector': 'lib-deck-counter'},{'name': 'GamePage', 'selector': 'lib-game-page'},{'name': 'Hand', 'selector': 'lib-hand'},{'name': 'HandHistory', 'selector': 'lib-hand-history'},{'name': 'LandingPage', 'selector': 'lib-landing-page'},{'name': 'ScoreDisplay', 'selector': 'lib-score-display'},{'name': 'SettingsPanel', 'selector': 'lib-settings-panel'},{'name': 'Tile', 'selector': 'lib-tile'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'LandingPage'};

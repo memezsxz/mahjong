@@ -254,42 +254,42 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export enum TileType {
-    Number &#x3D; &#x27;number&#x27;,
-    Wind &#x3D; &#x27;wind&#x27;,
-    Dragon &#x3D; &#x27;dragon&#x27;,
+  Number &#x3D; &#x27;number&#x27;,
+  Wind &#x3D; &#x27;wind&#x27;,
+  Dragon &#x3D; &#x27;dragon&#x27;,
 }
 export enum NumberSuit {
-    Pinyin &#x3D; &#x27;pinyin&#x27;,
-    Dots &#x3D; &#x27;dots&#x27;,
-    Bamboo &#x3D; &#x27;bamboo&#x27;
+  Pinyin &#x3D; &#x27;pinyin&#x27;,
+  Dots &#x3D; &#x27;dots&#x27;,
+  Bamboo &#x3D; &#x27;bamboo&#x27;,
 }
 
 export enum DragonSuit {
-    Red &#x3D; &#x27;red&#x27;,
-    Green &#x3D; &#x27;green&#x27;,
-    White &#x3D; &#x27;white&#x27;
+  Red &#x3D; &#x27;red&#x27;,
+  Green &#x3D; &#x27;green&#x27;,
+  White &#x3D; &#x27;white&#x27;,
 }
 
 export enum WindSuit {
-    East &#x3D; &#x27;east&#x27;,
-    South &#x3D; &#x27;south&#x27;,
-    West &#x3D; &#x27;west&#x27;,
-    North &#x3D; &#x27;north&#x27;
+  East &#x3D; &#x27;east&#x27;,
+  South &#x3D; &#x27;south&#x27;,
+  West &#x3D; &#x27;west&#x27;,
+  North &#x3D; &#x27;north&#x27;,
 }
 
 interface NumberTile {
-    type: TileType.Number;
-    suit: NumberSuit;
+  type: TileType.Number;
+  suit: NumberSuit;
 }
 
 interface WindTile {
-    type: TileType.Wind;
-    suit: WindSuit;
+  type: TileType.Wind;
+  suit: WindSuit;
 }
 
 interface DragonTile {
-    type: TileType.Dragon;
-    suit: DragonSuit;
+  type: TileType.Dragon;
+  suit: DragonSuit;
 }
 
 // &#x60;TileInfo&#x60; is the stable category/suit identity shared by every tile shape.
@@ -297,13 +297,13 @@ export type TileInfo &#x3D; NumberTile | WindTile | DragonTile;
 
 // &#x60;TileDefinition&#x60; is the static rules-layer definition before a runtime instance gets an ID.
 export type TileDefinition &#x3D; TileInfo &amp; {
-    faceValue: number;
+  faceValue: number;
 };
 
 // &#x60;TileInstance&#x60; is the runtime tile shape used in decks, hands, and persisted history snapshots.
 export type TileInstance &#x3D; TileDefinition &amp; {
-    id: string;
-    currentValue: number;
+  id: string;
+  currentValue: number;
 };
 </code></pre>
     </div>

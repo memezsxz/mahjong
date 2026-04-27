@@ -117,7 +117,7 @@
   <li class="breadcrumb-item">Interfaces</li>
   <li class="breadcrumb-item"
   >
-  HandHistoryItem</li>
+  AudioStateBindings</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -141,7 +141,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/libs/models/hand-history-item.model.ts</code>
+            <code>src/app/features/game-page/game-page-audio-state.service.ts</code>
         </p>
 
 
@@ -160,41 +160,39 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#bet" 
+                                        <a href="#gamePhase" 
 >
-                                            bet
+                                            gamePhase
                                         </a>
                                 </li>
                                 <li>
-                                            <span class="modifier">Optional</span>
-                                        <a href="#hiddenHand" 
+                                        <a href="#isPaused" 
 >
-                                            hiddenHand
+                                            isPaused
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#result" 
+                                        <a href="#musicEnabled" 
 >
-                                            result
+                                            musicEnabled
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#round" 
+                                        <a href="#reshuffleDiscardValue" 
 >
-                                            round
+                                            reshuffleDiscardValue
                                         </a>
                                 </li>
                                 <li>
-                                        <a href="#scoreChange" 
+                                        <a href="#reshuffleDrawValue" 
 >
-                                            scoreChange
+                                            reshuffleDrawValue
                                         </a>
                                 </li>
                                 <li>
-                                            <span class="modifier">Optional</span>
-                                        <a href="#visibleHand" 
+                                        <a href="#scoreDisplayValue" 
 >
-                                            visibleHand
+                                            scoreDisplayValue
                                         </a>
                                 </li>
                             </ul>
@@ -212,9 +210,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="bet"></a>
-                                        <span class="name "><b>bet</b>
-                                            <a href="#bet">
+                                        <a name="gamePhase"></a>
+                                        <span class="name "><b>gamePhase</b>
+                                            <a href="#gamePhase">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -222,7 +220,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>bet:         <code><a href="../miscellaneous/enumerations.html#Bet" target="_self" >Bet</a></code>
+                                        <code>gamePhase:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -230,7 +228,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../miscellaneous/enumerations.html#Bet" target="_self" >Bet</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 
                                         </td>
                                     </tr>
@@ -245,9 +243,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="hiddenHand"></a>
-                                        <span class="name "><b>hiddenHand</b>
-                                            <a href="#hiddenHand">
+                                        <a name="isPaused"></a>
+                                        <span class="name "><b>isPaused</b>
+                                            <a href="#isPaused">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -255,7 +253,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>hiddenHand:         <code><a href="../interfaces/HandModel.html" target="_self" >HandModel</a></code>
+                                        <code>isPaused:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -263,45 +261,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../interfaces/HandModel.html" target="_self" >HandModel</a></code>
-
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Optional</i>
-                                        </td>
-                                    </tr>
-
-
-
-
-                        </tbody>
-                    </table>
-                    <table class="table table-sm table-bordered">
-                        <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="result"></a>
-                                        <span class="name "><b>result</b>
-                                            <a href="#result">
-                                                <span class="icon ion-ios-link"></span>
-                                            </a>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>result:         <code><a href="../miscellaneous/typealiases.html#HandResult" target="_self" >HandResult</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../miscellaneous/typealiases.html#HandResult" target="_self" >HandResult</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 
                                         </td>
                                     </tr>
@@ -316,9 +276,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="round"></a>
-                                        <span class="name "><b>round</b>
-                                            <a href="#round">
+                                        <a name="musicEnabled"></a>
+                                        <span class="name "><b>musicEnabled</b>
+                                            <a href="#musicEnabled">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -326,7 +286,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>round:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                        <code>musicEnabled:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -334,7 +294,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 
                                         </td>
                                     </tr>
@@ -349,9 +309,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="scoreChange"></a>
-                                        <span class="name "><b>scoreChange</b>
-                                            <a href="#scoreChange">
+                                        <a name="reshuffleDiscardValue"></a>
+                                        <span class="name "><b>reshuffleDiscardValue</b>
+                                            <a href="#reshuffleDiscardValue">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -359,7 +319,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>scoreChange:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                        <code>reshuffleDiscardValue:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -367,7 +327,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 
                                         </td>
                                     </tr>
@@ -382,9 +342,9 @@
                         <tbody>
                                 <tr>
                                     <td class="col-md-4">
-                                        <a name="visibleHand"></a>
-                                        <span class="name "><b>visibleHand</b>
-                                            <a href="#visibleHand">
+                                        <a name="reshuffleDrawValue"></a>
+                                        <span class="name "><b>reshuffleDrawValue</b>
+                                            <a href="#reshuffleDrawValue">
                                                 <span class="icon ion-ios-link"></span>
                                             </a>
                                         </span>
@@ -392,7 +352,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>visibleHand:         <code><a href="../interfaces/HandModel.html" target="_self" >HandModel</a></code>
+                                        <code>reshuffleDrawValue:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 </code>
                                     </td>
                                 </tr>
@@ -400,16 +360,44 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="../interfaces/HandModel.html" target="_self" >HandModel</a></code>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
 
                                         </td>
                                     </tr>
+
+
+
+
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="scoreDisplayValue"></a>
+                                        <span class="name "><b>scoreDisplayValue</b>
+                                            <a href="#scoreDisplayValue">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>scoreDisplayValue:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+</code>
+                                    </td>
+                                </tr>
+
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Optional</i>
+                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
                                         </td>
                                     </tr>
+
 
 
 
@@ -421,18 +409,108 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Bet } from &#x27;./bet.model.js&#x27;;
-import { HandResult } from &#x27;./game-state.model.js&#x27;;
-import { HandModel } from &#x27;./hand.model.js&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { effect, inject, Injectable } from &#x27;@angular/core&#x27;;
+import { GameAudioManager } from &#x27;@hbg/game-data-access&#x27;;
+import { GamePhase } from &#x27;@hbg/shared-models&#x27;;
 
-export interface HandHistoryItem {
-  round: number;
-  bet: Bet;
-  result: HandResult;
-  scoreChange: number;
-  // These are recorded snapshots for the sidebar/history view, not live hand references.
-  visibleHand?: HandModel;
-  hiddenHand?: HandModel;
+type TrackedValueKey &#x3D; &#x27;scoreDisplay&#x27; | &#x27;reshuffleDraw&#x27; | &#x27;reshuffleDiscard&#x27;;
+
+interface AudioStateBindings {
+  scoreDisplayValue: () &#x3D;&gt; number | null;
+  reshuffleDrawValue: () &#x3D;&gt; number | null;
+  reshuffleDiscardValue: () &#x3D;&gt; number | null;
+  gamePhase: () &#x3D;&gt; GamePhase;
+  isPaused: () &#x3D;&gt; boolean;
+  musicEnabled: () &#x3D;&gt; boolean;
+}
+
+/**
+ * Bridges reactive game-page UI state into audio side effects.
+ *
+ * This service keeps the component free of repetitive &#x60;effect()&#x60; setup for
+ * score-step sounds, reshuffle counter sounds, and background music sync.
+ */
+@Injectable()
+export class GamePageAudioStateService {
+  private readonly audioManager &#x3D; inject(GameAudioManager);
+  private previousValues: Record&lt;TrackedValueKey, number | null&gt; &#x3D; {
+    scoreDisplay: null,
+    reshuffleDraw: null,
+    reshuffleDiscard: null,
+  };
+  private effectsRegistered &#x3D; false;
+
+  /**
+   * Registers one-time reactive bindings between game-page signals and audio.
+   *
+   * The tracked values are deliberately narrow: only the counters that should
+   * emit incremental step sounds and the phase/pause state that drives music.
+   */
+  registerEffects(bindings: AudioStateBindings): void {
+    if (this.effectsRegistered) {
+      return;
+    }
+
+    this.effectsRegistered &#x3D; true;
+
+    effect(() &#x3D;&gt; {
+      this.playStepSoundForValueChange(bindings.scoreDisplayValue(), &#x27;scoreDisplay&#x27;);
+    });
+
+    effect(() &#x3D;&gt; {
+      this.playStepSoundForValueChange(bindings.reshuffleDrawValue(), &#x27;reshuffleDraw&#x27;);
+    });
+
+    effect(() &#x3D;&gt; {
+      this.playStepSoundForValueChange(bindings.reshuffleDiscardValue(), &#x27;reshuffleDiscard&#x27;);
+    });
+
+    effect(() &#x3D;&gt; {
+      const phase &#x3D; bindings.gamePhase();
+      const paused &#x3D; bindings.isPaused();
+      const musicEnabled &#x3D; bindings.musicEnabled();
+
+      if (!musicEnabled || phase &#x3D;&#x3D;&#x3D; GamePhase.Idle || phase &#x3D;&#x3D;&#x3D; GamePhase.GameOver) {
+        this.audioManager.syncMusic(&#x27;none&#x27;);
+        return;
+      }
+
+      this.audioManager.syncMusic(paused ? &#x27;pause&#x27; : &#x27;gameplay&#x27;);
+    });
+  }
+
+  /** Stops all managed background music when the page is torn down. */
+  stopMusic(): void {
+    this.audioManager.syncMusic(&#x27;none&#x27;);
+  }
+
+  /**
+   * Plays the upward or downward counter step sound when a tracked value changes.
+   *
+   * Initial values are treated as baseline state so opening the page does not
+   * immediately emit step sounds before any animated change occurs.
+   */
+  private playStepSoundForValueChange(nextValue: number | null, key: TrackedValueKey): void {
+    const previousValue &#x3D; this.previousValues[key];
+
+    if (nextValue &#x3D;&#x3D;&#x3D; null) {
+      this.previousValues[key] &#x3D; null;
+      return;
+    }
+
+    if (previousValue &#x3D;&#x3D;&#x3D; null) {
+      this.previousValues[key] &#x3D; nextValue;
+      return;
+    }
+
+    if (nextValue &gt; previousValue) {
+      this.audioManager.playScoreIncrease();
+    } else if (nextValue &lt; previousValue) {
+      this.audioManager.playScoreDecrease();
+    }
+
+    this.previousValues[key] &#x3D; nextValue;
+  }
 }
 </code></pre>
     </div>
@@ -471,7 +549,7 @@ export interface HandHistoryItem {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
-            var COMPODOC_CURRENT_PAGE_URL = 'HandHistoryItem.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'AudioStateBindings.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

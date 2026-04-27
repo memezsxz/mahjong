@@ -435,11 +435,11 @@ import { VALID_HAND_SIZES } from &#x27;@hbg/shared-util-game&#x27;;
   imports: [ButtonModule],
   templateUrl: &#x27;./settings-panel.html&#x27;,
   styleUrl: &#x27;./settings-panel.css&#x27;,
-  standalone: true
+  standalone: true,
 })
 export class SettingsPanel {
   settings &#x3D; input.required&lt;PlayerSettingsModel&gt;();
-  inGame   &#x3D; input&lt;boolean&gt;(false);
+  inGame &#x3D; input&lt;boolean&gt;(false);
   settingsChanged &#x3D; output&lt;Partial&lt;PlayerSettingsModel&gt;&gt;();
   closed &#x3D; output&lt;void&gt;();
 
@@ -450,8 +450,7 @@ export class SettingsPanel {
     </div>
 
     <div class="tab-pane fade " id="templateData">
-        <pre class="line-numbers"><code class="language-html">
-&lt;div
+        <pre class="line-numbers"><code class="language-html">&lt;div
   class&#x3D;&quot;fixed inset-0 bg-c-bg/60 backdrop-blur-sm flex items-stretch justify-end z-20&quot;
   tabindex&#x3D;&quot;0&quot;
   (click)&#x3D;&quot;$event.target &#x3D;&#x3D;&#x3D; $event.currentTarget &amp;&amp; closed.emit()&quot;
@@ -462,10 +461,11 @@ export class SettingsPanel {
   &lt;div
     class&#x3D;&quot;bg-c-surface border-l border-c-indigo/10 w-full sm:w-80 lg:w-96 h-dvh max-h-dvh flex flex-col overflow-y-auto&quot;
   &gt;
-
     &lt;!-- Header --&gt;
     &lt;div class&#x3D;&quot;shrink-0 flex justify-between items-center px-6 py-5 border-b border-c-indigo/10&quot;&gt;
-      &lt;span class&#x3D;&quot;font-mono text-[0.75rem] font-bold tracking-[0.25em] text-c-indigo&quot;&gt;SETTINGS&lt;/span&gt;
+      &lt;span class&#x3D;&quot;font-mono text-[0.75rem] font-bold tracking-[0.25em] text-c-indigo&quot;
+        &gt;SETTINGS&lt;/span
+      &gt;
       &lt;p-button
         icon&#x3D;&quot;pi pi-times&quot;
         [text]&#x3D;&quot;true&quot;
@@ -486,14 +486,18 @@ export class SettingsPanel {
         @for (n of handSizeOptions; track n) {
           &lt;button
             class&#x3D;&quot;w-9 h-9 border font-mono text-sm font-bold transition-all duration-100&quot;
-            [class]&#x3D;&quot;inGame()
-              ? &#x27;cursor-not-allowed opacity-40 bg-transparent border-c-indigo/10 text-c-muted&#x27;
-              : settings().handSize &#x3D;&#x3D;&#x3D; n
-                ? &#x27;cursor-pointer bg-c-indigo border-c-indigo text-white&#x27;
-                : &#x27;cursor-pointer bg-transparent border-c-indigo/10 text-c-muted hover:border-c-indigo hover:text-c-indigo&#x27;&quot;
+            [class]&#x3D;&quot;
+              inGame()
+                ? &#x27;cursor-not-allowed opacity-40 bg-transparent border-c-indigo/10 text-c-muted&#x27;
+                : settings().handSize &#x3D;&#x3D;&#x3D; n
+                  ? &#x27;cursor-pointer bg-c-indigo border-c-indigo text-white&#x27;
+                  : &#x27;cursor-pointer bg-transparent border-c-indigo/10 text-c-muted hover:border-c-indigo hover:text-c-indigo&#x27;
+            &quot;
             [disabled]&#x3D;&quot;inGame()&quot;
             (click)&#x3D;&quot;!inGame() &amp;&amp; settingsChanged.emit({ handSize: n })&quot;
-          &gt;{{ n }}&lt;/button&gt;
+          &gt;
+            {{ n }}
+          &lt;/button&gt;
         }
       &lt;/div&gt;
     &lt;/div&gt;
@@ -504,15 +508,21 @@ export class SettingsPanel {
     &lt;div class&#x3D;&quot;flex items-center justify-between gap-4 px-6 py-4&quot;&gt;
       &lt;div class&#x3D;&quot;flex flex-col gap-0.5&quot;&gt;
         &lt;span class&#x3D;&quot;text-sm font-semibold text-c-text&quot;&gt;Show Tile Values&lt;/span&gt;
-        &lt;span class&#x3D;&quot;font-mono text-[0.55rem] text-c-muted tracking-[0.05em]&quot;&gt;Display current value badge on each tile&lt;/span&gt;
+        &lt;span class&#x3D;&quot;font-mono text-[0.55rem] text-c-muted tracking-[0.05em]&quot;
+          &gt;Display current value badge on each tile&lt;/span
+        &gt;
       &lt;/div&gt;
       &lt;button
         class&#x3D;&quot;h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100&quot;
-        [class]&#x3D;&quot;settings().showTileValues
-          ? &#x27;bg-c-green border-c-green text-white&#x27;
-          : &#x27;bg-transparent border-c-indigo/10 text-c-muted&#x27;&quot;
+        [class]&#x3D;&quot;
+          settings().showTileValues
+            ? &#x27;bg-c-green border-c-green text-white&#x27;
+            : &#x27;bg-transparent border-c-indigo/10 text-c-muted&#x27;
+        &quot;
         (click)&#x3D;&quot;settingsChanged.emit({ showTileValues: !settings().showTileValues })&quot;
-      &gt;{{ settings().showTileValues ? &#x27;ON&#x27; : &#x27;OFF&#x27; }}&lt;/button&gt;
+      &gt;
+        {{ settings().showTileValues ? &#x27;ON&#x27; : &#x27;OFF&#x27; }}
+      &lt;/button&gt;
     &lt;/div&gt;
 
     &lt;div class&#x3D;&quot;h-px bg-c-indigo/10 mx-6&quot;&gt;&lt;/div&gt;
@@ -521,15 +531,21 @@ export class SettingsPanel {
     &lt;div class&#x3D;&quot;flex items-center justify-between gap-4 px-6 py-4&quot;&gt;
       &lt;div class&#x3D;&quot;flex flex-col gap-0.5&quot;&gt;
         &lt;span class&#x3D;&quot;text-sm font-semibold text-c-text&quot;&gt;Sound Effects&lt;/span&gt;
-        &lt;span class&#x3D;&quot;font-mono text-[0.55rem] text-c-muted tracking-[0.05em]&quot;&gt;Play audio on tile reveal and bet&lt;/span&gt;
+        &lt;span class&#x3D;&quot;font-mono text-[0.55rem] text-c-muted tracking-[0.05em]&quot;
+          &gt;Play audio on tile reveal and bet&lt;/span
+        &gt;
       &lt;/div&gt;
       &lt;button
         class&#x3D;&quot;h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100&quot;
-        [class]&#x3D;&quot;settings().soundEnabled
-          ? &#x27;bg-c-green border-c-green text-white&#x27;
-          : &#x27;bg-transparent border-c-indigo/10 text-c-muted&#x27;&quot;
+        [class]&#x3D;&quot;
+          settings().soundEnabled
+            ? &#x27;bg-c-green border-c-green text-white&#x27;
+            : &#x27;bg-transparent border-c-indigo/10 text-c-muted&#x27;
+        &quot;
         (click)&#x3D;&quot;settingsChanged.emit({ soundEnabled: !settings().soundEnabled })&quot;
-      &gt;{{ settings().soundEnabled ? &#x27;ON&#x27; : &#x27;OFF&#x27; }}&lt;/button&gt;
+      &gt;
+        {{ settings().soundEnabled ? &#x27;ON&#x27; : &#x27;OFF&#x27; }}
+      &lt;/button&gt;
     &lt;/div&gt;
 
     &lt;div class&#x3D;&quot;h-px bg-c-indigo/10 mx-6&quot;&gt;&lt;/div&gt;
@@ -538,15 +554,21 @@ export class SettingsPanel {
     &lt;div class&#x3D;&quot;flex items-center justify-between gap-4 px-6 py-4&quot;&gt;
       &lt;div class&#x3D;&quot;flex flex-col gap-0.5&quot;&gt;
         &lt;span class&#x3D;&quot;text-sm font-semibold text-c-text&quot;&gt;Reveal Animations&lt;/span&gt;
-        &lt;span class&#x3D;&quot;font-mono text-[0.55rem] text-c-muted tracking-[0.05em]&quot;&gt;Card reveal and total-to-score animation&lt;/span&gt;
+        &lt;span class&#x3D;&quot;font-mono text-[0.55rem] text-c-muted tracking-[0.05em]&quot;
+          &gt;Card reveal and total-to-score animation&lt;/span
+        &gt;
       &lt;/div&gt;
       &lt;button
         class&#x3D;&quot;h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100&quot;
-        [class]&#x3D;&quot;settings().animationsEnabled
-          ? &#x27;bg-c-green border-c-green text-white&#x27;
-          : &#x27;bg-transparent border-c-indigo/10 text-c-muted&#x27;&quot;
+        [class]&#x3D;&quot;
+          settings().animationsEnabled
+            ? &#x27;bg-c-green border-c-green text-white&#x27;
+            : &#x27;bg-transparent border-c-indigo/10 text-c-muted&#x27;
+        &quot;
         (click)&#x3D;&quot;settingsChanged.emit({ animationsEnabled: !settings().animationsEnabled })&quot;
-      &gt;{{ settings().animationsEnabled ? &#x27;ON&#x27; : &#x27;OFF&#x27; }}&lt;/button&gt;
+      &gt;
+        {{ settings().animationsEnabled ? &#x27;ON&#x27; : &#x27;OFF&#x27; }}
+      &lt;/button&gt;
     &lt;/div&gt;
 
     &lt;!-- DO NOT DELETE: Music toggle — kept for when background music is re-enabled --&gt;
@@ -567,7 +589,6 @@ export class SettingsPanel {
       &gt;{{ settings().musicEnabled ? &#x27;ON&#x27; : &#x27;OFF&#x27; }}&lt;/button&gt;
     &lt;/div&gt;
     --&gt;
-
   &lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
@@ -599,7 +620,7 @@ export class SettingsPanel {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div  class="fixed inset-0 bg-c-bg/60 backdrop-blur-sm flex items-stretch justify-end z-20"  tabindex="0"  (click)="$event.target === $event.currentTarget && closed.emit()"  (keydown.enter)="closed.emit()"  (keydown.space)="closed.emit()"  (keydown.escape)="closed.emit()">  <div    class="bg-c-surface border-l border-c-indigo/10 w-full sm:w-80 lg:w-96 h-dvh max-h-dvh flex flex-col overflow-y-auto"  >    <!-- Header -->    <div class="shrink-0 flex justify-between items-center px-6 py-5 border-b border-c-indigo/10">      <span class="font-mono text-[0.75rem] font-bold tracking-[0.25em] text-c-indigo">SETTINGS</span>      <p-button        icon="pi pi-times"        [text]="true"        [rounded]="true"        severity="secondary"        styleClass="sp-close"        (onClick)="closed.emit()"      />    </div>    <!-- Hand Size -->    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Hand Size</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Tiles per hand</span>      </div>      <div class="flex gap-1">        @for (n of handSizeOptions; track n) {          <button            class="w-9 h-9 border font-mono text-sm font-bold transition-all duration-100"            [class]="inGame()              ? \'cursor-not-allowed opacity-40 bg-transparent border-c-indigo/10 text-c-muted\'              : settings().handSize === n                ? \'cursor-pointer bg-c-indigo border-c-indigo text-white\'                : \'cursor-pointer bg-transparent border-c-indigo/10 text-c-muted hover:border-c-indigo hover:text-c-indigo\'"            [disabled]="inGame()"            (click)="!inGame() && settingsChanged.emit({ handSize: n })"          >{{ n }}</button>        }      </div>    </div>    <div class="h-px bg-c-indigo/10 mx-6"></div>    <!-- Show Tile Values -->    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Show Tile Values</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Display current value badge on each tile</span>      </div>      <button        class="h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100"        [class]="settings().showTileValues          ? \'bg-c-green border-c-green text-white\'          : \'bg-transparent border-c-indigo/10 text-c-muted\'"        (click)="settingsChanged.emit({ showTileValues: !settings().showTileValues })"      >{{ settings().showTileValues ? \'ON\' : \'OFF\' }}</button>    </div>    <div class="h-px bg-c-indigo/10 mx-6"></div>    <!-- Sound -->    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Sound Effects</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Play audio on tile reveal and bet</span>      </div>      <button        class="h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100"        [class]="settings().soundEnabled          ? \'bg-c-green border-c-green text-white\'          : \'bg-transparent border-c-indigo/10 text-c-muted\'"        (click)="settingsChanged.emit({ soundEnabled: !settings().soundEnabled })"      >{{ settings().soundEnabled ? \'ON\' : \'OFF\' }}</button>    </div>    <div class="h-px bg-c-indigo/10 mx-6"></div>    <!-- Reveal Animations -->    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Reveal Animations</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Card reveal and total-to-score animation</span>      </div>      <button        class="h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100"        [class]="settings().animationsEnabled          ? \'bg-c-green border-c-green text-white\'          : \'bg-transparent border-c-indigo/10 text-c-muted\'"        (click)="settingsChanged.emit({ animationsEnabled: !settings().animationsEnabled })"      >{{ settings().animationsEnabled ? \'ON\' : \'OFF\' }}</button>    </div>    <!-- DO NOT DELETE: Music toggle — kept for when background music is re-enabled -->    <!--    <div class="h-px bg-c-indigo/10 mx-6"></div>    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Music</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Background music during play</span>      </div>      <button        class="h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100"        [class]="settings().musicEnabled          ? \'bg-c-green border-c-green text-white\'          : \'bg-transparent border-c-indigo/10 text-c-muted\'"        (click)="settingsChanged.emit({ musicEnabled: !settings().musicEnabled })"      >{{ settings().musicEnabled ? \'ON\' : \'OFF\' }}</button>    </div>    -->  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div  class="fixed inset-0 bg-c-bg/60 backdrop-blur-sm flex items-stretch justify-end z-20"  tabindex="0"  (click)="$event.target === $event.currentTarget && closed.emit()"  (keydown.enter)="closed.emit()"  (keydown.space)="closed.emit()"  (keydown.escape)="closed.emit()">  <div    class="bg-c-surface border-l border-c-indigo/10 w-full sm:w-80 lg:w-96 h-dvh max-h-dvh flex flex-col overflow-y-auto"  >    <!-- Header -->    <div class="shrink-0 flex justify-between items-center px-6 py-5 border-b border-c-indigo/10">      <span class="font-mono text-[0.75rem] font-bold tracking-[0.25em] text-c-indigo"        >SETTINGS</span      >      <p-button        icon="pi pi-times"        [text]="true"        [rounded]="true"        severity="secondary"        styleClass="sp-close"        (onClick)="closed.emit()"      />    </div>    <!-- Hand Size -->    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Hand Size</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Tiles per hand</span>      </div>      <div class="flex gap-1">        @for (n of handSizeOptions; track n) {          <button            class="w-9 h-9 border font-mono text-sm font-bold transition-all duration-100"            [class]="              inGame()                ? \'cursor-not-allowed opacity-40 bg-transparent border-c-indigo/10 text-c-muted\'                : settings().handSize === n                  ? \'cursor-pointer bg-c-indigo border-c-indigo text-white\'                  : \'cursor-pointer bg-transparent border-c-indigo/10 text-c-muted hover:border-c-indigo hover:text-c-indigo\'            "            [disabled]="inGame()"            (click)="!inGame() && settingsChanged.emit({ handSize: n })"          >            {{ n }}          </button>        }      </div>    </div>    <div class="h-px bg-c-indigo/10 mx-6"></div>    <!-- Show Tile Values -->    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Show Tile Values</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]"          >Display current value badge on each tile</span        >      </div>      <button        class="h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100"        [class]="          settings().showTileValues            ? \'bg-c-green border-c-green text-white\'            : \'bg-transparent border-c-indigo/10 text-c-muted\'        "        (click)="settingsChanged.emit({ showTileValues: !settings().showTileValues })"      >        {{ settings().showTileValues ? \'ON\' : \'OFF\' }}      </button>    </div>    <div class="h-px bg-c-indigo/10 mx-6"></div>    <!-- Sound -->    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Sound Effects</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]"          >Play audio on tile reveal and bet</span        >      </div>      <button        class="h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100"        [class]="          settings().soundEnabled            ? \'bg-c-green border-c-green text-white\'            : \'bg-transparent border-c-indigo/10 text-c-muted\'        "        (click)="settingsChanged.emit({ soundEnabled: !settings().soundEnabled })"      >        {{ settings().soundEnabled ? \'ON\' : \'OFF\' }}      </button>    </div>    <div class="h-px bg-c-indigo/10 mx-6"></div>    <!-- Reveal Animations -->    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Reveal Animations</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]"          >Card reveal and total-to-score animation</span        >      </div>      <button        class="h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100"        [class]="          settings().animationsEnabled            ? \'bg-c-green border-c-green text-white\'            : \'bg-transparent border-c-indigo/10 text-c-muted\'        "        (click)="settingsChanged.emit({ animationsEnabled: !settings().animationsEnabled })"      >        {{ settings().animationsEnabled ? \'ON\' : \'OFF\' }}      </button>    </div>    <!-- DO NOT DELETE: Music toggle — kept for when background music is re-enabled -->    <!--    <div class="h-px bg-c-indigo/10 mx-6"></div>    <div class="flex items-center justify-between gap-4 px-6 py-4">      <div class="flex flex-col gap-0.5">        <span class="text-sm font-semibold text-c-text">Music</span>        <span class="font-mono text-[0.55rem] text-c-muted tracking-[0.05em]">Background music during play</span>      </div>      <button        class="h-8 px-3 border font-mono text-[0.62rem] font-bold tracking-[0.1em] cursor-pointer min-w-14 transition-all duration-100"        [class]="settings().musicEnabled          ? \'bg-c-green border-c-green text-white\'          : \'bg-transparent border-c-indigo/10 text-c-muted\'"        (click)="settingsChanged.emit({ musicEnabled: !settings().musicEnabled })"      >{{ settings().musicEnabled ? \'ON\' : \'OFF\' }}</button>    </div>    -->  </div></div></div>'
     var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'BetControls', 'selector': 'lib-bet-controls'},{'name': 'DeckCounter', 'selector': 'lib-deck-counter'},{'name': 'GamePage', 'selector': 'lib-game-page'},{'name': 'Hand', 'selector': 'lib-hand'},{'name': 'HandHistory', 'selector': 'lib-hand-history'},{'name': 'LandingPage', 'selector': 'lib-landing-page'},{'name': 'ScoreDisplay', 'selector': 'lib-score-display'},{'name': 'SettingsPanel', 'selector': 'lib-settings-panel'},{'name': 'Tile', 'selector': 'lib-tile'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'SettingsPanel'};

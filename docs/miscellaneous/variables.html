@@ -361,7 +361,7 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>[
-  { path: &#x27;&#x27;,     component: LandingPage },
+  { path: &#x27;&#x27;, component: LandingPage },
   { path: &#x27;game&#x27;, component: GamePage, canDeactivate: [canDeactivateGamePage] },
 ]</code>
                     </td>
@@ -389,8 +389,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>(component) &#x3D;&gt;
-  component.canLeaveGame()</code>
+                        <i>Default value : </i><code>(component) &#x3D;&gt; component.canLeaveGame()</code>
                     </td>
                 </tr>
 
@@ -1718,7 +1717,9 @@
 
   withComputed((state) &#x3D;&gt; ({
     isDrawPileEmpty: computed(() &#x3D;&gt; state.drawPile().length &#x3D;&#x3D;&#x3D; 0), // TODO: we should handle the draw pile not having enough to draw the hand
-    isGameActive: computed(() &#x3D;&gt; state.gamePhase() !&#x3D;&#x3D; GamePhase.Idle &amp;&amp; state.gamePhase() !&#x3D;&#x3D; GamePhase.GameOver),
+    isGameActive: computed(
+      () &#x3D;&gt; state.gamePhase() !&#x3D;&#x3D; GamePhase.Idle &amp;&amp; state.gamePhase() !&#x3D;&#x3D; GamePhase.GameOver,
+    ),
     isGameOver: computed(() &#x3D;&gt; state.gamePhase() &#x3D;&#x3D;&#x3D; GamePhase.GameOver),
     totalTileCount: computed(() &#x3D;&gt; state.drawPile().length + state.discard().length),
   })),
@@ -1734,10 +1735,16 @@
         const selectedHandSize &#x3D; playerSettings.settings().handSize;
         let nextDeck &#x3D; buildDeck();
         // The first drawn hand is the player&#x27;s visible hand.
-        const { hand: firstHand, drawPile: firstRemainingDeck } &#x3D; drawHand(selectedHandSize, nextDeck);
+        const { hand: firstHand, drawPile: firstRemainingDeck } &#x3D; drawHand(
+          selectedHandSize,
+          nextDeck,
+        );
         nextDeck &#x3D; firstRemainingDeck;
         // The second drawn hand becomes the opening hidden hand.
-        const { hand: secondHand, drawPile: secondRemainingDeck } &#x3D; drawHand(selectedHandSize, nextDeck);
+        const { hand: secondHand, drawPile: secondRemainingDeck } &#x3D; drawHand(
+          selectedHandSize,
+          nextDeck,
+        );
 
         patchState(store, {
           drawPile: secondRemainingDeck,
@@ -1889,17 +1896,14 @@
           return false;
         }
 
-        patchState(
-          store,
-          {
-            visibleHand: currentHiddenHand,
-            discard: [...store.discard(), ...currentHiddenHand.tiles],
-            gamePhase: GamePhase.GameOver,
-            lastResult: null,
-            lastScoreChange: null,
-            gameOverReason: reshuffleGameOver,
-          },
-        );
+        patchState(store, {
+          visibleHand: currentHiddenHand,
+          discard: [...store.discard(), ...currentHiddenHand.tiles],
+          gamePhase: GamePhase.GameOver,
+          lastResult: null,
+          lastScoreChange: null,
+          gameOverReason: reshuffleGameOver,
+        });
 
         return true;
       },

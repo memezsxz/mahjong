@@ -314,8 +314,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="102"
-                                    class="link-to-prism">src/app/libs/data-access/scores.service.ts:102</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/app/libs/data-access/scores.service.ts:99</a></div>
                         </td>
                     </tr>
 
@@ -904,19 +904,14 @@ export class ScoresService {
   private persistLocalCache(scores: LeaderboardEntryModel[]): void {
     const normalizedScores &#x3D; this.normalizeScores(scores);
     this._topScores.set(normalizedScores);
-    localStorage.setItem(
-      ScoresService.STORAGE_KEY,
-      JSON.stringify(normalizedScores),
-    );
+    localStorage.setItem(ScoresService.STORAGE_KEY, JSON.stringify(normalizedScores));
   }
 
   /**
    * Sorts leaderboard entries by score, then by most recent date, and trims the
    * list to the configured maximum size.
    */
-  private normalizeScores(
-    scores: LeaderboardEntryModel[],
-  ): LeaderboardEntryModel[] {
+  private normalizeScores(scores: LeaderboardEntryModel[]): LeaderboardEntryModel[] {
     return [...scores]
       .sort((a, b) &#x3D;&gt; {
         if (b.totalScore !&#x3D;&#x3D; a.totalScore) {

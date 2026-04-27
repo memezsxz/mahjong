@@ -137,6 +137,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                             <li class="link">
+                                <a href="interfaces/AudioStateBindings.html" data-type="entity-link" >AudioStateBindings</a>
+                            </li>
+                            <li class="link">
                                 <a href="interfaces/DragonTile.html" data-type="entity-link" >DragonTile</a>
                             </li>
                             <li class="link">
@@ -153,6 +156,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </li>
                             <li class="link">
                                 <a href="interfaces/NumberTile.html" data-type="entity-link" >NumberTile</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/PendingAssetPlayback.html" data-type="entity-link" >PendingAssetPlayback</a>
                             </li>
                             <li class="link">
                                 <a href="interfaces/PlayerSettingsModel.html" data-type="entity-link" >PlayerSettingsModel</a>

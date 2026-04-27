@@ -262,7 +262,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/app.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/app.ts:11</a></div>
                         </td>
                     </tr>
 
@@ -278,10 +278,11 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, signal } from &#x27;@angular/core&#x27;;
 import { RouterOutlet } from &#x27;@angular/router&#x27;;
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: &#x27;app-root&#x27;,
   imports: [RouterOutlet],
   templateUrl: &#x27;./app.html&#x27;,
-  styleUrl: &#x27;./app.css&#x27;
+  styleUrl: &#x27;./app.css&#x27;,
 })
 export class App {
   protected readonly title &#x3D; signal(&#x27;mahjong-high-low&#x27;);

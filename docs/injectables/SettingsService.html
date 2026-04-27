@@ -227,7 +227,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/libs/data-access/settings.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/libs/data-access/settings.service.ts:24</a></div>
                             </td>
                         </tr>
 
@@ -260,8 +260,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="36"
-                                    class="link-to-prism">src/app/libs/data-access/settings.service.ts:36</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="41"
+                                    class="link-to-prism">src/app/libs/data-access/settings.service.ts:41</a></div>
                         </td>
                     </tr>
 
@@ -301,8 +301,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="43"
-                                    class="link-to-prism">src/app/libs/data-access/settings.service.ts:43</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="48"
+                                    class="link-to-prism">src/app/libs/data-access/settings.service.ts:48</a></div>
                         </td>
                     </tr>
 
@@ -342,8 +342,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="59"
-                                    class="link-to-prism">src/app/libs/data-access/settings.service.ts:59</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="68"
+                                    class="link-to-prism">src/app/libs/data-access/settings.service.ts:68</a></div>
                         </td>
                     </tr>
 
@@ -411,8 +411,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="28"
-                                    class="link-to-prism">src/app/libs/data-access/settings.service.ts:28</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="33"
+                                    class="link-to-prism">src/app/libs/data-access/settings.service.ts:33</a></div>
                         </td>
                     </tr>
 
@@ -487,8 +487,13 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>signal&lt;PlayerSettingsModel&gt;({
-        handSize: DEFAULT_HAND_SIZE, musicEnabled: true, soundEnabled: true, animationsEnabled: true, showTileValues: true, hasSeenTutorial: false
-    })</code>
+    handSize: DEFAULT_HAND_SIZE,
+    musicEnabled: true,
+    soundEnabled: true,
+    animationsEnabled: true,
+    showTileValues: true,
+    hasSeenTutorial: false,
+  })</code>
                     </td>
                 </tr>
                     <tr>
@@ -525,7 +530,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/libs/data-access/settings.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/libs/data-access/settings.service.ts:24</a></div>
                         </td>
                     </tr>
 
@@ -616,70 +621,81 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Injectable, signal} from &quot;@angular/core&quot;;
-import {PlayerSettingsModel} from &quot;@hbg/shared-models&quot;;
-import {DEFAULT_HAND_SIZE, VALID_HAND_SIZES} from &quot;@hbg/shared-util-game&quot;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, signal } from &#x27;@angular/core&#x27;;
+import { PlayerSettingsModel } from &#x27;@hbg/shared-models&#x27;;
+import { DEFAULT_HAND_SIZE, VALID_HAND_SIZES } from &#x27;@hbg/shared-util-game&#x27;;
 
 /**
  * Stores, normalizes, and persists player-facing settings.
  */
-@Injectable({providedIn: &#x27;root&#x27;})
+@Injectable({ providedIn: &#x27;root&#x27; })
 export class SettingsService {
-    /** Local storage key used to persist player settings. */
-    private readonly STORAGE_KEY &#x3D; &#x27;player-settings&#x27;;
-    /** Valid hand sizes accepted by the settings normalization path. */
-    private readonly VALID_HAND_SIZES &#x3D; new Set(VALID_HAND_SIZES);
+  /** Local storage key used to persist player settings. */
+  private readonly STORAGE_KEY &#x3D; &#x27;player-settings&#x27;;
+  /** Valid hand sizes accepted by the settings normalization path. */
+  private readonly VALID_HAND_SIZES &#x3D; new Set(VALID_HAND_SIZES);
 
-    private _settings &#x3D; signal&lt;PlayerSettingsModel&gt;({
-        handSize: DEFAULT_HAND_SIZE, musicEnabled: true, soundEnabled: true, animationsEnabled: true, showTileValues: true, hasSeenTutorial: false
-    });
+  private _settings &#x3D; signal&lt;PlayerSettingsModel&gt;({
+    handSize: DEFAULT_HAND_SIZE,
+    musicEnabled: true,
+    soundEnabled: true,
+    animationsEnabled: true,
+    showTileValues: true,
+    hasSeenTutorial: false,
+  });
 
-    readonly settings &#x3D; this._settings.asReadonly();
+  readonly settings &#x3D; this._settings.asReadonly();
 
-    constructor() {
-        this.load()
+  constructor() {
+    this.load();
+  }
+
+  /**
+   * Merges a partial settings update, normalizes it, and persists it.
+   */
+  update(settings: Partial&lt;PlayerSettingsModel&gt;) {
+    this._settings.update((current) &#x3D;&gt; this.normalizeSettings({ ...current, ...settings }));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._settings()));
+  }
+
+  /**
+   * Returns whether the player has not yet completed the first-time flow.
+   */
+  isFirstTime(): boolean {
+    return !this._settings().hasSeenTutorial;
+  }
+
+  /**
+   * Loads persisted settings from local storage if available.
+   */
+  private load() {
+    const stored &#x3D; localStorage.getItem(this.STORAGE_KEY);
+    if (stored) {
+      const parsed &#x3D; JSON.parse(stored) as Partial&lt;PlayerSettingsModel&gt; &amp; {
+        playerName?: string | null;
+      };
+      const { playerName, ...rest } &#x3D; parsed;
+      void playerName;
+      this._settings.set(
+        this.normalizeSettings({
+          ...this._settings(),
+          ...rest,
+        }),
+      );
     }
+  }
 
-    /**
-     * Merges a partial settings update, normalizes it, and persists it.
-     */
-    update(settings: Partial&lt;PlayerSettingsModel&gt;) {
-        this._settings.update((current) &#x3D;&gt; this.normalizeSettings({...current, ...settings}));
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._settings()))
-    }
-
-    /**
-     * Returns whether the player has not yet completed the first-time flow.
-     */
-    isFirstTime(): boolean {
-        return !this._settings().hasSeenTutorial;
-    }
-
-    /**
-     * Loads persisted settings from local storage if available.
-     */
-    private load() {
-        const stored &#x3D; localStorage.getItem(this.STORAGE_KEY);
-        if (stored) {
-            const parsed &#x3D; JSON.parse(stored) as Partial&lt;PlayerSettingsModel&gt; &amp; { playerName?: string | null };
-            const { playerName, ...rest } &#x3D; parsed;
-            void playerName;
-            this._settings.set(this.normalizeSettings({
-                ...this._settings(),
-                ...rest,
-            }))
-        }
-    }
-
-    /**
-     * Normalizes settings values against the supported configuration.
-     */
-    private normalizeSettings(settings: PlayerSettingsModel): PlayerSettingsModel {
-        return {
-            ...settings,
-            handSize: this.VALID_HAND_SIZES.has(settings.handSize) ? settings.handSize : DEFAULT_HAND_SIZE,
-        };
-    }
+  /**
+   * Normalizes settings values against the supported configuration.
+   */
+  private normalizeSettings(settings: PlayerSettingsModel): PlayerSettingsModel {
+    return {
+      ...settings,
+      handSize: this.VALID_HAND_SIZES.has(settings.handSize)
+        ? settings.handSize
+        : DEFAULT_HAND_SIZE,
+    };
+  }
 }
 </code></pre>
     </div>

@@ -570,7 +570,7 @@ during reshuffle presentation sequences.</p>
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Array&lt;literal type&gt;</code>
+                            <b>Returns : </b>    <code>literal type[]</code>
 
                         </div>
                             <div class="io-description">
@@ -642,7 +642,7 @@ a generated grid for any other count.</p>
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Array&lt;literal type&gt;</code>
+                            <b>Returns : </b>    <code>literal type[]</code>
 
                         </div>
                             <div class="io-description">
@@ -1068,7 +1068,7 @@ import { UI_DECK_COUNTER_ROLL_DURATION_MS } from &#x27;../game-ui.animations&#x2
   imports: [],
   templateUrl: &#x27;./deck-counter.html&#x27;,
   styleUrls: [&#x27;../game-ui.animation-tokens.css&#x27;, &#x27;./deck-counter.css&#x27;],
-  standalone: true
+  standalone: true,
 })
 export class DeckCounter implements OnDestroy {
   drawCount &#x3D; input.required&lt;number&gt;();
@@ -1157,8 +1157,8 @@ export class DeckCounter implements OnDestroy {
    * Returns hand-tuned pip layouts for common reshuffle limits and falls back to
    * a generated grid for any other count.
    */
-  private getPipPositions(total: number): Array&lt;{ left: number; top: number }&gt; {
-    const fixedLayouts: Partial&lt;Record&lt;number, Array&lt;{ left: number; top: number }&gt;&gt;&gt; &#x3D; {
+  private getPipPositions(total: number): { left: number; top: number }[] {
+    const fixedLayouts: Partial&lt;Record&lt;number, { left: number; top: number }[]&gt;&gt; &#x3D; {
       0: [],
       1: [{ left: 50, top: 50 }],
       2: [
@@ -1232,7 +1232,7 @@ export class DeckCounter implements OnDestroy {
   /**
    * Generates a simple grid layout when no fixed pip layout is defined.
    */
-  private getFallbackGrid(total: number): Array&lt;{ left: number; top: number }&gt; {
+  private getFallbackGrid(total: number): { left: number; top: number }[] {
     if (total &lt;&#x3D; 0) {
       return [];
     }
@@ -1268,14 +1268,16 @@ export class DeckCounter implements OnDestroy {
             class&#x3D;&quot;dc-roll&quot;
             [class.dc-old]&#x3D;&quot;drawRollDirection() &#x3D;&#x3D;&#x3D; &#x27;down&#x27;&quot;
             [class.dc-old-up]&#x3D;&quot;drawRollDirection() &#x3D;&#x3D;&#x3D; &#x27;up&#x27;&quot;
-          &gt;{{ previousDrawValue() }}&lt;/span&gt;
+            &gt;{{ previousDrawValue() }}&lt;/span
+          &gt;
           &lt;span
             class&#x3D;&quot;dc-roll&quot;
             [class.dc-new]&#x3D;&quot;drawRollDirection() &#x3D;&#x3D;&#x3D; &#x27;down&#x27;&quot;
             [class.dc-new-up]&#x3D;&quot;drawRollDirection() &#x3D;&#x3D;&#x3D; &#x27;up&#x27;&quot;
-          &gt;{{ currentDrawValue() }}&lt;/span&gt;
+            &gt;{{ currentDrawValue() }}&lt;/span
+          &gt;
         } @else {
-          &lt;span&gt;{{ currentDrawValue() ?? (displayDrawCount() ?? drawCount()) }}&lt;/span&gt;
+          &lt;span&gt;{{ currentDrawValue() ?? displayDrawCount() ?? drawCount() }}&lt;/span&gt;
         }
       &lt;/span&gt;
       &lt;span class&#x3D;&quot;font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted&quot;&gt;draw&lt;/span&gt;
@@ -1288,14 +1290,16 @@ export class DeckCounter implements OnDestroy {
             class&#x3D;&quot;dc-roll&quot;
             [class.dc-old]&#x3D;&quot;discardRollDirection() &#x3D;&#x3D;&#x3D; &#x27;down&#x27;&quot;
             [class.dc-old-up]&#x3D;&quot;discardRollDirection() &#x3D;&#x3D;&#x3D; &#x27;up&#x27;&quot;
-          &gt;{{ previousDiscardValue() }}&lt;/span&gt;
+            &gt;{{ previousDiscardValue() }}&lt;/span
+          &gt;
           &lt;span
             class&#x3D;&quot;dc-roll&quot;
             [class.dc-new]&#x3D;&quot;discardRollDirection() &#x3D;&#x3D;&#x3D; &#x27;down&#x27;&quot;
             [class.dc-new-up]&#x3D;&quot;discardRollDirection() &#x3D;&#x3D;&#x3D; &#x27;up&#x27;&quot;
-          &gt;{{ currentDiscardValue() }}&lt;/span&gt;
+            &gt;{{ currentDiscardValue() }}&lt;/span
+          &gt;
         } @else {
-          &lt;span&gt;{{ currentDiscardValue() ?? (displayDiscardCount() ?? discardCount()) }}&lt;/span&gt;
+          &lt;span&gt;{{ currentDiscardValue() ?? displayDiscardCount() ?? discardCount() }}&lt;/span&gt;
         }
       &lt;/span&gt;
       &lt;span class&#x3D;&quot;font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted&quot;&gt;discard&lt;/span&gt;
@@ -1412,23 +1416,39 @@ export class DeckCounter implements OnDestroy {
 }
 
 @keyframes dc-old-down {
-  0% { transform: translate(-50%, 0); }
-  100% { transform: translate(-50%, 125%); }
+  0% {
+    transform: translate(-50%, 0);
+  }
+  100% {
+    transform: translate(-50%, 125%);
+  }
 }
 
 @keyframes dc-new-down {
-  0% { transform: translate(-50%, -125%); }
-  100% { transform: translate(-50%, 0); }
+  0% {
+    transform: translate(-50%, -125%);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
 }
 
 @keyframes dc-old-up {
-  0% { transform: translate(-50%, 0); }
-  100% { transform: translate(-50%, -125%); }
+  0% {
+    transform: translate(-50%, 0);
+  }
+  100% {
+    transform: translate(-50%, -125%);
+  }
 }
 
 @keyframes dc-new-up {
-  0% { transform: translate(-50%, 125%); }
-  100% { transform: translate(-50%, 0); }
+  0% {
+    transform: translate(-50%, 125%);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
 }
 </code></pre>
     </div>
@@ -1458,7 +1478,7 @@ export class DeckCounter implements OnDestroy {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col items-center gap-2">  <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">DECK</span>  <div class="dc-grid">    <div class="dc-col">      <span class="dc-value font-mono text-2xl font-bold leading-none text-c-indigo">        @if (drawRolling() && previousDrawValue() !== null) {          <span            class="dc-roll"            [class.dc-old]="drawRollDirection() === \'down\'"            [class.dc-old-up]="drawRollDirection() === \'up\'"          >{{ previousDrawValue() }}</span>          <span            class="dc-roll"            [class.dc-new]="drawRollDirection() === \'down\'"            [class.dc-new-up]="drawRollDirection() === \'up\'"          >{{ currentDrawValue() }}</span>        } @else {          <span>{{ currentDrawValue() ?? (displayDrawCount() ?? drawCount()) }}</span>        }      </span>      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">draw</span>    </div>    <div class="dc-col">      <span class="dc-value font-mono text-2xl font-bold leading-none text-c-muted">        @if (discardRolling() && previousDiscardValue() !== null) {          <span            class="dc-roll"            [class.dc-old]="discardRollDirection() === \'down\'"            [class.dc-old-up]="discardRollDirection() === \'up\'"          >{{ previousDiscardValue() }}</span>          <span            class="dc-roll"            [class.dc-new]="discardRollDirection() === \'down\'"            [class.dc-new-up]="discardRollDirection() === \'up\'"          >{{ currentDiscardValue() }}</span>        } @else {          <span>{{ currentDiscardValue() ?? (displayDiscardCount() ?? discardCount()) }}</span>        }      </span>      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">discard</span>    </div>    <div class="dc-col">      <div class="dc-pips">        @for (pip of pips(); track $index) {          <span            class="dc-pip"            [style.left.%]="pip.left"            [style.top.%]="pip.top"            [class.bg-c-pink]="pip.used"            [class.border]="!pip.used"            [class.border-c-indigo/10]="!pip.used"            [class.bg-transparent]="!pip.used"          ></span>        }      </div>      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">shuffle</span>    </div>  </div></div></div>'
+        var COMPONENT_TEMPLATE = '<div><div class="flex flex-col items-center gap-2">  <span class="font-mono text-[0.52rem] tracking-[0.22em] uppercase text-c-muted">DECK</span>  <div class="dc-grid">    <div class="dc-col">      <span class="dc-value font-mono text-2xl font-bold leading-none text-c-indigo">        @if (drawRolling() && previousDrawValue() !== null) {          <span            class="dc-roll"            [class.dc-old]="drawRollDirection() === \'down\'"            [class.dc-old-up]="drawRollDirection() === \'up\'"            >{{ previousDrawValue() }}</span          >          <span            class="dc-roll"            [class.dc-new]="drawRollDirection() === \'down\'"            [class.dc-new-up]="drawRollDirection() === \'up\'"            >{{ currentDrawValue() }}</span          >        } @else {          <span>{{ currentDrawValue() ?? displayDrawCount() ?? drawCount() }}</span>        }      </span>      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">draw</span>    </div>    <div class="dc-col">      <span class="dc-value font-mono text-2xl font-bold leading-none text-c-muted">        @if (discardRolling() && previousDiscardValue() !== null) {          <span            class="dc-roll"            [class.dc-old]="discardRollDirection() === \'down\'"            [class.dc-old-up]="discardRollDirection() === \'up\'"            >{{ previousDiscardValue() }}</span          >          <span            class="dc-roll"            [class.dc-new]="discardRollDirection() === \'down\'"            [class.dc-new-up]="discardRollDirection() === \'up\'"            >{{ currentDiscardValue() }}</span          >        } @else {          <span>{{ currentDiscardValue() ?? displayDiscardCount() ?? discardCount() }}</span>        }      </span>      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">discard</span>    </div>    <div class="dc-col">      <div class="dc-pips">        @for (pip of pips(); track $index) {          <span            class="dc-pip"            [style.left.%]="pip.left"            [style.top.%]="pip.top"            [class.bg-c-pink]="pip.used"            [class.border]="!pip.used"            [class.border-c-indigo/10]="!pip.used"            [class.bg-transparent]="!pip.used"          ></span>        }      </div>      <span class="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-c-muted">shuffle</span>    </div>  </div></div></div>'
     var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'BetControls', 'selector': 'lib-bet-controls'},{'name': 'DeckCounter', 'selector': 'lib-deck-counter'},{'name': 'GamePage', 'selector': 'lib-game-page'},{'name': 'Hand', 'selector': 'lib-hand'},{'name': 'HandHistory', 'selector': 'lib-hand-history'},{'name': 'LandingPage', 'selector': 'lib-landing-page'},{'name': 'ScoreDisplay', 'selector': 'lib-score-display'},{'name': 'SettingsPanel', 'selector': 'lib-settings-panel'},{'name': 'Tile', 'selector': 'lib-tile'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'DeckCounter'};

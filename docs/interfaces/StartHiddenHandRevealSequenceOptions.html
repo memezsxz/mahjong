@@ -706,11 +706,7 @@ interface StartHiddenHandRevealSequenceOptions {
   preWinHand: HandModel;
   postWinHand: HandModel;
   setScoreDisplayOverride: (value: number | null) &#x3D;&gt; void;
-  startScoreGainAnimation: (
-    scoreBefore: number,
-    scoreAfter: number,
-    onDone: () &#x3D;&gt; void,
-  ) &#x3D;&gt; void;
+  startScoreGainAnimation: (scoreBefore: number, scoreAfter: number, onDone: () &#x3D;&gt; void) &#x3D;&gt; void;
   playTileFlip: () &#x3D;&gt; void;
   playWin: () &#x3D;&gt; void;
   playLose: () &#x3D;&gt; void;
@@ -749,25 +745,17 @@ export class GamePageRevealSequenceService implements OnDestroy {
   readonly oldTileValues &#x3D; computed&lt;Record&lt;string, number&gt; | null&gt;(() &#x3D;&gt; {
     const hand &#x3D; this.preWinHiddenHand();
     if (!hand) return null;
-    return Object.fromEntries(
-      hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
-    );
+    return Object.fromEntries(hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]));
   });
 
   readonly newTileValues &#x3D; computed&lt;Record&lt;string, number&gt; | null&gt;(() &#x3D;&gt; {
     const hand &#x3D; this.postWinHiddenHand();
     if (!hand) return null;
-    return Object.fromEntries(
-      hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
-    );
+    return Object.fromEntries(hand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]));
   });
 
-  readonly oldTotal &#x3D; computed&lt;number | null&gt;(
-    () &#x3D;&gt; this.preWinHiddenHand()?.total ?? null,
-  );
-  readonly newTotal &#x3D; computed&lt;number | null&gt;(
-    () &#x3D;&gt; this.postWinHiddenHand()?.total ?? null,
-  );
+  readonly oldTotal &#x3D; computed&lt;number | null&gt;(() &#x3D;&gt; this.preWinHiddenHand()?.total ?? null);
+  readonly newTotal &#x3D; computed&lt;number | null&gt;(() &#x3D;&gt; this.postWinHiddenHand()?.total ?? null);
   readonly animationRunning &#x3D; computed&lt;boolean&gt;(() &#x3D;&gt; this.sequenceLocked());
 
   private readonly revealTimers &#x3D; new Set&lt;ReturnType&lt;typeof globalThis.setTimeout&gt;&gt;();
@@ -805,9 +793,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
    * staged timing collapses into immediate state changes with only the minimum
    * pause needed to preserve result readability.
    */
-  startHiddenHandRevealSequence(
-    options: StartHiddenHandRevealSequenceOptions,
-  ): void {
+  startHiddenHandRevealSequence(options: StartHiddenHandRevealSequenceOptions): void {
     const {
       animationsEnabled,
       scoreBefore,
@@ -894,10 +880,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
       }, showValueDelay + HIDDEN_REVEAL_TOTAL_STEP_MS);
 
       runningTotal &#x3D; nextTotal;
-      cursorMs &#x3D;
-        showValueDelay +
-        HIDDEN_REVEAL_TOTAL_STEP_MS +
-        HIDDEN_REVEAL_POST_TILE_MS;
+      cursorMs &#x3D; showValueDelay + HIDDEN_REVEAL_TOTAL_STEP_MS + HIDDEN_REVEAL_POST_TILE_MS;
     });
 
     const handRevealDoneMs &#x3D; cursorMs + HIDDEN_REVEAL_SETTLE_MS;
@@ -967,9 +950,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
       this.queueTimer(() &#x3D;&gt; {
         this.historyReady.set(true);
         this.tileValueOverrides.set(
-          Object.fromEntries(
-            postWinHand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
-          ),
+          Object.fromEntries(postWinHand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue])),
         );
         this.hiddenTotalOverride.set(postWinHand.total);
         if (hasValueChange) {
@@ -994,7 +975,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
     const finalValues &#x3D; Object.fromEntries(
       postWinHand.tiles.map((tile) &#x3D;&gt; [tile.id, tile.currentValue]),
     );
-    const valueSteps: Array&lt;{ id: string; value: number; total: number }&gt; &#x3D; [];
+    const valueSteps: { id: string; value: number; total: number }[] &#x3D; [];
     let runningTotal &#x3D; preWinHand.total;
 
     for (const tile of postWinHand.tiles) {
