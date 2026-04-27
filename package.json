@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "docs": "compodoc -p tsconfig.app.json --theme material --output dist/mahjong/browser/docs"
+    "docs": "compodoc -p tsconfig.app.json --theme material --output dist/mahjong/browser/docs",
+    "lint": "ng lint"
   },
   "prettier": {
     "printWidth": 100,
@@ -49,8 +50,12 @@
     "@angular/cli": "^21.2.8",
     "@angular/compiler-cli": "^21.2.10",
     "@compodoc/compodoc": "^1.2.1",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/postcss": "^4.2.4",
     "@types/jasmine": "~5.1.0",
+    "angular-eslint": "21.3.1",
+    "eslint": "^10.0.3",
+    "eslint-config-prettier": "^10.1.8",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -58,7 +63,9 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.5.12",
+    "prettier": "^3.8.3",
     "tailwindcss": "^4.2.4",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "typescript-eslint": "8.56.1"
   }
 }

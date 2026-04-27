@@ -101,8 +101,8 @@ export class DeckCounter implements OnDestroy {
    * Returns hand-tuned pip layouts for common reshuffle limits and falls back to
    * a generated grid for any other count.
    */
-  private getPipPositions(total: number): Array<{ left: number; top: number }> {
-    const fixedLayouts: Partial<Record<number, Array<{ left: number; top: number }>>> = {
+  private getPipPositions(total: number): { left: number; top: number }[] {
+    const fixedLayouts: Partial<Record<number, { left: number; top: number }[]>> = {
       0: [],
       1: [{ left: 50, top: 50 }],
       2: [
@@ -176,7 +176,7 @@ export class DeckCounter implements OnDestroy {
   /**
    * Generates a simple grid layout when no fixed pip layout is defined.
    */
-  private getFallbackGrid(total: number): Array<{ left: number; top: number }> {
+  private getFallbackGrid(total: number): { left: number; top: number }[] {
     if (total <= 0) {
       return [];
     }

@@ -4,12 +4,12 @@ import { SettingsService } from './settings.service';
 type MusicMode = 'none' | 'gameplay' | 'pause';
 type MusicTrack = 'gameplay' | 'pause';
 type ResultSound = 'win' | 'lose';
-type PendingAssetPlayback = {
+interface PendingAssetPlayback {
   src: string;
   volume: number;
   requestedAtMs: number;
   offsetMs: number;
-};
+}
 
 /**
  * Central audio controller for the game.

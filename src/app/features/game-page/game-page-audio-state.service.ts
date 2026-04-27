@@ -7,14 +7,14 @@ type TrackedValueKey =
   | 'reshuffleDraw'
   | 'reshuffleDiscard';
 
-type AudioStateBindings = {
+interface AudioStateBindings {
   scoreDisplayValue: () => number | null;
   reshuffleDrawValue: () => number | null;
   reshuffleDiscardValue: () => number | null;
   gamePhase: () => GamePhase;
   isPaused: () => boolean;
   musicEnabled: () => boolean;
-};
+}
 
 /**
  * Bridges reactive game-page UI state into audio side effects.

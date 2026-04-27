@@ -310,7 +310,7 @@ export class GamePageRevealSequenceService implements OnDestroy {
     const finalValues = Object.fromEntries(
       postWinHand.tiles.map((tile) => [tile.id, tile.currentValue]),
     );
-    const valueSteps: Array<{ id: string; value: number; total: number }> = [];
+    const valueSteps: { id: string; value: number; total: number }[] = [];
     let runningTotal = preWinHand.total;
 
     for (const tile of postWinHand.tiles) {
