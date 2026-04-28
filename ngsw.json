@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777287190695,
+  "timestamp": 1777360596790,
   "index": "/mahjong/index.html",
   "assetGroups": [
     {
@@ -18,7 +18,7 @@
         "/mahjong/main-7GRTD75G.js",
         "/mahjong/manifest.webmanifest",
         "/mahjong/polyfills-5CFQRCPP.js",
-        "/mahjong/styles-J54I7KOV.css"
+        "/mahjong/styles-JZFPLOGG.css"
       ],
       "patterns": []
     },
@@ -131,7 +131,7 @@
     "/mahjong/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "/mahjong/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "/mahjong/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "/mahjong/index.html": "3610ef314ce8d70d759468a087de43f3a0dd3d51",
+    "/mahjong/index.html": "fce49afe90938dbd82d51291ded4cb454c54fdb6",
     "/mahjong/main-7GRTD75G.js": "a1f88b5a5c5ff8e428a3ac8ed9e14a8025a68a64",
     "/mahjong/manifest.webmanifest": "b149ead37a9e5119aa601f769602b4e1fa48a7a8",
     "/mahjong/media/primeicons-4GST5W3O.woff2": "837c1279b6af9d297f34fdb43e6fcc9206a79f32",
@@ -139,7 +139,7 @@
     "/mahjong/media/primeicons-GEFHGEHP.ttf": "3b878ca7e88945a8ec25814810b95367d8977ae6",
     "/mahjong/media/primeicons-P53SE5CV.woff": "361e3af71bb4e515feead2f787348a92a5527158",
     "/mahjong/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
-    "/mahjong/styles-J54I7KOV.css": "58b93c16c2eecb2c7917491ec8d93af61fb5edf1"
+    "/mahjong/styles-JZFPLOGG.css": "1b4ddb98f3cbad74175493cb2d4e97a9c067e944"
   },
   "navigationUrls": [
     {
